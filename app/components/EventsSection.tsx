@@ -18,7 +18,7 @@ export default function EventsSection() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="bg-[#F5F0EB] py-24 px-12 relative overflow-hidden">
+    <section ref={sectionRef} className="bg-[#F4F4F4] py-24 px-12 relative overflow-hidden">
       {/* Large circle — slides in from left */}
       <div
         style={{
@@ -26,7 +26,7 @@ export default function EventsSection() {
           width: "500px",
           height: "500px",
           borderRadius: "50%",
-          backgroundColor: "#E8E0D5",
+          backgroundColor: "#E2DFDB",
           left: 0,
           bottom: "-80px",
           transform: visible ? "translateX(-25%)" : "translateX(-110%)",
@@ -42,7 +42,7 @@ export default function EventsSection() {
           width: "200px",
           height: "200px",
           borderRadius: "50%",
-          backgroundColor: "#E8E0D5",
+          backgroundColor: "#E2DFDB",
           right: "60px",
           bottom: "-40px",
           transform: visible ? "translateX(0%)" : "translateX(80%)",

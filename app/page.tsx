@@ -1,5 +1,7 @@
 import Image from "next/image";
 import EventsSection from "./components/EventsSection";
+import EventTypesSection from "./components/EventTypesSection";
+import StatsSection from "./components/StatsSection";
 
 export default function Home() {
   const tickerItems = [
@@ -43,7 +45,10 @@ export default function Home() {
       </nav>
 
       {/* HERO */}
-      <section className="relative h-[88vh] flex items-center overflow-hidden">
+      <section
+        className="relative h-[88vh] flex items-center overflow-hidden"
+        style={{ backgroundImage: "url(https://www.ortusclub.com/wp-content/uploads/2026/03/2026-Home-Page-Banner-optimized.webp)", backgroundSize: "cover", backgroundPosition: "center" }}
+      >
         {/* Video background — replace src with actual video URL */}
         <video
           className="absolute inset-0 w-full h-full object-cover"
@@ -72,7 +77,7 @@ export default function Home() {
             <a
               href="#"
               className="px-7 py-3 rounded-full text-black text-sm font-medium hover:opacity-90 transition-opacity"
-              style={{ backgroundColor: "#E8B86D" }}
+              style={{ backgroundColor: "#F7BE68" }}
             >
               Attend an Event
             </a>
@@ -98,6 +103,8 @@ export default function Home() {
       </div>
 
       <EventsSection />
+      <StatsSection />
+      <EventTypesSection />
     </main>
   );
 }
