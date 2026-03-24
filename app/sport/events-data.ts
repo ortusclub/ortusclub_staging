@@ -1,0 +1,273 @@
+export interface SportEvent {
+  name: string;
+  date: string;
+  location: string;
+  country: string;
+  venue: string;
+  fromPrice: string;
+  tier: "Ultra-Premium" | "Premium" | "Mid-Premium" | "Mid-Tier";
+  notes: string;
+}
+
+export interface SportCategory {
+  name: string;
+  icon: string;
+  events: SportEvent[];
+}
+
+export const categories: SportCategory[] = [
+  {
+    name: "Formula 1",
+    icon: "🏎",
+    events: [
+      { name: "F1 Australian Grand Prix", date: "6–8 Mar 2026", location: "Melbourne", country: "Australia", venue: "Albert Park Circuit", fromPrice: "$2,500", tier: "Premium", notes: "Season opener; Paddock Club available" },
+      { name: "F1 Chinese Grand Prix (Sprint)", date: "13–15 Mar 2026", location: "Shanghai", country: "China", venue: "Shanghai International Circuit", fromPrice: "$2,000", tier: "Premium", notes: "Sprint weekend" },
+      { name: "F1 Japanese Grand Prix", date: "27–29 Mar 2026", location: "Suzuka", country: "Japan", venue: "Suzuka Circuit", fromPrice: "$2,500", tier: "Premium", notes: "Iconic circuit" },
+      { name: "F1 Bahrain Grand Prix", date: "10–12 Apr 2026", location: "Sakhir", country: "Bahrain", venue: "Bahrain International Circuit", fromPrice: "$2,000", tier: "Premium", notes: "Night race; excellent hospitality" },
+      { name: "F1 Saudi Arabian Grand Prix", date: "17–19 Apr 2026", location: "Jeddah", country: "Saudi Arabia", venue: "Jeddah Corniche Circuit", fromPrice: "$2,500", tier: "Premium", notes: "Street circuit; luxury hospitality" },
+      { name: "F1 Miami Grand Prix (Sprint)", date: "1–3 May 2026", location: "Miami", country: "USA", venue: "Miami International Autodrome", fromPrice: "$3,000", tier: "Ultra-Premium", notes: "High-end; sold-out hospitality" },
+      { name: "F1 Canadian Grand Prix (Sprint)", date: "22–24 May 2026", location: "Montreal", country: "Canada", venue: "Circuit Gilles Villeneuve", fromPrice: "$2,000", tier: "Premium", notes: "Sprint weekend; vibrant city" },
+      { name: "F1 Monaco Grand Prix", date: "5–7 Jun 2026", location: "Monte Carlo", country: "Monaco", venue: "Circuit de Monaco", fromPrice: "$5,000", tier: "Ultra-Premium", notes: "Most prestigious F1 hospitality; yacht options" },
+      { name: "F1 Spanish Grand Prix", date: "12–14 Jun 2026", location: "Barcelona", country: "Spain", venue: "Circuit de Barcelona-Catalunya", fromPrice: "$1,500", tier: "Premium", notes: "Good value hospitality" },
+      { name: "F1 Austrian Grand Prix", date: "26–28 Jun 2026", location: "Spielberg", country: "Austria", venue: "Red Bull Ring", fromPrice: "$1,800", tier: "Premium", notes: "Scenic mountain setting" },
+      { name: "F1 British Grand Prix (Sprint)", date: "3–5 Jul 2026", location: "Silverstone", country: "UK", venue: "Silverstone Circuit", fromPrice: "$2,500", tier: "Premium", notes: "Sprint weekend; iconic motorsport" },
+      { name: "F1 Belgian Grand Prix", date: "17–19 Jul 2026", location: "Spa", country: "Belgium", venue: "Circuit de Spa-Francorchamps", fromPrice: "$2,000", tier: "Premium", notes: "Classic circuit; Ardennes" },
+      { name: "F1 Hungarian Grand Prix", date: "24–26 Jul 2026", location: "Budapest", country: "Hungary", venue: "Hungaroring", fromPrice: "$1,800", tier: "Premium", notes: "Budapest city experience" },
+      { name: "F1 Dutch Grand Prix (Sprint)", date: "21–23 Aug 2026", location: "Zandvoort", country: "Netherlands", venue: "Circuit Zandvoort", fromPrice: "$2,500", tier: "Premium", notes: "Final Dutch GP; beach setting" },
+      { name: "F1 Italian Grand Prix", date: "4–6 Sep 2026", location: "Monza", country: "Italy", venue: "Autodromo di Monza", fromPrice: "$2,000", tier: "Premium", notes: "Temple of Speed; Milan" },
+      { name: "F1 Madrid Grand Prix (NEW)", date: "11–13 Sep 2026", location: "Madrid", country: "Spain", venue: "MADRING Circuit", fromPrice: "$2,500", tier: "Premium", notes: "Inaugural event; brand new circuit" },
+      { name: "F1 Azerbaijan Grand Prix", date: "24–26 Sep 2026", location: "Baku", country: "Azerbaijan", venue: "Baku City Circuit", fromPrice: "$2,000", tier: "Premium", notes: "Dramatic street circuit" },
+      { name: "F1 Singapore Grand Prix (Sprint)", date: "9–11 Oct 2026", location: "Singapore", country: "Singapore", venue: "Marina Bay Street Circuit", fromPrice: "$3,000", tier: "Ultra-Premium", notes: "Night race; spectacular setting" },
+      { name: "F1 United States Grand Prix", date: "23–25 Oct 2026", location: "Austin", country: "USA", venue: "Circuit of The Americas", fromPrice: "$2,500", tier: "Premium", notes: "Americas tripleheader" },
+      { name: "F1 Mexico City Grand Prix", date: "30 Oct–1 Nov 2026", location: "Mexico City", country: "Mexico", venue: "Autódromo Hermanos Rodríguez", fromPrice: "$2,000", tier: "Premium", notes: "Electric atmosphere" },
+      { name: "F1 São Paulo Grand Prix", date: "6–8 Nov 2026", location: "São Paulo", country: "Brazil", venue: "Interlagos", fromPrice: "$2,000", tier: "Premium", notes: "Passionate fans" },
+      { name: "F1 Las Vegas Grand Prix", date: "19–21 Nov 2026", location: "Las Vegas", country: "USA", venue: "Las Vegas Strip Circuit", fromPrice: "$4,000", tier: "Ultra-Premium", notes: "Saturday night race; Strip hospitality" },
+      { name: "F1 Qatar Grand Prix", date: "27–29 Nov 2026", location: "Lusail", country: "Qatar", venue: "Lusail International Circuit", fromPrice: "$2,500", tier: "Premium", notes: "Floodlit race; luxury hospitality" },
+      { name: "F1 Abu Dhabi Grand Prix", date: "4–6 Dec 2026", location: "Abu Dhabi", country: "UAE", venue: "Yas Marina Circuit", fromPrice: "$3,000", tier: "Ultra-Premium", notes: "Season finale; sunset race; Yas Island" },
+    ],
+  },
+  {
+    name: "Tennis",
+    icon: "🎾",
+    events: [
+      { name: "Australian Open", date: "18 Jan–1 Feb 2026", location: "Melbourne", country: "Australia", venue: "Melbourne Park", fromPrice: "$1,500", tier: "Premium", notes: "First Grand Slam; Rod Laver Arena" },
+      { name: "Australian Open — Finals Weekend", date: "31 Jan–1 Feb 2026", location: "Melbourne", country: "Australia", venue: "Rod Laver Arena", fromPrice: "$3,000", tier: "Ultra-Premium", notes: "Finals hospitality; premium suites" },
+      { name: "ABN AMRO Open", date: "7–15 Feb 2026", location: "Rotterdam", country: "Netherlands", venue: "Rotterdam Ahoy", fromPrice: "$800", tier: "Mid-Premium", notes: "Indoor ATP 500; corporate-friendly" },
+      { name: "Indian Wells (BNP Paribas Open)", date: "Mar 2026", location: "Indian Wells", country: "USA", venue: "Indian Wells Tennis Garden", fromPrice: "$1,200", tier: "Premium", notes: "Desert resort setting" },
+      { name: "Miami Open", date: "Mar–Apr 2026", location: "Miami", country: "USA", venue: "Hard Rock Stadium", fromPrice: "$1,200", tier: "Premium", notes: "South Beach atmosphere" },
+      { name: "Monte-Carlo Masters", date: "4–12 Apr 2026", location: "Monte Carlo", country: "Monaco", venue: "Monte-Carlo Country Club", fromPrice: "$2,000", tier: "Ultra-Premium", notes: "Riviera setting; intimate venue" },
+      { name: "Madrid Open", date: "Apr–May 2026", location: "Madrid", country: "Spain", venue: "Caja Mágica", fromPrice: "$1,000", tier: "Premium", notes: "Combined ATP/WTA; vibrant city" },
+      { name: "Italian Open (Rome)", date: "May 2026", location: "Rome", country: "Italy", venue: "Foro Italico", fromPrice: "$1,000", tier: "Premium", notes: "Beautiful Roman setting" },
+      { name: "French Open (Roland Garros)", date: "May–Jun 2026", location: "Paris", country: "France", venue: "Stade Roland Garros", fromPrice: "$2,000", tier: "Ultra-Premium", notes: "Grand Slam; Parisian glamour" },
+      { name: "French Open — Finals Weekend", date: "Jun 2026", location: "Paris", country: "France", venue: "Court Philippe Chatrier", fromPrice: "$4,000", tier: "Ultra-Premium", notes: "Grand Slam finals; most exclusive seats" },
+      { name: "Queen's Club Championships", date: "Jun 2026", location: "London", country: "UK", venue: "Queen's Club", fromPrice: "$1,500", tier: "Premium", notes: "Wimbledon warm-up; intimate London venue" },
+      { name: "Wimbledon Championships", date: "29 Jun–12 Jul 2026", location: "London", country: "UK", venue: "All England Club", fromPrice: "$2,000", tier: "Ultra-Premium", notes: "Most prestigious; debenture seats available" },
+      { name: "Wimbledon — Men's Final", date: "12 Jul 2026", location: "London", country: "UK", venue: "Centre Court", fromPrice: "$8,000", tier: "Ultra-Premium", notes: "Pinnacle of tennis hospitality" },
+      { name: "Wimbledon — Ladies' Final", date: "11 Jul 2026", location: "London", country: "UK", venue: "Centre Court", fromPrice: "$4,000", tier: "Ultra-Premium", notes: "Slightly more accessible than Men's final" },
+      { name: "Canadian Open", date: "Jul–Aug 2026", location: "Toronto/Montreal", country: "Canada", venue: "IGA Stadium / Sobeys Stadium", fromPrice: "$800", tier: "Mid-Premium", notes: "ATP/WTA alternating cities" },
+      { name: "US Open", date: "Aug–Sep 2026", location: "New York", country: "USA", venue: "USTA Billie Jean King NTC", fromPrice: "$2,000", tier: "Ultra-Premium", notes: "Grand Slam; NYC nightlife" },
+      { name: "US Open — Finals Weekend", date: "Sep 2026", location: "New York", country: "USA", venue: "Arthur Ashe Stadium", fromPrice: "$5,000", tier: "Ultra-Premium", notes: "Finals suites; Manhattan experience" },
+      { name: "Laver Cup", date: "Sep 2026", location: "London", country: "UK", venue: "O2 Arena", fromPrice: "$2,000", tier: "Ultra-Premium", notes: "Team Europe vs World; intimate format" },
+      { name: "Shanghai Masters", date: "Oct 2026", location: "Shanghai", country: "China", venue: "Qizhong Forest Sports City", fromPrice: "$1,000", tier: "Premium", notes: "ATP 1000; Asian market" },
+      { name: "ATP Finals", date: "Nov 2026", location: "Turin", country: "Italy", venue: "Pala Alpitour", fromPrice: "$1,500", tier: "Premium", notes: "Season-ending showpiece; top 8 players" },
+    ],
+  },
+  {
+    name: "Golf",
+    icon: "⛳",
+    events: [
+      { name: "The Masters", date: "6–12 Apr 2026", location: "Augusta", country: "USA", venue: "Augusta National Golf Club", fromPrice: "$5,000", tier: "Ultra-Premium", notes: "Most exclusive sporting event" },
+      { name: "PGA Championship", date: "May 2026", location: "TBD", country: "USA", venue: "TBD", fromPrice: "$2,000", tier: "Premium", notes: "Second major; corporate village" },
+      { name: "US Open", date: "18–21 Jun 2026", location: "Shinnecock Hills", country: "USA", venue: "Shinnecock Hills Golf Club", fromPrice: "$2,500", tier: "Premium", notes: "Long Island setting" },
+      { name: "The Open Championship", date: "Jul 2026", location: "Hoylake", country: "UK", venue: "Royal Liverpool Golf Club", fromPrice: "$2,000", tier: "Premium", notes: "The oldest major; British links" },
+      { name: "Ryder Cup", date: "Sep 2026", location: "New York", country: "USA", venue: "Bethpage Black Course", fromPrice: "$3,000", tier: "Ultra-Premium", notes: "US vs Europe; electric atmosphere" },
+      { name: "Players Championship", date: "Mar 2026", location: "Ponte Vedra Beach", country: "USA", venue: "TPC Sawgrass", fromPrice: "$1,500", tier: "Premium", notes: "5th major; iconic island green" },
+      { name: "WM Phoenix Open", date: "Feb 2026", location: "Scottsdale", country: "USA", venue: "TPC Scottsdale", fromPrice: "$1,000", tier: "Premium", notes: "Party atmosphere; 16th hole" },
+      { name: "Arnold Palmer Invitational", date: "Mar 2026", location: "Orlando", country: "USA", venue: "Bay Hill Club", fromPrice: "$1,000", tier: "Mid-Premium", notes: "Florida destination" },
+      { name: "Memorial Tournament", date: "Jun 2026", location: "Dublin, OH", country: "USA", venue: "Muirfield Village Golf Club", fromPrice: "$1,200", tier: "Premium", notes: "Jack Nicklaus event" },
+      { name: "DP World Tour Championship", date: "Nov 2026", location: "Dubai", country: "UAE", venue: "Jumeirah Golf Estates", fromPrice: "$1,500", tier: "Premium", notes: "European Tour finale; Dubai luxury" },
+      { name: "LIV Golf Events", date: "Feb–Sep 2026", location: "Various", country: "Global", venue: "Various", fromPrice: "$1,000", tier: "Premium", notes: "Multiple events; party atmosphere" },
+      { name: "Chevron Championship (Women's)", date: "Apr 2026", location: "Houston", country: "USA", venue: "Memorial Park", fromPrice: "$800", tier: "Mid-Premium", notes: "First women's major of year" },
+      { name: "Women's Open Championship", date: "Jul–Aug 2026", location: "TBD", country: "UK", venue: "TBD", fromPrice: "$800", tier: "Mid-Premium", notes: "Women's major; British links" },
+      { name: "Solheim Cup", date: "Sep 2026", location: "TBD", country: "Europe", venue: "TBD", fromPrice: "$1,500", tier: "Premium", notes: "Women's Ryder Cup equivalent" },
+    ],
+  },
+  {
+    name: "Horse Racing",
+    icon: "🏇",
+    events: [
+      { name: "Kentucky Derby", date: "2 May 2026", location: "Louisville", country: "USA", venue: "Churchill Downs", fromPrice: "$2,000", tier: "Ultra-Premium", notes: "Millionaires Row; iconic American event" },
+      { name: "Royal Ascot", date: "16–20 Jun 2026", location: "Ascot", country: "UK", venue: "Ascot Racecourse", fromPrice: "$1,500", tier: "Ultra-Premium", notes: "British tradition; Royal Enclosure; 5 days" },
+      { name: "Cheltenham Festival", date: "Mar 2026", location: "Cheltenham", country: "UK", venue: "Cheltenham Racecourse", fromPrice: "$1,200", tier: "Premium", notes: "4-day jump racing festival" },
+      { name: "Epsom Derby", date: "Jun 2026", location: "Epsom", country: "UK", venue: "Epsom Downs Racecourse", fromPrice: "$1,000", tier: "Premium", notes: "Classic flat race" },
+      { name: "Goodwood Festival", date: "Jul–Aug 2026", location: "Chichester", country: "UK", venue: "Goodwood Racecourse", fromPrice: "$1,000", tier: "Premium", notes: "5-day festival; Sussex countryside" },
+      { name: "Prix de l'Arc de Triomphe", date: "Oct 2026", location: "Paris", country: "France", venue: "Longchamp Racecourse", fromPrice: "$1,500", tier: "Premium", notes: "Europe's richest race; Parisian elegance" },
+      { name: "Melbourne Cup", date: "Nov 2026", location: "Melbourne", country: "Australia", venue: "Flemington Racecourse", fromPrice: "$1,500", tier: "Premium", notes: "The race that stops a nation" },
+      { name: "Dubai World Cup", date: "Mar 2026", location: "Dubai", country: "UAE", venue: "Meydan Racecourse", fromPrice: "$2,000", tier: "Ultra-Premium", notes: "World's richest race day" },
+      { name: "Preakness Stakes", date: "May 2026", location: "Baltimore", country: "USA", venue: "Pimlico Race Course", fromPrice: "$1,200", tier: "Premium", notes: "Second Triple Crown leg" },
+      { name: "Belmont Stakes", date: "Jun 2026", location: "New York", country: "USA", venue: "Saratoga Race Course", fromPrice: "$1,500", tier: "Premium", notes: "Third Triple Crown leg" },
+      { name: "Hong Kong International Races", date: "Dec 2026", location: "Hong Kong", country: "China", venue: "Sha Tin Racecourse", fromPrice: "$2,000", tier: "Ultra-Premium", notes: "Asia's premier race day" },
+      { name: "Breeders' Cup", date: "Nov 2026", location: "TBD", country: "USA", venue: "TBD", fromPrice: "$2,500", tier: "Ultra-Premium", notes: "2-day championship" },
+      { name: "Grand National", date: "Apr 2026", location: "Liverpool", country: "UK", venue: "Aintree Racecourse", fromPrice: "$1,000", tier: "Premium", notes: "World-famous steeplechase" },
+      { name: "Japan Cup", date: "Nov 2026", location: "Tokyo", country: "Japan", venue: "Tokyo Racecourse", fromPrice: "$1,500", tier: "Premium", notes: "Top Asian flat race" },
+    ],
+  },
+  {
+    name: "Football",
+    icon: "⚽",
+    events: [
+      { name: "FIFA World Cup — Group Stage", date: "11 Jun–2 Jul 2026", location: "Various Cities", country: "USA/Canada/Mexico", venue: "Various Stadiums", fromPrice: "$1,300", tier: "Premium", notes: "48 teams; multiple cities" },
+      { name: "FIFA World Cup — Round of 32", date: "3–6 Jul 2026", location: "Various Cities", country: "USA/Canada/Mexico", venue: "Various Stadiums", fromPrice: "$1,500", tier: "Premium", notes: "Knockout rounds" },
+      { name: "FIFA World Cup — Round of 16", date: "7–10 Jul 2026", location: "Various Cities", country: "USA/Canada/Mexico", venue: "Various Stadiums", fromPrice: "$2,000", tier: "Premium", notes: "Prime knockout matches" },
+      { name: "FIFA World Cup — Quarter-Finals", date: "11–12 Jul 2026", location: "Various Cities", country: "USA/Canada/Mexico", venue: "Various Stadiums", fromPrice: "$3,000", tier: "Ultra-Premium", notes: "High-demand matches" },
+      { name: "FIFA World Cup — Semi-Finals", date: "15–16 Jul 2026", location: "TBD", country: "USA", venue: "TBD", fromPrice: "$5,000", tier: "Ultra-Premium", notes: "Extremely limited" },
+      { name: "FIFA World Cup — Final", date: "19 Jul 2026", location: "New York/New Jersey", country: "USA", venue: "MetLife Stadium", fromPrice: "$8,000", tier: "Ultra-Premium", notes: "Biggest single sporting event globally" },
+      { name: "UEFA Champions League Final", date: "May 2026", location: "Budapest", country: "Hungary", venue: "Puskás Aréna", fromPrice: "$3,000", tier: "Ultra-Premium", notes: "Europe's premier club final" },
+      { name: "Premier League — Top 6 Matches", date: "Aug 2025–May 2026", location: "Various", country: "UK", venue: "Various Stadiums", fromPrice: "$1,500", tier: "Premium", notes: "Private boxes; flexible dates" },
+      { name: "El Clásico", date: "TBD 2026", location: "Madrid/Barcelona", country: "Spain", venue: "Bernabéu / Camp Nou", fromPrice: "$2,000", tier: "Ultra-Premium", notes: "World's biggest club rivalry" },
+      { name: "Manchester Derby", date: "TBD 2026", location: "Manchester", country: "UK", venue: "Old Trafford / Etihad", fromPrice: "$1,500", tier: "Premium", notes: "Corporate suites available" },
+      { name: "North London Derby", date: "TBD 2026", location: "London", country: "UK", venue: "Emirates / Tottenham Stadium", fromPrice: "$1,500", tier: "Premium", notes: "New stadium hospitality" },
+      { name: "Milan Derby", date: "TBD 2026", location: "Milan", country: "Italy", venue: "San Siro", fromPrice: "$1,200", tier: "Premium", notes: "Italian football passion" },
+      { name: "PSG Home Matches", date: "Aug 2025–May 2026", location: "Paris", country: "France", venue: "Parc des Princes", fromPrice: "$1,000", tier: "Premium", notes: "Parisian football" },
+      { name: "Bayern Munich Home Matches", date: "Aug 2025–May 2026", location: "Munich", country: "Germany", venue: "Allianz Arena", fromPrice: "$800", tier: "Premium", notes: "Bavarian hospitality" },
+      { name: "FA Cup Final", date: "May 2026", location: "London", country: "UK", venue: "Wembley Stadium", fromPrice: "$1,500", tier: "Premium", notes: "Historic knockout competition" },
+    ],
+  },
+  {
+    name: "American Football",
+    icon: "🏈",
+    events: [
+      { name: "Super Bowl LX", date: "8 Feb 2026", location: "Santa Clara", country: "USA", venue: "Levi's Stadium", fromPrice: "$8,000", tier: "Ultra-Premium", notes: "Biggest US sporting event; Bay Area" },
+      { name: "NFL Regular Season — Premium Games", date: "Sep–Dec 2026", location: "Various", country: "USA", venue: "Various NFL Stadiums", fromPrice: "$1,000", tier: "Premium", notes: "Private suites; 30+ stadiums" },
+      { name: "NFL London Games", date: "Oct 2026", location: "London", country: "UK", venue: "Tottenham / Wembley", fromPrice: "$1,200", tier: "Premium", notes: "Growing international market" },
+      { name: "NFL Thanksgiving Games", date: "Nov 2026", location: "Dallas/Detroit", country: "USA", venue: "AT&T Stadium / Ford Field", fromPrice: "$1,500", tier: "Premium", notes: "American tradition; triple-header" },
+      { name: "NFL Playoffs — Divisional Round", date: "Jan 2027", location: "Various", country: "USA", venue: "Various", fromPrice: "$2,000", tier: "Premium", notes: "Playoff intensity" },
+      { name: "College Football Playoff Championship", date: "Jan 2026", location: "TBD", country: "USA", venue: "TBD", fromPrice: "$3,000", tier: "Ultra-Premium", notes: "12-team playoff era" },
+      { name: "NFL Draft", date: "Apr 2026", location: "TBD", country: "USA", venue: "TBD", fromPrice: "$500", tier: "Mid-Premium", notes: "3-day fan festival; networking" },
+      { name: "NFL Germany Game", date: "Nov 2026", location: "Frankfurt/Munich", country: "Germany", venue: "Deutsche Bank Park / Allianz Arena", fromPrice: "$1,000", tier: "Premium", notes: "European NFL expansion" },
+      { name: "NFL Brazil Game", date: "Sep 2026", location: "São Paulo", country: "Brazil", venue: "Arena Corinthians", fromPrice: "$1,000", tier: "Premium", notes: "South American market" },
+    ],
+  },
+  {
+    name: "Basketball",
+    icon: "🏀",
+    events: [
+      { name: "NBA All-Star Weekend", date: "Feb 2026", location: "Los Angeles", country: "USA", venue: "Intuit Dome", fromPrice: "$2,000", tier: "Ultra-Premium", notes: "Skills, dunk contest; LA nightlife" },
+      { name: "NBA Finals", date: "Jun 2026", location: "TBD", country: "USA", venue: "TBD", fromPrice: "$3,000", tier: "Ultra-Premium", notes: "Championship series; courtside options" },
+      { name: "NBA Christmas Day Games", date: "25 Dec 2026", location: "Various", country: "USA", venue: "Various Arenas", fromPrice: "$1,500", tier: "Premium", notes: "Marquee matchups; holiday tradition" },
+      { name: "March Madness — Final Four", date: "Apr 2026", location: "TBD", country: "USA", venue: "TBD", fromPrice: "$2,000", tier: "Ultra-Premium", notes: "College basketball pinnacle" },
+      { name: "EuroLeague Final Four", date: "May 2026", location: "TBD", country: "Europe", venue: "TBD", fromPrice: "$800", tier: "Premium", notes: "Top European club basketball" },
+      { name: "NBA Paris Game", date: "Jan 2026", location: "Paris", country: "France", venue: "Accor Arena", fromPrice: "$1,500", tier: "Premium", notes: "NBA Global Games; European market" },
+    ],
+  },
+  {
+    name: "Rugby",
+    icon: "🏉",
+    events: [
+      { name: "Six Nations — England vs France", date: "Feb–Mar 2026", location: "London/Paris", country: "UK/France", venue: "Twickenham / Stade de France", fromPrice: "$1,500", tier: "Premium", notes: "Le Crunch; premium hospitality" },
+      { name: "Six Nations — England vs Ireland", date: "Feb–Mar 2026", location: "London/Dublin", country: "UK/Ireland", venue: "Twickenham / Aviva Stadium", fromPrice: "$1,500", tier: "Premium", notes: "Top Six Nations fixture" },
+      { name: "Six Nations — Wales vs France", date: "Feb–Mar 2026", location: "Cardiff", country: "Wales", venue: "Principality Stadium", fromPrice: "$1,000", tier: "Premium", notes: "Roof-closed atmosphere" },
+      { name: "Six Nations — Scotland vs England", date: "Feb–Mar 2026", location: "Edinburgh", country: "Scotland", venue: "Murrayfield", fromPrice: "$1,200", tier: "Premium", notes: "Calcutta Cup" },
+      { name: "World Rugby Nations Championship", date: "2026", location: "Various", country: "Global", venue: "Various", fromPrice: "$1,000", tier: "Premium", notes: "New tournament" },
+      { name: "Rugby League World Cup", date: "15 Oct–15 Nov 2026", location: "Various", country: "Australia/NZ/PNG", venue: "Various", fromPrice: "$800", tier: "Premium", notes: "Three host nations; 16 teams" },
+      { name: "Champions Cup Final", date: "May 2026", location: "TBD", country: "Europe", venue: "TBD", fromPrice: "$1,000", tier: "Premium", notes: "European club rugby showpiece" },
+      { name: "Hong Kong Sevens", date: "Mar–Apr 2026", location: "Hong Kong", country: "China", venue: "Hong Kong Stadium", fromPrice: "$1,500", tier: "Premium", notes: "Party atmosphere; major networking" },
+    ],
+  },
+  {
+    name: "Cricket",
+    icon: "🏏",
+    events: [
+      { name: "ICC Men's T20 World Cup", date: "7 Feb–8 Mar 2026", location: "Various", country: "India/Sri Lanka", venue: "Various Stadiums", fromPrice: "$800", tier: "Premium", notes: "20 teams; subcontinent hospitality" },
+      { name: "The Ashes", date: "TBD 2026", location: "Various", country: "Australia/England", venue: "Various", fromPrice: "$1,000", tier: "Premium", notes: "Cricket's greatest rivalry" },
+      { name: "IPL (Various Matches)", date: "Mar–May 2026", location: "Various", country: "India", venue: "Various Stadiums", fromPrice: "$800", tier: "Premium", notes: "World's richest cricket league" },
+      { name: "Lord's Test Match", date: "Summer 2026", location: "London", country: "UK", venue: "Lord's Cricket Ground", fromPrice: "$1,500", tier: "Premium", notes: "Home of cricket; traditional hospitality" },
+      { name: "T20 Blast Finals Day", date: "2026", location: "Birmingham", country: "UK", venue: "Edgbaston", fromPrice: "$800", tier: "Mid-Premium", notes: "Domestic T20 showpiece" },
+    ],
+  },
+  {
+    name: "Winter Olympics",
+    icon: "⛷",
+    events: [
+      { name: "Opening Ceremony", date: "6 Feb 2026", location: "Milan", country: "Italy", venue: "San Siro Stadium", fromPrice: "$3,000", tier: "Ultra-Premium", notes: "Once every 4 years; spectacular" },
+      { name: "Alpine Skiing", date: "Feb 2026", location: "Cortina d'Ampezzo", country: "Italy", venue: "Cortina Venues", fromPrice: "$1,500", tier: "Premium", notes: "Dolomites setting" },
+      { name: "Figure Skating", date: "Feb 2026", location: "Milan", country: "Italy", venue: "Milano Santa Giulia Arena", fromPrice: "$2,000", tier: "Premium", notes: "High-demand; spectacular performances" },
+      { name: "Ice Hockey Final", date: "22 Feb 2026", location: "Milan", country: "Italy", venue: "PalaSharp", fromPrice: "$2,500", tier: "Ultra-Premium", notes: "Gold medal game" },
+      { name: "Closing Ceremony", date: "22 Feb 2026", location: "Verona", country: "Italy", venue: "Arena di Verona", fromPrice: "$2,000", tier: "Ultra-Premium", notes: "Historic arena; unforgettable" },
+    ],
+  },
+  {
+    name: "Motorsport",
+    icon: "🏁",
+    events: [
+      { name: "24 Hours of Le Mans", date: "13–14 Jun 2026", location: "Le Mans", country: "France", venue: "Circuit de la Sarthe", fromPrice: "$1,500", tier: "Premium", notes: "Endurance racing classic" },
+      { name: "Indianapolis 500", date: "31 May 2026", location: "Indianapolis", country: "USA", venue: "Indianapolis Motor Speedway", fromPrice: "$1,500", tier: "Premium", notes: "Greatest Spectacle in Racing" },
+      { name: "Daytona 500", date: "Feb 2026", location: "Daytona Beach", country: "USA", venue: "Daytona International Speedway", fromPrice: "$1,200", tier: "Premium", notes: "NASCAR's Super Bowl" },
+      { name: "MotoGP — Various Rounds", date: "Mar–Nov 2026", location: "Various", country: "Global", venue: "Various Circuits", fromPrice: "$800", tier: "Premium", notes: "Paddock access available" },
+      { name: "Goodwood Festival of Speed", date: "Jul 2026", location: "Chichester", country: "UK", venue: "Goodwood Estate", fromPrice: "$1,000", tier: "Premium", notes: "Hillclimb; supercar paddock" },
+      { name: "Goodwood Revival", date: "Sep 2026", location: "Chichester", country: "UK", venue: "Goodwood Motor Circuit", fromPrice: "$800", tier: "Premium", notes: "Vintage racing; period dress" },
+      { name: "Bathurst 1000", date: "Oct 2026", location: "Bathurst", country: "Australia", venue: "Mount Panorama Circuit", fromPrice: "$800", tier: "Premium", notes: "Australia's greatest race" },
+      { name: "Rally Monte Carlo (WRC)", date: "Jan 2026", location: "Monte Carlo", country: "Monaco", venue: "Various Stages", fromPrice: "$1,000", tier: "Premium", notes: "WRC season opener; Monaco glamour" },
+      { name: "Isle of Man TT", date: "May–Jun 2026", location: "Isle of Man", country: "UK", venue: "Snaefell Mountain Course", fromPrice: "$1,000", tier: "Premium", notes: "Unique island experience" },
+      { name: "Formula E — Various Rounds", date: "2026", location: "Various", country: "Global", venue: "Various Street Circuits", fromPrice: "$800", tier: "Premium", notes: "Electric racing; city-centre circuits" },
+    ],
+  },
+  {
+    name: "Boxing & MMA",
+    icon: "🥊",
+    events: [
+      { name: "UFC International Fight Nights", date: "2026", location: "Various", country: "Global", venue: "Various Arenas", fromPrice: "$800", tier: "Premium", notes: "London, Abu Dhabi, and more" },
+      { name: "Major Boxing — Las Vegas", date: "2026", location: "Las Vegas", country: "USA", venue: "T-Mobile Arena / MGM Grand", fromPrice: "$2,000", tier: "Ultra-Premium", notes: "Vegas boxing; casino hospitality" },
+      { name: "Major Boxing — Saudi Arabia", date: "2026", location: "Riyadh", country: "Saudi Arabia", venue: "Kingdom Arena", fromPrice: "$2,000", tier: "Ultra-Premium", notes: "Riyadh Season" },
+      { name: "Major Boxing — London", date: "2026", location: "London", country: "UK", venue: "Wembley / Tottenham Stadium", fromPrice: "$1,500", tier: "Premium", notes: "Stadium atmosphere" },
+      { name: "UFC Abu Dhabi", date: "2026", location: "Abu Dhabi", country: "UAE", venue: "Etihad Arena", fromPrice: "$1,500", tier: "Premium", notes: "Fight Island legacy" },
+    ],
+  },
+  {
+    name: "Sailing",
+    icon: "⛵",
+    events: [
+      { name: "America's Cup", date: "2026", location: "TBD", country: "TBD", venue: "TBD", fromPrice: "$3,000", tier: "Ultra-Premium", notes: "Oldest trophy in sport; yacht hospitality" },
+      { name: "Cowes Week", date: "Aug 2026", location: "Isle of Wight", country: "UK", venue: "Cowes, Solent", fromPrice: "$1,000", tier: "Premium", notes: "Historic regatta; yacht entertainment" },
+      { name: "Sydney to Hobart Yacht Race", date: "26 Dec 2026", location: "Sydney", country: "Australia", venue: "Sydney Harbour", fromPrice: "$1,500", tier: "Premium", notes: "Boxing Day start; harbour spectacle" },
+    ],
+  },
+  {
+    name: "Cycling",
+    icon: "🚴",
+    events: [
+      { name: "Tour de France (Stage)", date: "Jul 2026", location: "Various", country: "France", venue: "Various Locations", fromPrice: "$1,500", tier: "Premium", notes: "VIP village; team access" },
+      { name: "Tour de France — Champs-Élysées Finale", date: "Jul 2026", location: "Paris", country: "France", venue: "Champs-Élysées", fromPrice: "$2,000", tier: "Ultra-Premium", notes: "Iconic finale; Parisian hospitality" },
+      { name: "Giro d'Italia (Stage)", date: "May 2026", location: "Various", country: "Italy", venue: "Various", fromPrice: "$800", tier: "Premium", notes: "Italian scenery; food & wine" },
+      { name: "Tour of Flanders", date: "5 Apr 2026", location: "Belgium", country: "Belgium", venue: "Various Locations", fromPrice: "$800", tier: "Premium", notes: "Cobblestone classic; Belgian beer" },
+    ],
+  },
+  {
+    name: "Baseball",
+    icon: "⚾",
+    events: [
+      { name: "MLB World Series", date: "Oct 2026", location: "TBD", country: "USA", venue: "TBD", fromPrice: "$2,000", tier: "Ultra-Premium", notes: "7-game championship" },
+      { name: "MLB All-Star Game", date: "14 Jul 2026", location: "Philadelphia", country: "USA", venue: "Citizens Bank Park", fromPrice: "$1,500", tier: "Premium", notes: "Midsummer Classic; Home Run Derby" },
+      { name: "MLB Opening Day", date: "Mar 2026", location: "Various", country: "USA", venue: "Various Ballparks", fromPrice: "$800", tier: "Premium", notes: "American tradition" },
+      { name: "Yankees vs Red Sox", date: "2026", location: "New York/Boston", country: "USA", venue: "Yankee Stadium / Fenway Park", fromPrice: "$1,200", tier: "Premium", notes: "Greatest MLB rivalry" },
+      { name: "MLB London Series", date: "Jun 2026", location: "London", country: "UK", venue: "London Stadium", fromPrice: "$1,000", tier: "Premium", notes: "MLB in Europe" },
+    ],
+  },
+  {
+    name: "Ice Hockey",
+    icon: "🏒",
+    events: [
+      { name: "NHL Stanley Cup Finals", date: "Jun 2026", location: "TBD", country: "USA/Canada", venue: "TBD", fromPrice: "$2,000", tier: "Ultra-Premium", notes: "7-game series; intense atmosphere" },
+      { name: "NHL All-Star Weekend", date: "Feb 2026", location: "TBD", country: "USA", venue: "TBD", fromPrice: "$1,500", tier: "Premium", notes: "Skills competition; all-star game" },
+      { name: "NHL Winter Classic", date: "Jan 2026", location: "TBD", country: "USA", venue: "TBD", fromPrice: "$1,500", tier: "Premium", notes: "Outdoor hockey; unique stadium" },
+    ],
+  },
+  {
+    name: "Multi-Sport",
+    icon: "🏅",
+    events: [
+      { name: "Commonwealth Games", date: "Jul 2026", location: "Glasgow", country: "UK", venue: "Various Venues", fromPrice: "$500", tier: "Mid-Premium", notes: "10 days; Scottish hospitality" },
+      { name: "Invictus Games", date: "2026", location: "TBD", country: "TBD", venue: "TBD", fromPrice: "$500", tier: "Mid-Premium", notes: "Military veterans; inspirational" },
+    ],
+  },
+];
