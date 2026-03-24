@@ -40,7 +40,7 @@ const bottomRow = [
     title: "Sport",
     description: "We bring executives together through world-class sporting experiences, combining elite competition with meaningful networking in unforgettable settings.",
     bg: PLACEHOLDER,
-    href: "/sport/",
+    href: "/sport",
   },
 ];
 
