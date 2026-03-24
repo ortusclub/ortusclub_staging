@@ -8,7 +8,7 @@ const SLIDES = [
     alt: "Swimming pool aerial",
   },
   {
-    image: "https://images.unsplash.com/photo-1541447271487-09612b3f49f7?w=1800&q=80",
+    image: "https://images.unsplash.com/photo-1580651214613-f4692d6d138f?w=1800&q=80",
     alt: "Formula 1 dark moody car",
   },
   {
@@ -71,14 +71,14 @@ export default function HeroCarousel() {
             className="absolute inset-0"
             style={{
               background:
-                "linear-gradient(135deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.45) 50%, rgba(0,0,0,0.3) 100%)",
+                "linear-gradient(135deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.55) 50%, rgba(0,0,0,0.4) 100%)",
             }}
           />
           <div
             className="absolute inset-0"
             style={{
               background:
-                "linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.15) 50%)",
+                "linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.25) 50%)",
             }}
           />
         </div>
