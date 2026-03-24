@@ -69,6 +69,115 @@ export default function SportPage() {
         </div>
       </div>
 
+      {/* HOW IT WORKS */}
+      <section className="bg-white py-20 px-8">
+        <div className="max-w-4xl mx-auto">
+          <h2
+            className="text-center text-3xl mb-14"
+            style={{
+              fontFamily: "var(--font-cormorant), serif",
+              fontWeight: 400,
+              color: "#111",
+              fontStyle: "italic",
+            }}
+          >
+            How It Works
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+            {/* Step 1 */}
+            <div className="text-center">
+              <div
+                className="w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-5"
+                style={{ backgroundColor: "#F7BE68" }}
+              >
+                <span
+                  className="text-xl font-light"
+                  style={{ fontFamily: "var(--font-cormorant), serif", color: "#111" }}
+                >
+                  1
+                </span>
+              </div>
+              <h3
+                className="text-lg mb-3"
+                style={{
+                  fontFamily: "var(--font-cormorant), serif",
+                  fontWeight: 400,
+                  fontStyle: "italic",
+                  color: "#111",
+                }}
+              >
+                Share Your Targets
+              </h3>
+              <p className="text-neutral-500 text-sm leading-relaxed">
+                Provide a list of target accounts, your ideal customer profile,
+                or the specific titles and industries you want to engage with.
+              </p>
+            </div>
+
+            {/* Step 2 */}
+            <div className="text-center">
+              <div
+                className="w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-5"
+                style={{ backgroundColor: "#F7BE68" }}
+              >
+                <span
+                  className="text-xl font-light"
+                  style={{ fontFamily: "var(--font-cormorant), serif", color: "#111" }}
+                >
+                  2
+                </span>
+              </div>
+              <h3
+                className="text-lg mb-3"
+                style={{
+                  fontFamily: "var(--font-cormorant), serif",
+                  fontWeight: 400,
+                  fontStyle: "italic",
+                  color: "#111",
+                }}
+              >
+                Choose Your Event
+              </h3>
+              <p className="text-neutral-500 text-sm leading-relaxed">
+                Select a sporting event from our calendar — or let us recommend
+                the perfect occasion to match your audience and objectives.
+              </p>
+            </div>
+
+            {/* Step 3 */}
+            <div className="text-center">
+              <div
+                className="w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-5"
+                style={{ backgroundColor: "#F7BE68" }}
+              >
+                <span
+                  className="text-xl font-light"
+                  style={{ fontFamily: "var(--font-cormorant), serif", color: "#111" }}
+                >
+                  3
+                </span>
+              </div>
+              <h3
+                className="text-lg mb-3"
+                style={{
+                  fontFamily: "var(--font-cormorant), serif",
+                  fontWeight: 400,
+                  fontStyle: "italic",
+                  color: "#111",
+                }}
+              >
+                We Curate &amp; Invite
+              </h3>
+              <p className="text-neutral-500 text-sm leading-relaxed">
+                Ortus will curate and invite your target audience to the
+                sporting event, where you&apos;ll be positioned as host with the
+                perfect platform to build lasting relationships.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* SPORT ACCORDION */}
       <SportAccordion />
 
