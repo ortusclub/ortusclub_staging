@@ -5,7 +5,7 @@ import { useState } from "react";
 const SPORTS = [
   {
     name: "Formula 1",
-    image: "https://images.unsplash.com/photo-1587280501635-68a0e82cd5ff?w=1200&q=80",
+    image: "https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=1200&q=80",
     description: "Experience the pinnacle of motorsport from Paddock Club suites and exclusive hospitality at every Grand Prix on the 2026 calendar.",
   },
   {
