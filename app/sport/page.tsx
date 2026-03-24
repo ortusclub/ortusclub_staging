@@ -71,9 +71,9 @@ export default function SportPage() {
 
       {/* HOW IT WORKS */}
       <section className="bg-white py-20 px-8">
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-6xl mx-auto">
           <h2
-            className="text-center text-3xl mb-14"
+            className="text-center text-4xl mb-14"
             style={{
               fontFamily: "var(--font-cormorant), serif",
               fontWeight: 400,
@@ -83,7 +83,7 @@ export default function SportPage() {
           >
             How It Works
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-16">
             {/* Step 1 */}
             <div className="text-center">
               <div
@@ -98,7 +98,7 @@ export default function SportPage() {
                 </span>
               </div>
               <h3
-                className="text-lg mb-3"
+                className="text-xl mb-3"
                 style={{
                   fontFamily: "var(--font-cormorant), serif",
                   fontWeight: 400,
@@ -108,7 +108,7 @@ export default function SportPage() {
               >
                 Share Your Targets
               </h3>
-              <p className="text-neutral-500 text-sm leading-relaxed">
+              <p className="text-neutral-500 text-base leading-relaxed">
                 Provide a list of target accounts, your ideal customer profile,
                 or the specific titles and industries you want to engage with.
               </p>
@@ -128,7 +128,7 @@ export default function SportPage() {
                 </span>
               </div>
               <h3
-                className="text-lg mb-3"
+                className="text-xl mb-3"
                 style={{
                   fontFamily: "var(--font-cormorant), serif",
                   fontWeight: 400,
@@ -138,7 +138,7 @@ export default function SportPage() {
               >
                 Choose Your Event
               </h3>
-              <p className="text-neutral-500 text-sm leading-relaxed">
+              <p className="text-neutral-500 text-base leading-relaxed">
                 Select a sporting event from our calendar — or let us recommend
                 the perfect occasion to match your audience and objectives.
               </p>
@@ -158,7 +158,7 @@ export default function SportPage() {
                 </span>
               </div>
               <h3
-                className="text-lg mb-3"
+                className="text-xl mb-3"
                 style={{
                   fontFamily: "var(--font-cormorant), serif",
                   fontWeight: 400,
@@ -168,7 +168,7 @@ export default function SportPage() {
               >
                 We Curate &amp; Invite
               </h3>
-              <p className="text-neutral-500 text-sm leading-relaxed">
+              <p className="text-neutral-500 text-base leading-relaxed">
                 Ortus will curate and invite your target audience to the
                 sporting event, where you&apos;ll be positioned as host with the
                 perfect platform to build lasting relationships.

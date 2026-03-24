@@ -14,86 +14,86 @@ const CoverPage = forwardRef<HTMLDivElement>(function CoverPage(_props, ref) {
   return (
     <div
       ref={ref}
-      className="flex flex-col items-center justify-between h-full text-center"
+      className="flex flex-col items-center justify-center h-full text-center"
       style={{
-        backgroundColor: "#1a1a1a",
-        border: "1px solid #333",
+        backgroundColor: "#2a2a2a",
+        border: "1px solid #444",
         padding: "40px 30px",
       }}
     >
       {/* Top ornament */}
-      <div className="flex flex-col items-center">
-        <div className="w-12 h-px mb-3" style={{ backgroundColor: "#F7BE68" }} />
-        <p
-          className="text-[10px] tracking-[0.4em] uppercase"
-          style={{ color: "#F7BE68" }}
-        >
-          Est. 2018
-        </p>
-      </div>
+      <div className="w-12 h-px mb-4" style={{ backgroundColor: "#F7BE68" }} />
+      <p
+        className="text-[10px] tracking-[0.4em] uppercase mb-2"
+        style={{ color: "#F7BE68" }}
+      >
+        Est. 2018
+      </p>
+      <p
+        className="tracking-[0.35em] uppercase mb-6"
+        style={{ color: "#F7BE68", fontSize: "10px" }}
+      >
+        The Ortus Club
+      </p>
 
-      {/* Centre content */}
-      <div className="flex flex-col items-center">
-        <p
-          className="tracking-[0.35em] uppercase mb-4"
-          style={{ color: "#F7BE68", fontSize: "10px" }}
-        >
-          The Ortus Club
-        </p>
-        <div className="w-20 h-px mb-5" style={{ backgroundColor: "rgba(255,255,255,0.15)" }} />
-        <h2
-          className="text-white mb-2"
-          style={{
-            fontFamily: "var(--font-cormorant), serif",
-            fontWeight: 400,
-            fontStyle: "italic",
-            fontSize: "2.6rem",
-            lineHeight: 1.1,
-          }}
-        >
-          Sporting
-        </h2>
-        <h2
-          className="text-white mb-5"
-          style={{
-            fontFamily: "var(--font-cormorant), serif",
-            fontWeight: 400,
-            fontStyle: "italic",
-            fontSize: "2.6rem",
-            lineHeight: 1.1,
-          }}
-        >
-          Catalogue
-        </h2>
-        <div className="w-20 h-px mb-5" style={{ backgroundColor: "rgba(255,255,255,0.15)" }} />
-        <p
-          className="text-xs tracking-[0.2em] uppercase mb-3"
-          style={{ color: "rgba(255,255,255,0.5)" }}
-        >
-          A Definitive Guide to
-        </p>
-        <p
-          className="tracking-[0.15em] uppercase"
-          style={{
-            color: "#F7BE68",
-            fontSize: "1.1rem",
-            fontFamily: "var(--font-cormorant), serif",
-            fontWeight: 600,
-            letterSpacing: "0.15em",
-          }}
-        >
-          2026 Sporting Events
-        </p>
-      </div>
+      {/* Divider */}
+      <div className="w-20 h-px mb-8" style={{ backgroundColor: "rgba(255,255,255,0.2)" }} />
 
-      {/* Bottom */}
-      <div className="flex flex-col items-center">
-        <div className="w-12 h-px mb-3" style={{ backgroundColor: "rgba(255,255,255,0.15)" }} />
-        <p className="text-[9px] text-white/25 leading-relaxed max-w-[220px]">
-          Subject to availability. Prices may vary.
-        </p>
-        <p className="text-[9px] text-white/15 mt-1">ortusclub.com</p>
-      </div>
+      {/* Title */}
+      <h2
+        className="text-white mb-2"
+        style={{
+          fontFamily: "var(--font-cormorant), serif",
+          fontWeight: 400,
+          fontStyle: "italic",
+          fontSize: "2.6rem",
+          lineHeight: 1.1,
+        }}
+      >
+        Sporting
+      </h2>
+      <h2
+        className="text-white mb-8"
+        style={{
+          fontFamily: "var(--font-cormorant), serif",
+          fontWeight: 400,
+          fontStyle: "italic",
+          fontSize: "2.6rem",
+          lineHeight: 1.1,
+        }}
+      >
+        Catalogue
+      </h2>
+
+      {/* Divider */}
+      <div className="w-20 h-px mb-8" style={{ backgroundColor: "rgba(255,255,255,0.2)" }} />
+
+      {/* Subtitle */}
+      <p
+        className="text-xs tracking-[0.2em] uppercase mb-3"
+        style={{ color: "rgba(255,255,255,0.5)" }}
+      >
+        A Definitive Guide to
+      </p>
+      <p
+        className="tracking-[0.15em] uppercase mb-8"
+        style={{
+          color: "#F7BE68",
+          fontSize: "1.1rem",
+          fontFamily: "var(--font-cormorant), serif",
+          fontWeight: 600,
+          letterSpacing: "0.15em",
+        }}
+      >
+        2026 Sporting Events
+      </p>
+
+      {/* Disclaimer */}
+      <div className="w-12 h-px mb-4" style={{ backgroundColor: "rgba(255,255,255,0.15)" }} />
+      <p className="text-[9px] text-white/30 leading-relaxed max-w-[220px]">
+        Subject to availability. Prices may vary.
+      </p>
+      <p className="text-[9px] text-white/20 mt-1">ortusclub.com</p>
     </div>
   );
 });
@@ -136,7 +136,7 @@ const CategoryPage = forwardRef<HTMLDivElement, { category: SportCategory; pageN
         {/* Header */}
         <div
           className="px-8 py-5 flex items-center justify-between shrink-0"
-          style={{ backgroundColor: "#111" }}
+          style={{ backgroundColor: "#2a2a2a" }}
         >
           <div className="flex items-center gap-2">
             <span className="text-lg">{category.icon}</span>
@@ -202,7 +202,7 @@ const BackCover = forwardRef<HTMLDivElement>(function BackCover(_props, ref) {
     <div
       ref={ref}
       className="flex flex-col items-center justify-center h-full p-10 text-center"
-      style={{ backgroundColor: "#1a1a1a", border: "1px solid #333" }}
+      style={{ backgroundColor: "#2a2a2a", border: "1px solid #444" }}
     >
       <div className="w-16 h-px mb-6" style={{ backgroundColor: "#F7BE68" }} />
       <h3
