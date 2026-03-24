@@ -249,7 +249,7 @@ export default function SportCalendarSection() {
   }, []);
 
   return (
-    <section className="bg-white py-20 px-8">
+    <section className="py-20 px-8" style={{ backgroundColor: "#ffffff" }}>
       <div className="max-w-5xl mx-auto">
         {/* Heading */}
         <div className="text-center mb-12">
@@ -272,7 +272,12 @@ export default function SportCalendarSection() {
 
         {/* Flipbook */}
         <div className="flex justify-center mb-10">
-          <div style={{ filter: "drop-shadow(0 25px 50px rgba(0,0,0,0.25))" }}>
+          <div
+            className="rounded-lg overflow-hidden"
+            style={{
+              boxShadow: "0 25px 60px rgba(0,0,0,0.35), 0 0 0 1px rgba(0,0,0,0.1)",
+            }}
+          >
             <HTMLFlipBook
               ref={bookRef}
               width={380}
