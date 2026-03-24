@@ -12,35 +12,88 @@ import type { SportCategory } from "./events-data";
 
 const CoverPage = forwardRef<HTMLDivElement>(function CoverPage(_props, ref) {
   return (
-    <div ref={ref} className="flex flex-col justify-between h-full p-10" style={{ backgroundColor: "#1a1a1a", border: "1px solid #333" }}>
-      <div>
-        <p className="text-xs tracking-[0.3em] uppercase mb-1" style={{ color: "#F7BE68" }}>
-          The Ortus Club
+    <div
+      ref={ref}
+      className="flex flex-col items-center justify-between h-full text-center"
+      style={{
+        backgroundColor: "#1a1a1a",
+        border: "1px solid #333",
+        padding: "40px 30px",
+      }}
+    >
+      {/* Top ornament */}
+      <div className="flex flex-col items-center">
+        <div className="w-12 h-px mb-3" style={{ backgroundColor: "#F7BE68" }} />
+        <p
+          className="text-[10px] tracking-[0.4em] uppercase"
+          style={{ color: "#F7BE68" }}
+        >
+          Est. 2018
         </p>
       </div>
-      <div>
+
+      {/* Centre content */}
+      <div className="flex flex-col items-center">
+        <p
+          className="tracking-[0.35em] uppercase mb-4"
+          style={{ color: "#F7BE68", fontSize: "10px" }}
+        >
+          The Ortus Club
+        </p>
+        <div className="w-20 h-px mb-5" style={{ backgroundColor: "rgba(255,255,255,0.15)" }} />
         <h2
-          className="text-white mb-3"
+          className="text-white mb-2"
           style={{
             fontFamily: "var(--font-cormorant), serif",
             fontWeight: 400,
             fontStyle: "italic",
-            fontSize: "2.8rem",
+            fontSize: "2.6rem",
             lineHeight: 1.1,
           }}
         >
-          Ortus Sport
+          Sporting
         </h2>
-        <div className="w-16 h-px mb-4" style={{ backgroundColor: "#F7BE68" }} />
-        <p className="text-white/60 text-sm leading-relaxed mb-6 max-w-xs">
-          2026 Sporting Events Calendar
+        <h2
+          className="text-white mb-5"
+          style={{
+            fontFamily: "var(--font-cormorant), serif",
+            fontWeight: 400,
+            fontStyle: "italic",
+            fontSize: "2.6rem",
+            lineHeight: 1.1,
+          }}
+        >
+          Catalogue
+        </h2>
+        <div className="w-20 h-px mb-5" style={{ backgroundColor: "rgba(255,255,255,0.15)" }} />
+        <p
+          className="text-xs tracking-[0.2em] uppercase mb-3"
+          style={{ color: "rgba(255,255,255,0.5)" }}
+        >
+          A Definitive Guide to
         </p>
-        <p className="text-white/30 text-xs">
-          {categories.reduce((s, c) => s + c.events.length, 0)} events &middot;{" "}
-          {categories.length} sports
+        <p
+          className="tracking-[0.15em] uppercase"
+          style={{
+            color: "#F7BE68",
+            fontSize: "1.1rem",
+            fontFamily: "var(--font-cormorant), serif",
+            fontWeight: 600,
+            letterSpacing: "0.15em",
+          }}
+        >
+          2026 Sporting Events
         </p>
       </div>
-      <p className="text-white/20 text-[10px]">Confidential &middot; ortusclub.com</p>
+
+      {/* Bottom */}
+      <div className="flex flex-col items-center">
+        <div className="w-12 h-px mb-3" style={{ backgroundColor: "rgba(255,255,255,0.15)" }} />
+        <p className="text-[9px] text-white/25 leading-relaxed max-w-[220px]">
+          Subject to availability. Prices may vary.
+        </p>
+        <p className="text-[9px] text-white/15 mt-1">ortusclub.com</p>
+      </div>
     </div>
   );
 });
@@ -270,54 +323,98 @@ export default function SportCalendarSection() {
           </p>
         </div>
 
-        {/* Flipbook */}
-        <div className="flex justify-center mb-10">
-          <div
-            className="rounded-lg overflow-hidden"
-            style={{
-              boxShadow: "0 25px 60px rgba(0,0,0,0.35), 0 0 0 1px rgba(0,0,0,0.1)",
+        {/* Flipbook with nav arrows */}
+        <div className="flex items-center justify-center gap-6 mb-10">
+          {/* Left arrow */}
+          <button
+            onClick={() => {
+              const book = bookRef.current as unknown as { pageFlip: () => { flipPrev: () => void } };
+              book?.pageFlip()?.flipPrev();
             }}
+            className="w-12 h-12 rounded-full flex items-center justify-center cursor-pointer transition-all hover:scale-110"
+            style={{ backgroundColor: "#F7BE68" }}
+            aria-label="Previous page"
           >
-            <HTMLFlipBook
-              ref={bookRef}
-              width={380}
-              height={520}
-              size="fixed"
-              minWidth={300}
-              maxWidth={400}
-              minHeight={420}
-              maxHeight={560}
-              showCover={true}
-              mobileScrollSupport={true}
-              className="flipbook"
-              style={{}}
-              startPage={0}
-              drawShadow={true}
-              flippingTime={600}
-              usePortrait={false}
-              startZIndex={0}
-              autoSize={false}
-              maxShadowOpacity={0.3}
-              showPageCorners={true}
-              disableFlipByClick={false}
-              swipeDistance={30}
-              clickEventForward={true}
-              useMouseEvents={true}
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#000" strokeWidth="2.5">
+              <path d="M19 12H5M12 19l-7-7 7-7" />
+            </svg>
+          </button>
+
+          {/* Book */}
+          <div className="relative">
+            <div
+              className="rounded-lg overflow-hidden"
+              style={{
+                boxShadow: "0 25px 60px rgba(0,0,0,0.35), 0 0 0 1px rgba(0,0,0,0.1)",
+              }}
             >
-              <CoverPage />
-              <IntroPage />
-              {categories.map((cat, i) => (
-                <CategoryPage key={cat.name} category={cat} pageNum={i + 3} />
-              ))}
-              <BackCover />
-            </HTMLFlipBook>
+              <HTMLFlipBook
+                ref={bookRef}
+                width={380}
+                height={520}
+                size="fixed"
+                minWidth={300}
+                maxWidth={400}
+                minHeight={420}
+                maxHeight={560}
+                showCover={true}
+                mobileScrollSupport={true}
+                className="flipbook"
+                style={{}}
+                startPage={0}
+                drawShadow={true}
+                flippingTime={600}
+                usePortrait={false}
+                startZIndex={0}
+                autoSize={false}
+                maxShadowOpacity={0.3}
+                showPageCorners={true}
+                disableFlipByClick={false}
+                swipeDistance={30}
+                clickEventForward={true}
+                useMouseEvents={true}
+              >
+                <CoverPage />
+                <IntroPage />
+                {categories.map((cat, i) => (
+                  <CategoryPage key={cat.name} category={cat} pageNum={i + 3} />
+                ))}
+                <BackCover />
+              </HTMLFlipBook>
+            </div>
+
+            {/* Page curl hint */}
+            <div
+              className="absolute bottom-0 right-0 pointer-events-none animate-pulse"
+              style={{
+                width: 40,
+                height: 40,
+                background: "linear-gradient(135deg, transparent 50%, rgba(247,190,104,0.3) 50%)",
+                borderRadius: "0 0 8px 0",
+              }}
+            />
           </div>
+
+          {/* Right arrow */}
+          <button
+            onClick={() => {
+              const book = bookRef.current as unknown as { pageFlip: () => { flipNext: () => void } };
+              book?.pageFlip()?.flipNext();
+            }}
+            className="w-12 h-12 rounded-full flex items-center justify-center cursor-pointer transition-all hover:scale-110"
+            style={{ backgroundColor: "#F7BE68" }}
+            aria-label="Next page"
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#000" strokeWidth="2.5">
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
+          </button>
         </div>
 
         {/* Navigation hint + download */}
         <div className="flex flex-col items-center gap-4">
           <p className="text-neutral-400 text-xs">
-            Click or drag the page corners to flip &middot;{" "}
+            Use the arrows or drag the page corners to flip &middot;{" "}
             {categories.reduce((s, c) => s + c.events.length, 0)} events across{" "}
             {categories.length} sports
           </p>
