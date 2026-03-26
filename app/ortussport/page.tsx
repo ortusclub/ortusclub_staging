@@ -1,1 +1,5 @@
-export { default } from "../sport/page";
+import SportPage from "../sport/page";
+
+export default function OrtussportPage() {
+  return <SportPage />;
+}
