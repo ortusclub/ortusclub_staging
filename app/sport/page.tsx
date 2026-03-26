@@ -1,7 +1,8 @@
 import Image from "next/image";
-import SportsBookshelf from "../components/SportsBookshelf";
 import SportHero from "../components/SportHero";
-import CatalogueBook from "../components/CatalogueBook";
+import HorizontalSportsScroll from "../components/HorizontalSportsScroll";
+import EventsBrowser from "../components/EventsBrowser";
+import CatalogueDownloadButton from "../components/CatalogueDownloadButton";
 
 export default function SportPage() {
   const tickerItems = [
@@ -132,22 +133,127 @@ export default function SportPage() {
         </div>
       </section>
 
-      {/* SPORTS BOOKSHELF */}
-      <SportsBookshelf />
+      {/* HORIZONTAL SPORTS SCROLL */}
+      <HorizontalSportsScroll />
 
-      {/* CATALOGUE SECTION */}
-      <section className="bg-[#F4F4F4] py-20 px-8">
-        <div className="max-w-5xl mx-auto">
-          <h2
-            className="text-4xl mb-4 text-center"
-            style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 400 }}
+      {/* EVENTS BROWSER */}
+      <EventsBrowser />
+
+      {/* STATS + QUOTE + DOWNLOAD */}
+      <section
+        className="py-20 px-8"
+        style={{ background: "linear-gradient(175deg, #f7f6f4 0%, #edecea 40%, #f2f1ef 100%)" }}
+      >
+        <div className="max-w-[1100px] mx-auto">
+          {/* Stats */}
+          <div
+            className="grid grid-cols-4 mb-14 overflow-hidden"
+            style={{
+              border: "1px solid rgba(0,0,0,0.05)",
+              borderRadius: "14px",
+              background: "#fff",
+            }}
           >
-            See Our <em>Catalogue</em>
-          </h2>
-          <p className="text-gray-500 text-center text-sm mb-10">
-            Browse our full sporting events calendar for the year ahead.
-          </p>
-          <CatalogueBook />
+            {[
+              { num: "100+", label: "Events Annually" },
+              { num: "30+", label: "Countries" },
+              { num: "12", label: "Sports" },
+              { num: "C-Suite", label: "Exclusively" },
+            ].map((s, i) => (
+              <div
+                key={i}
+                className="text-center py-9"
+                style={{ borderRight: i < 3 ? "1px solid rgba(0,0,0,0.05)" : "none" }}
+              >
+                <div
+                  style={{
+                    fontFamily: "var(--font-cormorant), serif",
+                    fontSize: "2.8rem",
+                    fontWeight: 300,
+                    color: "#C5A255",
+                    lineHeight: 1,
+                    marginBottom: "6px",
+                  }}
+                >
+                  {s.num}
+                </div>
+                <div
+                  style={{
+                    fontSize: "0.6rem",
+                    letterSpacing: "0.2em",
+                    textTransform: "uppercase",
+                    color: "#999",
+                  }}
+                >
+                  {s.label}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Quote */}
+          <div className="text-center mb-12">
+            <div className="flex items-center justify-center gap-3.5 mb-6">
+              <span className="block w-10 h-px" style={{ background: "rgba(197,162,85,0.35)" }} />
+              <span
+                className="block w-1.5 h-1.5"
+                style={{ background: "#C5A255", transform: "rotate(45deg)", opacity: 0.5 }}
+              />
+              <span className="block w-10 h-px" style={{ background: "rgba(197,162,85,0.35)" }} />
+            </div>
+            <blockquote
+              className="max-w-[540px] mx-auto"
+              style={{
+                fontFamily: "var(--font-cormorant), serif",
+                fontSize: "1.6rem",
+                fontStyle: "italic",
+                fontWeight: 300,
+                lineHeight: 1.5,
+                color: "#333",
+              }}
+            >
+              &ldquo;Where the world&apos;s finest sport meets the art of meaningful connection.&rdquo;
+            </blockquote>
+            <p
+              className="mt-4"
+              style={{
+                fontSize: "0.65rem",
+                letterSpacing: "0.25em",
+                textTransform: "uppercase",
+                color: "#C5A255",
+              }}
+            >
+              &mdash; The Ortus Club Philosophy
+            </p>
+          </div>
+
+          {/* Download CTA */}
+          <div className="flex items-center justify-center gap-6">
+            <span
+              style={{
+                fontFamily: "var(--font-cormorant), serif",
+                fontSize: "1.1rem",
+                fontStyle: "italic",
+                color: "#888",
+              }}
+            >
+              Want the full picture?
+            </span>
+            <CatalogueDownloadButton />
+            <a
+              href="#"
+              className="px-8 py-3.5 rounded-full text-sm"
+              style={{
+                border: "1px solid rgba(0,0,0,0.12)",
+                color: "#444",
+                background: "#fff",
+                textDecoration: "none",
+                transition: "all 0.3s",
+              }}
+            >
+              Request a Bespoke Proposal
+            </a>
+          </div>
         </div>
       </section>
 
@@ -181,6 +287,10 @@ export default function SportPage() {
           </div>
         </div>
       </section>
+
+      <p style={{ textAlign: "center", color: "#484f58", marginTop: "32px", fontSize: "0.8rem", padding: "24px 0" }}>
+        Ortus Club &copy; 2026
+      </p>
     </main>
   );
 }
