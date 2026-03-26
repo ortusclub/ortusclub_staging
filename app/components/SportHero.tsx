@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 const slides = [
   "/f1.png",   // F1
   "https://images.unsplash.com/photo-1489944440615-453fc2b6a9a9?w=1920&q=80",   // Football stadium
-  "https://images.unsplash.com/photo-1535131749006-b7f58c99034b?w=1920&q=80",   // Golf
+  "/golf.jpg",   // Golf
   "https://images.unsplash.com/photo-1546519638-68e109498ffc?w=1920&q=80",      // Basketball
   "https://images.unsplash.com/photo-1554068865-24cecd4e34b8?w=1920&q=80",      // Tennis
   "https://images.unsplash.com/photo-1534854638093-bada1813ca19?w=1920&q=80",   // Sailing

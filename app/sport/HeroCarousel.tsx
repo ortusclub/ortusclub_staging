@@ -20,8 +20,8 @@ const SLIDES = [
     alt: "Football stadium",
   },
   {
-    image: "https://images.unsplash.com/photo-1535131749006-b7f58c99034b?w=1800&q=80",
-    alt: "Golf course",
+    image: "/golf.jpg",
+    alt: "Golf tee at links course",
   },
   {
     image: "https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=1800&q=80",

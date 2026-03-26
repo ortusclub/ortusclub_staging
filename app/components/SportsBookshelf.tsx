@@ -19,7 +19,7 @@ const sports = [
     title: "Golf",
     description:
       "Curated golf days at prestigious courses and major tournament hospitality at The Masters, The Open, and Ryder Cup. The perfect setting for building lasting business relationships.",
-    bg: "https://images.unsplash.com/photo-1535131749006-b7f58c99034b?w=800&q=80",
+    bg: "/golf.jpg",
   },
   {
     title: "Basketball",
