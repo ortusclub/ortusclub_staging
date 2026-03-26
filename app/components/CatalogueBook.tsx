@@ -39,7 +39,6 @@ export default function CatalogueBook() {
           perspective: "2000px",
         }}
       >
-        {/* @ts-expect-error - react-pageflip types */}
         <HTMLFlipBook
           ref={bookRef}
           width={420}
