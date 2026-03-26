@@ -7,7 +7,7 @@ const sports = [
     title: "Formula 1",
     description:
       "Exclusive hospitality suites at Grand Prix events worldwide, combining the thrill of racing with executive networking. From Monaco to Silverstone, experience the pinnacle of motorsport from the best seats in the house.",
-    bg: "https://images.unsplash.com/photo-1635414765065-0924107bf919?w=800&q=80",
+    bg: "/f1.png",
   },
   {
     title: "Football",

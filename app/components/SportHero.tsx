@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 
 const slides = [
-  "https://images.unsplash.com/photo-1504707748692-419802cf939d?w=1920&q=80",   // F1
+  "/f1.png",   // F1
   "https://images.unsplash.com/photo-1489944440615-453fc2b6a9a9?w=1920&q=80",   // Football stadium
   "https://images.unsplash.com/photo-1535131749006-b7f58c99034b?w=1920&q=80",   // Golf
   "https://images.unsplash.com/photo-1546519638-68e109498ffc?w=1920&q=80",      // Basketball

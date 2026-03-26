@@ -8,8 +8,8 @@ const SLIDES = [
     alt: "Swimming pool aerial",
   },
   {
-    image: "https://images.unsplash.com/photo-1580651214613-f4692d6d138f?w=1800&q=80",
-    alt: "Formula 1 dark moody car",
+    image: "/f1.png",
+    alt: "Formula 1 Red Bull car in the rain",
   },
   {
     image: "https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?w=1800&q=80",
