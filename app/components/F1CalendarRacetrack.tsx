@@ -65,13 +65,16 @@ const W = 1000;
 const VH = 620;
 
 // 6 outer vertices — exact paper boat proportions:
-// Narrow steep sail on top, wide flat hull on bottom
-const A = { x: 500, y: 40 };   // sail apex
-const B = { x: 380, y: 300 };  // sail base-left / deck-left
-const C = { x: 60,  y: 430 };  // hull far-left (wide!)
-const D = { x: 500, y: 560 };  // hull bottom-center
-const E = { x: 940, y: 430 };  // hull far-right (wide!)
-const F = { x: 620, y: 300 };  // sail base-right / deck-right
+// Narrow steep sail on top, wide FLAT-BOTTOMED hull
+const A  = { x: 500, y: 40 };   // sail apex
+const B  = { x: 380, y: 300 };  // sail base-left / deck-left
+const C  = { x: 60,  y: 430 };  // hull far-left
+const D1 = { x: 240, y: 560 };  // hull bottom-left (flat base)
+const D2 = { x: 760, y: 560 };  // hull bottom-right (flat base)
+const E  = { x: 940, y: 430 };  // hull far-right
+const F  = { x: 620, y: 300 };  // sail base-right / deck-right
+// Virtual center-bottom for fold lines to converge
+const DM = { x: 500, y: 560 };  // center of flat base
 
 // Sail horizontal fold — at mid-height of sail
 const sailMidY = (A.y + B.y) / 2;
@@ -79,8 +82,8 @@ const tL = (sailMidY - A.y) / (B.y - A.y);
 const H_pt = { x: A.x + (B.x - A.x) * tL, y: sailMidY };
 const I_pt = { x: A.x + (F.x - A.x) * tL, y: sailMidY };
 
-// Outer perimeter path
-const outerPathD = `M ${A.x} ${A.y} L ${B.x} ${B.y} L ${C.x} ${C.y} L ${D.x} ${D.y} L ${E.x} ${E.y} L ${F.x} ${F.y} Z`;
+// Outer perimeter path (7 vertices now — flat base between D1 and D2)
+const outerPathD = `M ${A.x} ${A.y} L ${B.x} ${B.y} L ${C.x} ${C.y} L ${D1.x} ${D1.y} L ${D2.x} ${D2.y} L ${E.x} ${E.y} L ${F.x} ${F.y} Z`;
 
 // Compute checkpoint positions along outer perimeter
 function lerp(p1: { x: number; y: number }, p2: { x: number; y: number }, t: number) {
@@ -90,7 +93,7 @@ function segDist(p1: { x: number; y: number }, p2: { x: number; y: number }) {
   return Math.sqrt((p2.x - p1.x) ** 2 + (p2.y - p1.y) ** 2);
 }
 
-const outerVerts = [A, B, C, D, E, F];
+const outerVerts = [A, B, C, D1, D2, E, F];
 const edges: { from: typeof A; to: typeof A; len: number }[] = [];
 let totalLen = 0;
 for (let i = 0; i < outerVerts.length; i++) {
@@ -173,30 +176,30 @@ export default function F1CalendarRacetrack() {
             <polygon points={`${H_pt.x},${H_pt.y} ${B.x},${B.y} ${500},${B.y} ${500},${sailMidY}`} fill="rgba(247,190,104,0.07)" />
             {/* Sail bottom-right quadrant */}
             <polygon points={`${500},${sailMidY} ${500},${B.y} ${F.x},${F.y} ${I_pt.x},${I_pt.y}`} fill="rgba(247,190,104,0.05)" />
-            {/* Hull outer-left: B → C → D */}
-            <polygon points={`${B.x},${B.y} ${C.x},${C.y} ${D.x},${D.y}`} fill="rgba(247,190,104,0.03)" />
-            {/* Hull inner-left: B → D → center */}
-            <polygon points={`${B.x},${B.y} ${D.x},${D.y} ${500},${B.y}`} fill="rgba(247,190,104,0.06)" />
-            {/* Hull inner-right: center → D → F */}
-            <polygon points={`${500},${B.y} ${D.x},${D.y} ${F.x},${F.y}`} fill="rgba(247,190,104,0.05)" />
-            {/* Hull outer-right: F → E → D */}
-            <polygon points={`${F.x},${F.y} ${E.x},${E.y} ${D.x},${D.y}`} fill="rgba(247,190,104,0.025)" />
+            {/* Hull outer-left: B → C → D1 → DM */}
+            <polygon points={`${B.x},${B.y} ${C.x},${C.y} ${D1.x},${D1.y} ${DM.x},${DM.y}`} fill="rgba(247,190,104,0.03)" />
+            {/* Hull inner-left: B → DM → deck-center */}
+            <polygon points={`${B.x},${B.y} ${DM.x},${DM.y} ${500},${B.y}`} fill="rgba(247,190,104,0.06)" />
+            {/* Hull inner-right: deck-center → DM → F */}
+            <polygon points={`${500},${B.y} ${DM.x},${DM.y} ${F.x},${F.y}`} fill="rgba(247,190,104,0.05)" />
+            {/* Hull outer-right: F → E → D2 → DM */}
+            <polygon points={`${F.x},${F.y} ${E.x},${E.y} ${D2.x},${D2.y} ${DM.x},${DM.y}`} fill="rgba(247,190,104,0.025)" />
 
             {/* ── Outer contour (gold track) ── */}
             <path d={outerPathD} fill="none" stroke="rgba(247,190,104,0.12)" strokeWidth="16" filter="url(#glow)" />
             <path d={outerPathD} fill="none" stroke="url(#trackGold)" strokeWidth="4.5" strokeLinejoin="round" />
 
             {/* ── Internal fold lines (clearly visible, part of the logo) ── */}
-            {/* Vertical: A → D (full center line) */}
-            <line x1={A.x} y1={A.y} x2={D.x} y2={D.y} stroke="rgba(247,190,104,0.45)" strokeWidth="2.5" />
+            {/* Vertical: A → DM (full center line through sail and hull) */}
+            <line x1={A.x} y1={A.y} x2={DM.x} y2={DM.y} stroke="rgba(247,190,104,0.45)" strokeWidth="2.5" />
             {/* Sail horizontal fold: H → I */}
             <line x1={H_pt.x} y1={H_pt.y} x2={I_pt.x} y2={I_pt.y} stroke="rgba(247,190,104,0.45)" strokeWidth="2.5" />
             {/* Deck line: B → F */}
             <line x1={B.x} y1={B.y} x2={F.x} y2={F.y} stroke="rgba(247,190,104,0.45)" strokeWidth="2.5" />
-            {/* Hull left fold: B → D */}
-            <line x1={B.x} y1={B.y} x2={D.x} y2={D.y} stroke="rgba(247,190,104,0.45)" strokeWidth="2.5" />
-            {/* Hull right fold: F → D */}
-            <line x1={F.x} y1={F.y} x2={D.x} y2={D.y} stroke="rgba(247,190,104,0.45)" strokeWidth="2.5" />
+            {/* Hull left fold: B → DM */}
+            <line x1={B.x} y1={B.y} x2={DM.x} y2={DM.y} stroke="rgba(247,190,104,0.45)" strokeWidth="2.5" />
+            {/* Hull right fold: F → DM */}
+            <line x1={F.x} y1={F.y} x2={DM.x} y2={DM.y} stroke="rgba(247,190,104,0.45)" strokeWidth="2.5" />
 
             {/* ── Watermark ── */}
             <text x={500} y={375} textAnchor="middle" style={{ fontFamily: "var(--font-cormorant), serif", fontSize: "72px", fontWeight: 300, fill: "rgba(247,190,104,0.05)", letterSpacing: "0.2em" }}>
