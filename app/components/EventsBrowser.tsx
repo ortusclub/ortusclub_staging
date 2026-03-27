@@ -21,14 +21,14 @@ interface CuratedEvent {
 
 const curatedEvents: CuratedEvent[] = [
   /* ── Formula 1 ── */
-  { name: "Monaco Grand Prix", sport: "Formula 1", date: "5–7 Jun 2026", location: "Monte Carlo", country: "Monaco", region: "Europe", tier: "Ultra-Premium", fromPrice: "$5,000", image: "https://images.unsplash.com/photo-1752884991461-8ac432ad9266?auto=format&fit=crop&q=80&w=2000", month: "Jun", imgPos: "center 40%" },
+  { name: "Monaco Grand Prix", sport: "Formula 1", date: "5–7 Jun 2026", location: "Monte Carlo", country: "Monaco", region: "Europe", tier: "Ultra-Premium", fromPrice: "$5,000", image: "https://images.unsplash.com/photo-1752884991461-8ac432ad9266?auto=format&fit=crop&q=80&w=2000", month: "Jun", imgPos: "center 65%" },
   { name: "British Grand Prix", sport: "Formula 1", date: "3–5 Jul 2026", location: "Silverstone", country: "UK", region: "Europe", tier: "Ultra-Premium", fromPrice: "$2,500", image: "https://ichef.bbci.co.uk/ace/standard/3840/cpsprodpb/dc39/live/49b724a0-a274-11ef-8f42-3b1b720c6f90.jpg", month: "Jul", imgPos: "center 35%" },
   { name: "Miami Grand Prix", sport: "Formula 1", date: "1–3 May 2026", location: "Miami Gardens", country: "USA", region: "North America", tier: "Ultra-Premium", fromPrice: "$3,000", image: "https://media.formula1.com/image/upload/c_lfill,w_3392/q_auto/v1740000001/content/dam/fom-website/2018-redesign-assets/Racehub%20header%20images%2016x9/Miami.webp", month: "May" },
   { name: "Las Vegas Grand Prix", sport: "Formula 1", date: "21 Nov 2026", location: "Las Vegas", country: "USA", region: "North America", tier: "Ultra-Premium", fromPrice: "$4,000", image: "https://ca-times.brightspotcdn.com/dims4/default/7a65ab6/2147483647/strip/true/crop/5074x3382+0+0/resize/2000x1333!/format/webp/quality/75/?url=https%3A%2F%2Fcalifornia-times-brightspot.s3.amazonaws.com%2Fd2%2F56%2F5c368dff41c7872cd0784c654caa%2F1376324-sp-f1-vegas-strip-17-mjc.jpg", month: "Nov" },
 
   /* ── Tennis ── */
-  { name: "Australian Open", sport: "Tennis", date: "12–25 Jan 2026", location: "Melbourne", country: "Australia", region: "Asia Pacific", tier: "Ultra-Premium", fromPrice: "$1,500", image: "https://www.thejewelleryeditor.com/media/images_thumbnails/filer_public_thumbnails/filer_public/77/ad/77adbe51-f2e3-4bba-b672-da3cbfd7321d/roger-federer-australian-open-2017.jpg__760x0_q75_crop-scale_subsampling-2_upscale-false.jpg", month: "Jan", imgPos: "center 10%" },
-  { name: "Roland-Garros", sport: "Tennis", date: "24 May – 7 Jun 2026", location: "Paris", country: "France", region: "Europe", tier: "Ultra-Premium", fromPrice: "$2,000", image: "https://www.repstatic.it/content/nazionale/img/2022/05/21/211704945-b26cccb4-12fd-40db-b2db-1764324faa5b.jpg", month: "May" },
+  { name: "Australian Open", sport: "Tennis", date: "12–25 Jan 2026", location: "Melbourne", country: "Australia", region: "Asia Pacific", tier: "Ultra-Premium", fromPrice: "$1,500", image: "https://www.thejewelleryeditor.com/media/images_thumbnails/filer_public_thumbnails/filer_public/77/ad/77adbe51-f2e3-4bba-b672-da3cbfd7321d/roger-federer-australian-open-2017.jpg__760x0_q75_crop-scale_subsampling-2_upscale-false.jpg", month: "Jan", imgPos: "center 30%" },
+  { name: "Roland-Garros", sport: "Tennis", date: "24 May – 7 Jun 2026", location: "Paris", country: "France", region: "Europe", tier: "Ultra-Premium", fromPrice: "$2,000", image: "https://www.repstatic.it/content/nazionale/img/2022/05/21/211704945-b26cccb4-12fd-40db-b2db-1764324faa5b.jpg", month: "May", imgPos: "center 25%" },
   { name: "Wimbledon Championships", sport: "Tennis", date: "29 Jun – 12 Jul 2026", location: "London", country: "UK", region: "Europe", tier: "Ultra-Premium", fromPrice: "$2,000", image: "https://media.cnn.com/api/v1/images/stellar/prod/220420110759-01-wimbledon-center-court-2021.jpg?c=16x9&q=h_1080,w_1920,c_fill", month: "Jun" },
   { name: "US Open", sport: "Tennis", date: "31 Aug – 13 Sep 2026", location: "New York", country: "USA", region: "North America", tier: "Ultra-Premium", fromPrice: "$2,500", image: "https://static01.nyt.com/images/2020/08/04/sports/04usopen-protocols01/04usopen-protocols01-videoSixteenByNineJumbo1600.jpg", month: "Aug" },
 
@@ -46,7 +46,7 @@ const curatedEvents: CuratedEvent[] = [
   { name: "The Open Championship", sport: "Golf", date: "16–19 Jul 2026", location: "Royal Birkdale", country: "UK", region: "Europe", tier: "Ultra-Premium", fromPrice: "$3,000", image: "https://golf.com/wp-content/uploads/2022/07/GettyImages-1241904014.jpg", month: "Jul" },
   { name: "Ryder Cup", sport: "Golf", date: "Sep 2026", location: "Bethpage", country: "USA", region: "North America", tier: "Ultra-Premium", fromPrice: "$4,000", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbzfyXaADoP8bCkamAz4N2Wz1b1RcnEY-4Gw&s", month: "Sep" },
   { name: "US Open", sport: "Golf", date: "18–21 Jun 2026", location: "Shinnecock Hills", country: "USA", region: "North America", tier: "Ultra-Premium", fromPrice: "$3,500", image: "https://www.nbc.com/sites/nbcblog/files/2024/05/us-open-golf-tournament4.jpg", month: "Jun" },
-  { name: "LIV Golf", sport: "Golf", date: "Various 2026", location: "Various", country: "Various", region: "North America", tier: "Ultra-Premium", fromPrice: "$2,000", image: "https://frontofficesports.com/wp-content/uploads/2023/10/USATSI_21497746-1-scaled.jpg?quality=100", month: "Mar" },
+  { name: "LIV Golf", sport: "Golf", date: "Various 2026", location: "Various", country: "Various", region: "North America", tier: "Ultra-Premium", fromPrice: "$2,000", image: "https://frontofficesports.com/wp-content/uploads/2023/10/USATSI_21497746-1-scaled.jpg?quality=100", month: "Mar", imgPos: "center 20%" },
 
   /* ── Basketball ── */
   { name: "NBA Matches", sport: "Basketball", date: "Oct 2026 – Jun 2027", location: "Various", country: "USA", region: "North America", tier: "Ultra-Premium", fromPrice: "$2,000", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQuwbdxdfC5U8msVKiMNbmuw-zruvmuvjOWqg&s", month: "Oct" },
@@ -79,7 +79,7 @@ const curatedEvents: CuratedEvent[] = [
   { name: "Kentucky Derby", sport: "Horse Racing", date: "2 May 2026", location: "Louisville", country: "USA", region: "North America", tier: "Ultra-Premium", fromPrice: "$3,000", image: "https://media.cnn.com/api/v1/images/stellar/prod/220507220710-07-kentucky-derby-winner.jpg?c=original", month: "May", expanded: true, imgPos: "center 40%" },
   { name: "Royal Ascot", sport: "Horse Racing", date: "16–20 Jun 2026", location: "Ascot", country: "UK", region: "Europe", tier: "Ultra-Premium", fromPrice: "$3,500", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHO9QZTp9Vz2gd1QAX-pqYOcsdqKJAQ-Qvcw&s", month: "Jun", expanded: true },
   { name: "Melbourne Cup", sport: "Horse Racing", date: "3 Nov 2026", location: "Flemington", country: "Australia", region: "Asia Pacific", tier: "Ultra-Premium", fromPrice: "$2,500", image: "https://static.independent.co.uk/2025/11/04/9/57/SEI272976918.jpeg", month: "Nov", expanded: true },
-  { name: "The Grand National", sport: "Horse Racing", date: "11 Apr 2026", location: "Aintree", country: "UK", region: "Europe", tier: "Premium", fromPrice: "$1,500", image: "https://e0.365dm.com/22/04/2048x1152/skysports-grand-national-aintree_5725798.jpg?20220401205040", month: "Apr", expanded: true, imgPos: "center 30%" },
+  { name: "The Grand National", sport: "Horse Racing", date: "11 Apr 2026", location: "Aintree", country: "UK", region: "Europe", tier: "Premium", fromPrice: "$1,500", image: "https://e0.365dm.com/22/04/2048x1152/skysports-grand-national-aintree_5725798.jpg?20220401205040", month: "Apr", expanded: true, imgPos: "center 40%" },
 
   /* ── Sailing ── */
   { name: "America's Cup", sport: "Sailing", date: "Oct 2026", location: "Barcelona", country: "Spain", region: "Europe", tier: "Ultra-Premium", fromPrice: "$4,000", image: "https://c.files.bbci.co.uk/fe7f/live/dcc24e60-6d44-11ef-b970-9f202720b57a.jpg", month: "Oct", expanded: true, imgPos: "center 40%" },
@@ -351,7 +351,11 @@ export default function EventsBrowser() {
             >
               {/* Image */}
               <div style={{ height: "180px", position: "relative", overflow: "hidden" }}>
-                <img src={ev.image} alt="" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", objectPosition: ev.imgPos || "center center", filter: "brightness(0.95) contrast(1.05) saturate(1.1)" }} />
+                <img src={ev.image} alt="" style={{
+                  width: "100%", height: "100%", objectFit: "cover", display: "block",
+                  objectPosition: ev.imgPos || "center center",
+                  filter: ev.sport === "Sailing" ? "brightness(1.15) contrast(1.1) saturate(1.15)" : "brightness(0.95) contrast(1.05) saturate(1.1)",
+                }} />
                 <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(26,29,26,1) 0%, rgba(26,29,26,0.2) 50%, transparent 100%)" }} />
                 <div style={{ position: "absolute", top: "14px", left: "14px", right: "14px", display: "flex", justifyContent: "space-between" }}>
                   <span style={{
