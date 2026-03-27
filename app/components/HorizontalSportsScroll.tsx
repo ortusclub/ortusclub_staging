@@ -3,22 +3,23 @@
 import { useRef, useState, useEffect, useCallback } from "react";
 
 const sports = [
-  { title: "Formula 1", desc: "From Monaco to Silverstone, the pinnacle of motorsport from Paddock Club suites.", bg: "https://images.unsplash.com/photo-1752884991461-8ac432ad9266?w=1200&q=80&auto=format&fit=crop", size: "hero" as const, bgPos: "center 30%" },
-  { title: "Tennis", desc: "Grand Slam hospitality at Wimbledon, Roland Garros, and the US Open.", bg: "https://media.cnn.com/api/v1/images/stellar/prod/220420110759-01-wimbledon-center-court-2021.jpg?c=16x9&q=h_833,w_1480,c_fill", size: "tall" as const, bgPos: "center" },
-  { title: "Football", desc: "Premium matchday experiences across the Premier League and Champions League.", bg: "https://images.unsplash.com/photo-1762013315117-1c8005ad2b41?w=1200&q=80&auto=format&fit=crop", size: "standard" as const, bgPos: "center" },
-  { title: "Golf", desc: "The Masters, The Open, and the Ryder Cup.", bg: "https://images.unsplash.com/photo-1742498626135-67a7d3501eff?w=1200&q=80&auto=format&fit=crop", size: "tall" as const, bgPos: "center" },
-  { title: "Horse Racing", desc: "Royal Ascot, the Derby, and the Melbourne Cup.", bg: "https://images.unsplash.com/photo-1631746556116-7559088141d6?w=1200&q=80&auto=format&fit=crop", size: "wide" as const, bgPos: "center" },
-  { title: "Basketball", desc: "Courtside at the NBA Finals, All-Star Weekend, and March Madness.", bg: "https://images.unsplash.com/photo-1504450758481-7338eba7524a?w=1200&q=80&auto=format&fit=crop", size: "standard" as const, bgPos: "center" },
-  { title: "Sailing", desc: "America's Cup regattas and luxury yacht experiences.", bg: "https://cdn.boatinternational.com/convert/bi_prd/bi/library_images/royvXCOoR6DTLUvAAK2Q_Emirates-Team-New-Zealand-racing-in-the-35th-Americas-cup-credit-acea-sander-van-der-borch.jpg/r[width]=1200/royvXCOoR6DTLUvAAK2Q_Emirates-Team-New-Zealand-racing-in-the-35th-Americas-cup-credit-acea-sander-van-der-borch.jpg", size: "tall" as const, bgPos: "center" },
-  { title: "Rugby", desc: "Six Nations, World Cup, and Premiership hospitality.", bg: "https://images.unsplash.com/photo-1693073410934-5e45e31a6b5c?w=1200&q=80&auto=format&fit=crop", size: "wide" as const, bgPos: "center" },
-  { title: "Cricket", desc: "Lord's, The Ashes, and IPL.", bg: "https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?w=1200&q=80&auto=format&fit=crop", size: "standard" as const, bgPos: "center" },
-  { title: "Polo", desc: "Guards Polo Club, Cartier Queen's Cup.", bg: "https://images.unsplash.com/photo-1742672631961-b0413e12113d?w=1200&q=80", size: "tall" as const, bgPos: "center" },
-  { title: "Motorsport", desc: "Le Mans 24hr, MotoGP, and rally championships.", bg: "https://images.unsplash.com/photo-1761092993834-967c046f0fa4?w=800&q=80", size: "wide" as const, bgPos: "center" },
-  { title: "Skiing", desc: "Alpine hospitality at World Cup events in Verbier and St. Moritz.", bg: "https://images.unsplash.com/photo-1551524559-8af4e6624178?w=800&q=80", size: "tall" as const, bgPos: "center" },
+  { title: "Formula 1", desc: "From Monaco to Silverstone, the pinnacle of motorsport from Paddock Club suites.", bg: "https://ichef.bbci.co.uk/ace/standard/3840/cpsprodpb/dc39/live/49b724a0-a274-11ef-8f42-3b1b720c6f90.jpg", bgPos: "center 30%" },
+  { title: "Tennis", desc: "Grand Slam hospitality at Wimbledon, Roland Garros, and the US Open.", bg: "https://media.cnn.com/api/v1/images/stellar/prod/220420110759-01-wimbledon-center-court-2021.jpg?c=16x9&q=h_1080,w_1920,c_fill", bgPos: "center" },
+  { title: "Football", desc: "Premium matchday experiences across the Premier League and Champions League.", bg: "https://images.unsplash.com/photo-1762013315117-1c8005ad2b41?w=1920&q=90&auto=format&fit=crop", bgPos: "center" },
+  { title: "Golf", desc: "The Masters, The Open, and the Ryder Cup.", bg: "https://res.cloudinary.com/rydercup-prod/w_1153,h_648,c_fit,q_auto,g_center,dpr_2.0,f_auto/rydercup/images/teams/united-states/First-Tee-Fans-Web-Hero.jpg", bgPos: "center" },
+  { title: "Horse Racing", desc: "Royal Ascot, the Derby, and the Melbourne Cup.", bg: "https://images.unsplash.com/photo-1631746556116-7559088141d6?w=1920&q=90&auto=format&fit=crop", bgPos: "center" },
+  { title: "Basketball", desc: "Courtside at the NBA Finals, All-Star Weekend, and March Madness.", bg: "https://images.unsplash.com/photo-1504450758481-7338eba7524a?w=1920&q=90&auto=format&fit=crop", bgPos: "center" },
+  { title: "Sailing", desc: "America's Cup regattas and luxury yacht experiences.", bg: "https://cdn.boatinternational.com/convert/bi_prd/bi/library_images/royvXCOoR6DTLUvAAK2Q_Emirates-Team-New-Zealand-racing-in-the-35th-Americas-cup-credit-acea-sander-van-der-borch.jpg/r[width]=1920/royvXCOoR6DTLUvAAK2Q_Emirates-Team-New-Zealand-racing-in-the-35th-Americas-cup-credit-acea-sander-van-der-borch.jpg", bgPos: "center" },
+  { title: "Rugby", desc: "Six Nations, World Cup, and Premiership hospitality.", bg: "https://images.unsplash.com/photo-1693073410934-5e45e31a6b5c?w=1920&q=90&auto=format&fit=crop", bgPos: "center" },
+  { title: "Cricket", desc: "Lord's, The Ashes, and IPL.", bg: "https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?w=1920&q=90&auto=format&fit=crop", bgPos: "center" },
+  { title: "Polo", desc: "Guards Polo Club, Cartier Queen's Cup.", bg: "https://images.unsplash.com/photo-1742672631961-b0413e12113d?w=1920&q=90&auto=format&fit=crop", bgPos: "center" },
+  { title: "Motorsport", desc: "Le Mans 24hr, MotoGP, and rally championships.", bg: "https://images.unsplash.com/photo-1761092993834-967c046f0fa4?w=1920&q=90&auto=format&fit=crop", bgPos: "center" },
+  { title: "Boxing", desc: "Ringside at world title fights in Las Vegas, London, and beyond.", bg: "https://images.unsplash.com/photo-1509563268479-0f004cf3f58b?w=1920&q=90&auto=format&fit=crop", bgPos: "center" },
 ];
 
-/* Card sizes — hero is the first/featured card, gets extra presence */
-const sizeWidths = { hero: 620, wide: 520, tall: 400, standard: 340 };
+/* All cards same size */
+const CARD_WIDTH = 420;
+const CARD_HEIGHT = 540;
 
 export default function HorizontalSportsScroll() {
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -122,7 +123,6 @@ export default function HorizontalSportsScroll() {
       >
         {cards.map((sport, i) => {
           const isHovered = hoveredIdx === i;
-          const isHero = sport.size === "hero";
 
           return (
             <a
@@ -132,8 +132,8 @@ export default function HorizontalSportsScroll() {
               onMouseLeave={() => setHoveredIdx(null)}
               style={{
                 flexShrink: 0,
-                width: `${sizeWidths[sport.size]}px`,
-                height: isHero ? "580px" : "540px",
+                width: `${CARD_WIDTH}px`,
+                height: `${CARD_HEIGHT}px`,
                 position: "relative",
                 overflow: "hidden",
                 borderRadius: "18px",
@@ -206,7 +206,7 @@ export default function HorizontalSportsScroll() {
                   bottom: 0,
                   left: 0,
                   right: 0,
-                  padding: isHero ? "40px" : "32px",
+                  padding: "32px",
                 }}
               >
                 {/* Number */}
@@ -229,7 +229,7 @@ export default function HorizontalSportsScroll() {
                     fontFamily: "var(--font-cormorant), serif",
                     fontWeight: 400,
                     color: "#fff",
-                    fontSize: isHero ? "2.6rem" : "2rem",
+                    fontSize: "2rem",
                     lineHeight: 1.05,
                     marginBottom: "12px",
                     letterSpacing: "-0.01em",
