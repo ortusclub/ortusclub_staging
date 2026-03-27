@@ -21,8 +21,8 @@ interface CuratedEvent {
 
 const curatedEvents: CuratedEvent[] = [
   /* ── Formula 1 ── */
-  { name: "Monaco Grand Prix", sport: "Formula 1", date: "5–7 Jun 2026", location: "Monte Carlo", country: "Monaco", region: "Europe", tier: "Ultra-Premium", fromPrice: "$5,000", image: "https://images.unsplash.com/photo-1752884991461-8ac432ad9266?auto=format&fit=crop&q=80&w=2000", month: "Jun" },
-  { name: "British Grand Prix", sport: "Formula 1", date: "3–5 Jul 2026", location: "Silverstone", country: "UK", region: "Europe", tier: "Ultra-Premium", fromPrice: "$2,500", image: "https://ichef.bbci.co.uk/ace/standard/3840/cpsprodpb/dc39/live/49b724a0-a274-11ef-8f42-3b1b720c6f90.jpg", month: "Jul" },
+  { name: "Monaco Grand Prix", sport: "Formula 1", date: "5–7 Jun 2026", location: "Monte Carlo", country: "Monaco", region: "Europe", tier: "Ultra-Premium", fromPrice: "$5,000", image: "https://images.unsplash.com/photo-1752884991461-8ac432ad9266?auto=format&fit=crop&q=80&w=2000", month: "Jun", imgPos: "center 40%" },
+  { name: "British Grand Prix", sport: "Formula 1", date: "3–5 Jul 2026", location: "Silverstone", country: "UK", region: "Europe", tier: "Ultra-Premium", fromPrice: "$2,500", image: "https://ichef.bbci.co.uk/ace/standard/3840/cpsprodpb/dc39/live/49b724a0-a274-11ef-8f42-3b1b720c6f90.jpg", month: "Jul", imgPos: "center 35%" },
   { name: "Miami Grand Prix", sport: "Formula 1", date: "1–3 May 2026", location: "Miami Gardens", country: "USA", region: "North America", tier: "Ultra-Premium", fromPrice: "$3,000", image: "https://media.formula1.com/image/upload/c_lfill,w_3392/q_auto/v1740000001/content/dam/fom-website/2018-redesign-assets/Racehub%20header%20images%2016x9/Miami.webp", month: "May" },
   { name: "Las Vegas Grand Prix", sport: "Formula 1", date: "21 Nov 2026", location: "Las Vegas", country: "USA", region: "North America", tier: "Ultra-Premium", fromPrice: "$4,000", image: "https://ca-times.brightspotcdn.com/dims4/default/7a65ab6/2147483647/strip/true/crop/5074x3382+0+0/resize/2000x1333!/format/webp/quality/75/?url=https%3A%2F%2Fcalifornia-times-brightspot.s3.amazonaws.com%2Fd2%2F56%2F5c368dff41c7872cd0784c654caa%2F1376324-sp-f1-vegas-strip-17-mjc.jpg", month: "Nov" },
 
@@ -33,7 +33,7 @@ const curatedEvents: CuratedEvent[] = [
   { name: "US Open", sport: "Tennis", date: "31 Aug – 13 Sep 2026", location: "New York", country: "USA", region: "North America", tier: "Ultra-Premium", fromPrice: "$2,500", image: "https://static01.nyt.com/images/2020/08/04/sports/04usopen-protocols01/04usopen-protocols01-videoSixteenByNineJumbo1600.jpg", month: "Aug" },
 
   /* ── Football ── */
-  { name: "FIFA World Cup Matches", sport: "Football", date: "Jun–Jul 2026", location: "Various", country: "USA/MEX/CAN", region: "North America", tier: "Ultra-Premium", fromPrice: "$4,000", image: "https://media.cnn.com/api/v1/images/stellar/prod/221219105607-messi-crowd-world-cup-121822.jpg?q=w_3000,c_fill", month: "Jun" },
+  { name: "FIFA World Cup Matches", sport: "Football", date: "Jun–Jul 2026", location: "Various", country: "USA/MEX/CAN", region: "North America", tier: "Ultra-Premium", fromPrice: "$4,000", image: "https://media.cnn.com/api/v1/images/stellar/prod/221219105607-messi-crowd-world-cup-121822.jpg?q=w_3000,c_fill", month: "Jun", imgPos: "center 30%" },
   { name: "UCL Matches", sport: "Football", date: "Sep 2026 – May 2027", location: "Various", country: "Europe", region: "Europe", tier: "Ultra-Premium", fromPrice: "$2,500", image: "https://www.aljazeera.com/wp-content/uploads/2025/05/2025-05-31T211235Z_1348966444_UP1EL5V1MWXBJ_RTRMADP_3_SOCCER-CHAMPIONS-PSG-INT-REPORT-1748726122.jpg?resize=1920%2C1080", month: "Sep" },
   { name: "Europa League Matches", sport: "Football", date: "Sep 2026 – May 2027", location: "Various", country: "Europe", region: "Europe", tier: "Ultra-Premium", fromPrice: "$1,800", image: "https://tottenhamhotspurs.shorthandstories.com/road-to-bilbao/assets/thC3fFwua4/uelwinnersheader-desk-2560x1440.jpg", month: "Sep" },
   { name: "Premier League Matches", sport: "Football", date: "Aug 2026 – May 2027", location: "Various", country: "UK", region: "Europe", tier: "Ultra-Premium", fromPrice: "$2,000", image: "https://resources.premierleague.pulselive.com/premierleague/photo/2025/05/25/e7a7f417-73be-488e-af27-eca7b8641fe5/GettyImages-2216996427.jpg", month: "Aug" },
@@ -55,7 +55,7 @@ const curatedEvents: CuratedEvent[] = [
   { name: "EuroLeague Matches", sport: "Basketball", date: "Oct 2026 – May 2027", location: "Various", country: "Europe", region: "Europe", tier: "Premium", fromPrice: "$1,500", image: "https://static-cdn.toi-media.com/www/uploads/2025/10/AP24333702009735.jpg", month: "Oct" },
 
   /* ── NFL ── */
-  { name: "Super Bowl", sport: "NFL", date: "Feb 2027", location: "TBC", country: "USA", region: "North America", tier: "Ultra-Premium", fromPrice: "$8,000", image: "https://ichef.bbci.co.uk/ace/standard/2560/cpsprodpb/56a6/live/d5811750-056c-11f1-9c47-91e6146aabf2.jpg", month: "Feb" },
+  { name: "Super Bowl", sport: "NFL", date: "Feb 2027", location: "TBC", country: "USA", region: "North America", tier: "Ultra-Premium", fromPrice: "$8,000", image: "https://ichef.bbci.co.uk/ace/standard/2560/cpsprodpb/56a6/live/d5811750-056c-11f1-9c47-91e6146aabf2.jpg", month: "Feb", imgPos: "center 35%" },
   { name: "NFL Season Matches", sport: "NFL", date: "Sep 2026 – Jan 2027", location: "Various", country: "USA", region: "North America", tier: "Ultra-Premium", fromPrice: "$2,500", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNesrQwm1nnm27x5_NgyfsqLVaQoa_zQcvbg&s", month: "Sep" },
   { name: "NFL Draft", sport: "NFL", date: "Apr 2026", location: "TBC", country: "USA", region: "North America", tier: "Ultra-Premium", fromPrice: "$1,500", image: "https://ichef.bbci.co.uk/ace/standard/2560/cpsprodpb/56a6/live/d5811750-056c-11f1-9c47-91e6146aabf2.jpg", month: "Apr" },
   { name: "NCAA Football", sport: "NFL", date: "Sep–Dec 2026", location: "Various", country: "USA", region: "North America", tier: "Premium", fromPrice: "$1,500", image: "https://sportshub.cbsistatic.com/i/2025/10/17/91b2743c-dd34-4239-b984-e79b1ba79e74/demon-june-north-carolina-tar-heels.jpg", month: "Sep" },
@@ -63,7 +63,7 @@ const curatedEvents: CuratedEvent[] = [
 
   /* ── Cricket ── */
   { name: "ICC T20 World Cup", sport: "Cricket", date: "Feb–Mar 2026", location: "India & Sri Lanka", country: "India", region: "Asia Pacific", tier: "Ultra-Premium", fromPrice: "$1,500", image: "https://icecric.news/wp-content/uploads/2025/11/dl.beatsnoop.com-3000-35NH1RU8i4.webp", month: "Feb" },
-  { name: "The Ashes", sport: "Cricket", date: "Various 2026", location: "England", country: "UK", region: "Europe", tier: "Ultra-Premium", fromPrice: "$2,000", image: "https://c.files.bbci.co.uk/936b/live/18a350a0-c668-11f0-b27e-ffa53df97408.jpg", month: "Jul" },
+  { name: "The Ashes", sport: "Cricket", date: "Various 2026", location: "England", country: "UK", region: "Europe", tier: "Ultra-Premium", fromPrice: "$2,000", image: "https://c.files.bbci.co.uk/936b/live/18a350a0-c668-11f0-b27e-ffa53df97408.jpg", month: "Jul", imgPos: "center 35%" },
   { name: "ICC Cricket World Cup", sport: "Cricket", date: "Oct–Nov 2026", location: "TBC", country: "TBC", region: "Asia Pacific", tier: "Ultra-Premium", fromPrice: "$2,500", image: "https://www.aljazeera.com/wp-content/uploads/2023/11/AP23323600739758-1700417528.jpg", month: "Oct" },
   { name: "IPL Final", sport: "Cricket", date: "May 2026", location: "Chennai", country: "India", region: "Asia Pacific", tier: "Premium", fromPrice: "$1,800", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRm1e4z-yY7rgVhS3KVaGnDQLEAjdnDWMpTcQ&s", month: "May" },
 
@@ -71,15 +71,9 @@ const curatedEvents: CuratedEvent[] = [
 
   /* ── Rugby ── */
   { name: "Six Nations Matches", sport: "Rugby", date: "7 Feb – 21 Mar 2026", location: "Various", country: "UK", region: "Europe", tier: "Ultra-Premium", fromPrice: "$1,500", image: "https://ichef.bbci.co.uk/ace/standard/1800/cpsprodpb/758c/live/b2c6de60-349e-11f0-8947-7d6241f9fce9.jpg", month: "Feb", expanded: true },
-  { name: "Rugby World Cup Matches", sport: "Rugby", date: "Sep–Nov 2027", location: "TBC", country: "Australia", region: "Asia Pacific", tier: "Ultra-Premium", fromPrice: "$3,000", image: "https://contentfulproxy.stadion.io/uiu4umqyl5b5/askj55pww8kr3QzfBbDZ9/a0760754959fa589f98fb2d4ae78e139/f646b1b81c232c714f0c03544829471c-snrbqO1VwEAV__1_.jpg?fm=webp&fit=fill&f=center&w=3495&h=1966", month: "Sep", expanded: true },
+  { name: "Rugby World Cup Matches", sport: "Rugby", date: "Sep–Nov 2027", location: "TBC", country: "Australia", region: "Asia Pacific", tier: "Ultra-Premium", fromPrice: "$3,000", image: "https://contentfulproxy.stadion.io/uiu4umqyl5b5/askj55pww8kr3QzfBbDZ9/a0760754959fa589f98fb2d4ae78e139/f646b1b81c232c714f0c03544829471c-snrbqO1VwEAV__1_.jpg?fm=webp&fit=fill&f=center&w=3495&h=1966", month: "Sep", expanded: true, imgPos: "center 30%" },
   { name: "Autumn Nations Series", sport: "Rugby", date: "Nov 2026", location: "Twickenham", country: "UK", region: "Europe", tier: "Premium", fromPrice: "$1,200", image: "https://ichef.bbci.co.uk/ace/standard/1800/cpsprodpb/758c/live/b2c6de60-349e-11f0-8947-7d6241f9fce9.jpg", month: "Nov", expanded: true },
   { name: "Premiership Matches", sport: "Rugby", date: "Sep 2026 – Jun 2027", location: "Various", country: "UK", region: "Europe", tier: "Premium", fromPrice: "$1,000", image: "https://www.bristolbearsrugby.com/wp-content/uploads/2022/11/20220910_bristol_bears_v_bath_rt1117-scaled.jpg", month: "Sep", expanded: true },
-
-  /* ── Cycling ── */
-  { name: "Tour de France", sport: "Cycling", date: "4–26 Jul 2026", location: "France", country: "France", region: "Europe", tier: "Ultra-Premium", fromPrice: "$2,500", image: "https://a.storyblok.com/f/135147/8013x5031/52bd775e39/24-07-08_2024-tour-de-france-gallery-week-one_culture-6.jpg", month: "Jul", expanded: true },
-  { name: "Giro d'Italia", sport: "Cycling", date: "May 2026", location: "Italy", country: "Italy", region: "Europe", tier: "Premium", fromPrice: "$1,500", image: "https://cdn-jupiter.metropolis.co.uk/wp-content/uploads/sites/9/2024/07/zw-tour-de-france-2024-3-scaled.webp", month: "May", expanded: true },
-  { name: "Vuelta a España", sport: "Cycling", date: "Aug–Sep 2026", location: "Spain", country: "Spain", region: "Europe", tier: "Premium", fromPrice: "$1,500", image: "https://cdn-jupiter.metropolis.co.uk/wp-content/uploads/sites/9/2024/09/CAuldPhoto-2024-LaVuelta-Stage6-6306-min-1-scaled.webp", month: "Aug", expanded: true },
-  { name: "Paris-Roubaix", sport: "Cycling", date: "Apr 2026", location: "Roubaix", country: "France", region: "Europe", tier: "Premium", fromPrice: "$1,200", image: "https://cdn-jupiter.metropolis.co.uk/wp-content/uploads/sites/9/2023/04/PLP_Roubaix_0198-scaled-e1734018684421.webp", month: "Apr", expanded: true },
 
   /* ── Horse Racing ── */
   { name: "Kentucky Derby", sport: "Horse Racing", date: "2 May 2026", location: "Louisville", country: "USA", region: "North America", tier: "Ultra-Premium", fromPrice: "$3,000", image: "https://media.cnn.com/api/v1/images/stellar/prod/220507220710-07-kentucky-derby-winner.jpg?c=original", month: "May", expanded: true, imgPos: "center 40%" },
@@ -88,20 +82,20 @@ const curatedEvents: CuratedEvent[] = [
   { name: "The Grand National", sport: "Horse Racing", date: "11 Apr 2026", location: "Aintree", country: "UK", region: "Europe", tier: "Premium", fromPrice: "$1,500", image: "https://e0.365dm.com/22/04/2048x1152/skysports-grand-national-aintree_5725798.jpg?20220401205040", month: "Apr", expanded: true, imgPos: "center 30%" },
 
   /* ── Sailing ── */
-  { name: "America's Cup", sport: "Sailing", date: "Oct 2026", location: "Barcelona", country: "Spain", region: "Europe", tier: "Ultra-Premium", fromPrice: "$4,000", image: "https://c.files.bbci.co.uk/fe7f/live/dcc24e60-6d44-11ef-b970-9f202720b57a.jpg", month: "Oct", expanded: true },
-  { name: "Rolex Sydney Hobart", sport: "Sailing", date: "26 Dec 2026", location: "Sydney", country: "Australia", region: "Asia Pacific", tier: "Premium", fromPrice: "$2,000", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSbo_9gkdTlWpHJkXKoIL63xyuyBW7WG5HRdw&s", month: "Dec", expanded: true },
-  { name: "Cowes Week", sport: "Sailing", date: "Aug 2026", location: "Isle of Wight", country: "UK", region: "Europe", tier: "Premium", fromPrice: "$1,500", image: "https://images.squarespace-cdn.com/content/v1/6020465310894c54832aa43e/eed79ff1-7b26-4301-aef9-698285c4a605/Cougar+MoM.jpeg", month: "Aug", expanded: true },
-  { name: "SailGP", sport: "Sailing", date: "Various 2026", location: "Various", country: "Various", region: "Europe", tier: "Premium", fromPrice: "$1,800", image: "https://media.sportstravelmagazine.com/wp-content/uploads/2025/01/10020137/U.S.-SailGP-and-Nirvana-Media-Asset-scaled.jpg", month: "May", expanded: true },
+  { name: "America's Cup", sport: "Sailing", date: "Oct 2026", location: "Barcelona", country: "Spain", region: "Europe", tier: "Ultra-Premium", fromPrice: "$4,000", image: "https://c.files.bbci.co.uk/fe7f/live/dcc24e60-6d44-11ef-b970-9f202720b57a.jpg", month: "Oct", expanded: true, imgPos: "center 40%" },
+  { name: "Rolex Sydney Hobart", sport: "Sailing", date: "26 Dec 2026", location: "Sydney", country: "Australia", region: "Asia Pacific", tier: "Premium", fromPrice: "$2,000", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSbo_9gkdTlWpHJkXKoIL63xyuyBW7WG5HRdw&s", month: "Dec", expanded: true, imgPos: "center 35%" },
+  { name: "Cowes Week", sport: "Sailing", date: "Aug 2026", location: "Isle of Wight", country: "UK", region: "Europe", tier: "Premium", fromPrice: "$1,500", image: "https://images.squarespace-cdn.com/content/v1/6020465310894c54832aa43e/eed79ff1-7b26-4301-aef9-698285c4a605/Cougar+MoM.jpeg", month: "Aug", expanded: true, imgPos: "center 30%" },
+  { name: "SailGP", sport: "Sailing", date: "Various 2026", location: "Various", country: "Various", region: "Europe", tier: "Premium", fromPrice: "$1,800", image: "https://media.sportstravelmagazine.com/wp-content/uploads/2025/01/10020137/U.S.-SailGP-and-Nirvana-Media-Asset-scaled.jpg", month: "May", expanded: true, imgPos: "center 35%" },
 
   /* ── Ringside (Boxing, MMA, WWE) ── */
-  { name: "Boxing PPV", sport: "Ringside", date: "Various 2026", location: "Las Vegas", country: "USA", region: "North America", tier: "Ultra-Premium", fromPrice: "$5,000", image: "https://images2.minutemediacdn.com/image/upload/c_crop,w_3715,h_2089,x_1117,y_150/v1738086341/images/voltaxMediaLibrary/mmsport/boxing/01jjq09mww1tddjpxrbz.jpg", month: "Mar", expanded: true },
+  { name: "Boxing PPV", sport: "Ringside", date: "Various 2026", location: "Las Vegas", country: "USA", region: "North America", tier: "Ultra-Premium", fromPrice: "$5,000", image: "https://images2.minutemediacdn.com/image/upload/c_crop,w_3715,h_2089,x_1117,y_150/v1738086341/images/voltaxMediaLibrary/mmsport/boxing/01jjq09mww1tddjpxrbz.jpg", month: "Mar", expanded: true, imgPos: "center 25%" },
   { name: "UFC / MMA PPV", sport: "Ringside", date: "Various 2026", location: "Las Vegas", country: "USA", region: "North America", tier: "Ultra-Premium", fromPrice: "$4,000", image: "https://platform.mmafighting.com/wp-content/uploads/sites/109/2026/01/gettyimages-2246910181.jpg?quality=90&strip=all&crop=0.0031156530408722%2C0%2C99.993768693918%2C100&w=2400", month: "Jul", expanded: true },
   { name: "WWE Premium Live Events", sport: "Ringside", date: "Various 2026", location: "Various", country: "USA", region: "North America", tier: "Ultra-Premium", fromPrice: "$3,000", image: "https://www.usanetwork.com/sites/usablog/files/2022/09/wwe-roman-reigns-titles.jpg", month: "Apr", expanded: true },
 ];
 
 /* Top sports shown initially */
 const topSports = ["Formula 1", "Tennis", "Football", "Golf", "Basketball", "Cricket", "NFL"];
-const moreSports = ["Rugby", "Cycling", "Horse Racing", "Sailing", "Ringside"];
+const moreSports = ["Rugby", "Horse Racing", "Sailing", "Ringside"];
 
 const regions = ["All Regions", "Europe", "North America", "Asia Pacific"];
 const months = ["Any Date", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
