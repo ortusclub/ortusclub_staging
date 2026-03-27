@@ -16,20 +16,21 @@ interface CuratedEvent {
   image: string;
   month: string;
   imgPos?: string; // custom object-position for image
+  imgScale?: number; // custom zoom level (1 = 100%)
   expanded?: boolean; // true = only shown after "View More"
 }
 
 const curatedEvents: CuratedEvent[] = [
   /* ── Formula 1 ── */
-  { name: "Monaco Grand Prix", sport: "Formula 1", date: "5–7 Jun 2026", location: "Monte Carlo", country: "Monaco", region: "Europe", tier: "Ultra-Premium", fromPrice: "$5,000", image: "https://images.unsplash.com/photo-1752884991461-8ac432ad9266?auto=format&fit=crop&q=80&w=2000", month: "Jun", imgPos: "center 65%" },
-  { name: "British Grand Prix", sport: "Formula 1", date: "3–5 Jul 2026", location: "Silverstone", country: "UK", region: "Europe", tier: "Ultra-Premium", fromPrice: "$2,500", image: "https://ichef.bbci.co.uk/ace/standard/3840/cpsprodpb/dc39/live/49b724a0-a274-11ef-8f42-3b1b720c6f90.jpg", month: "Jul", imgPos: "center 35%" },
+  { name: "Monaco Grand Prix", sport: "Formula 1", date: "5–7 Jun 2026", location: "Monte Carlo", country: "Monaco", region: "Europe", tier: "Ultra-Premium", fromPrice: "$5,000", image: "https://ichef.bbci.co.uk/ace/standard/3840/cpsprodpb/dc39/live/49b724a0-a274-11ef-8f42-3b1b720c6f90.jpg", month: "Jun", imgPos: "69% 98%", imgScale: 1.2 },
+  { name: "British Grand Prix", sport: "Formula 1", date: "3–5 Jul 2026", location: "Silverstone", country: "UK", region: "Europe", tier: "Ultra-Premium", fromPrice: "$2,500", image: "https://hips.hearstapps.com/hmg-prod/images/race-winner-lewis-hamilton-of-great-britain-driving-the-news-photo-1626625340.jpg?crop=1xw:1xh;center,top&resize=1200:*", month: "Jul", imgPos: "center 30%" },
   { name: "Miami Grand Prix", sport: "Formula 1", date: "1–3 May 2026", location: "Miami Gardens", country: "USA", region: "North America", tier: "Ultra-Premium", fromPrice: "$3,000", image: "https://media.formula1.com/image/upload/c_lfill,w_3392/q_auto/v1740000001/content/dam/fom-website/2018-redesign-assets/Racehub%20header%20images%2016x9/Miami.webp", month: "May" },
-  { name: "Las Vegas Grand Prix", sport: "Formula 1", date: "21 Nov 2026", location: "Las Vegas", country: "USA", region: "North America", tier: "Ultra-Premium", fromPrice: "$4,000", image: "https://ca-times.brightspotcdn.com/dims4/default/7a65ab6/2147483647/strip/true/crop/5074x3382+0+0/resize/2000x1333!/format/webp/quality/75/?url=https%3A%2F%2Fcalifornia-times-brightspot.s3.amazonaws.com%2Fd2%2F56%2F5c368dff41c7872cd0784c654caa%2F1376324-sp-f1-vegas-strip-17-mjc.jpg", month: "Nov" },
+  { name: "Las Vegas Grand Prix", sport: "Formula 1", date: "21 Nov 2026", location: "Las Vegas", country: "USA", region: "North America", tier: "Ultra-Premium", fromPrice: "$4,000", image: "https://ca-times.brightspotcdn.com/dims4/default/7a65ab6/2147483647/strip/true/crop/5074x3382+0+0/resize/2000x1333!/format/webp/quality/75/?url=https%3A%2F%2Fcalifornia-times-brightspot.s3.amazonaws.com%2Fd2%2F56%2F5c368dff41c7872cd0784c654caa%2F1376324-sp-f1-vegas-strip-17-mjc.jpg", month: "Nov", imgPos: "center 75%" },
 
   /* ── Tennis ── */
-  { name: "Australian Open", sport: "Tennis", date: "12–25 Jan 2026", location: "Melbourne", country: "Australia", region: "Asia Pacific", tier: "Ultra-Premium", fromPrice: "$1,500", image: "https://www.thejewelleryeditor.com/media/images_thumbnails/filer_public_thumbnails/filer_public/77/ad/77adbe51-f2e3-4bba-b672-da3cbfd7321d/roger-federer-australian-open-2017.jpg__760x0_q75_crop-scale_subsampling-2_upscale-false.jpg", month: "Jan", imgPos: "center 30%" },
-  { name: "Roland-Garros", sport: "Tennis", date: "24 May – 7 Jun 2026", location: "Paris", country: "France", region: "Europe", tier: "Ultra-Premium", fromPrice: "$2,000", image: "https://www.repstatic.it/content/nazionale/img/2022/05/21/211704945-b26cccb4-12fd-40db-b2db-1764324faa5b.jpg", month: "May", imgPos: "center 25%" },
-  { name: "Wimbledon Championships", sport: "Tennis", date: "29 Jun – 12 Jul 2026", location: "London", country: "UK", region: "Europe", tier: "Ultra-Premium", fromPrice: "$2,000", image: "https://media.cnn.com/api/v1/images/stellar/prod/220420110759-01-wimbledon-center-court-2021.jpg?c=16x9&q=h_1080,w_1920,c_fill", month: "Jun" },
+  { name: "Australian Open", sport: "Tennis", date: "12–25 Jan 2026", location: "Melbourne", country: "Australia", region: "Asia Pacific", tier: "Ultra-Premium", fromPrice: "$1,500", image: "https://www.thejewelleryeditor.com/media/images_thumbnails/filer_public_thumbnails/filer_public/77/ad/77adbe51-f2e3-4bba-b672-da3cbfd7321d/roger-federer-australian-open-2017.jpg__760x0_q75_crop-scale_subsampling-2_upscale-false.jpg", month: "Jan", imgPos: "73% 7%" },
+  { name: "Roland-Garros", sport: "Tennis", date: "24 May – 7 Jun 2026", location: "Paris", country: "France", region: "Europe", tier: "Ultra-Premium", fromPrice: "$2,000", image: "https://www.repstatic.it/content/nazionale/img/2022/05/21/211704945-b26cccb4-12fd-40db-b2db-1764324faa5b.jpg", month: "May", imgPos: "78% 5%" },
+  { name: "Wimbledon Championships", sport: "Tennis", date: "29 Jun – 12 Jul 2026", location: "London", country: "UK", region: "Europe", tier: "Ultra-Premium", fromPrice: "$2,000", image: "https://www.gazzettadireggio.com/wp-content/uploads/2025/07/sinner_wimbledon._2_ipa.jpeg", month: "Jun", imgPos: "71% 59%", imgScale: 1.65 },
   { name: "US Open", sport: "Tennis", date: "31 Aug – 13 Sep 2026", location: "New York", country: "USA", region: "North America", tier: "Ultra-Premium", fromPrice: "$2,500", image: "https://static01.nyt.com/images/2020/08/04/sports/04usopen-protocols01/04usopen-protocols01-videoSixteenByNineJumbo1600.jpg", month: "Aug" },
 
   /* ── Football ── */
@@ -37,60 +38,60 @@ const curatedEvents: CuratedEvent[] = [
   { name: "UCL Matches", sport: "Football", date: "Sep 2026 – May 2027", location: "Various", country: "Europe", region: "Europe", tier: "Ultra-Premium", fromPrice: "$2,500", image: "https://www.aljazeera.com/wp-content/uploads/2025/05/2025-05-31T211235Z_1348966444_UP1EL5V1MWXBJ_RTRMADP_3_SOCCER-CHAMPIONS-PSG-INT-REPORT-1748726122.jpg?resize=1920%2C1080", month: "Sep" },
   { name: "Europa League Matches", sport: "Football", date: "Sep 2026 – May 2027", location: "Various", country: "Europe", region: "Europe", tier: "Ultra-Premium", fromPrice: "$1,800", image: "https://tottenhamhotspurs.shorthandstories.com/road-to-bilbao/assets/thC3fFwua4/uelwinnersheader-desk-2560x1440.jpg", month: "Sep" },
   { name: "Premier League Matches", sport: "Football", date: "Aug 2026 – May 2027", location: "Various", country: "UK", region: "Europe", tier: "Ultra-Premium", fromPrice: "$2,000", image: "https://resources.premierleague.pulselive.com/premierleague/photo/2025/05/25/e7a7f417-73be-488e-af27-eca7b8641fe5/GettyImages-2216996427.jpg", month: "Aug" },
-  { name: "Serie A Matches", sport: "Football", date: "Aug 2026 – May 2027", location: "Various", country: "Italy", region: "Europe", tier: "Premium", fromPrice: "$1,500", image: "https://assets.goal.com/images/v3/bltbe9eb7dabaf51fff/FOTO%20PEZZI%201920X1080%20(46).png?auto=webp&format=pjpg&width=3840&quality=60", month: "Aug" },
-  { name: "LaLiga Matches", sport: "Football", date: "Aug 2026 – May 2027", location: "Various", country: "Spain", region: "Europe", tier: "Premium", fromPrice: "$1,500", image: "https://platform.barcablaugranes.com/wp-content/uploads/sites/21/2025/10/gettyimages-2243435247.jpg?quality=90&strip=all&crop=0%2C0.0046412327114069%2C100%2C99.990717534577&w=2400", month: "Aug" },
-  { name: "PSG Matches", sport: "Football", date: "Aug 2026 – May 2027", location: "Paris", country: "France", region: "Europe", tier: "Premium", fromPrice: "$1,500", image: "https://e0.365dm.com/26/03/2048x1152/skysports-psg-lens_7201879.jpg?20260324142151", month: "Aug" },
+  { name: "Serie A Matches", sport: "Football", date: "Aug 2026 – May 2027", location: "Various", country: "Italy", region: "Europe", tier: "Premium", fromPrice: "$1,500", image: "https://assets.goal.com/images/v3/bltbe9eb7dabaf51fff/FOTO%20PEZZI%201920X1080%20(46).png?auto=webp&format=pjpg&width=3840&quality=60", month: "Aug", imgPos: "91% 0%" },
+  { name: "LaLiga Matches", sport: "Football", date: "Aug 2026 – May 2027", location: "Various", country: "Spain", region: "Europe", tier: "Premium", fromPrice: "$1,500", image: "https://platform.barcablaugranes.com/wp-content/uploads/sites/21/2025/10/gettyimages-2243435247.jpg?quality=90&strip=all&crop=0%2C0.0046412327114069%2C100%2C99.990717534577&w=2400", month: "Aug", imgPos: "84% 9%" },
+  { name: "PSG Matches", sport: "Football", date: "Aug 2026 – May 2027", location: "Paris", country: "France", region: "Europe", tier: "Premium", fromPrice: "$1,500", image: "https://e0.365dm.com/26/03/2048x1152/skysports-psg-lens_7201879.jpg?20260324142151", month: "Aug", imgPos: "85% 3%" },
 
   /* ── Golf ── */
-  { name: "The Masters", sport: "Golf", date: "9–12 Apr 2026", location: "Augusta", country: "USA", region: "North America", tier: "Ultra-Premium", fromPrice: "$5,000", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSuNYQMDNRt718GYpk_d6mvBmNhKJs659v8CA&s", month: "Apr" },
+  { name: "The Masters", sport: "Golf", date: "9–12 Apr 2026", location: "Augusta", country: "USA", region: "North America", tier: "Ultra-Premium", fromPrice: "$5,000", image: "https://res.cloudinary.com/sv-augusta/image/upload/v1738961018/cms_resources/clients/augusta/DSC_0010_9707b66a-c107-4a2f-9430-b55355db9910.jpg", month: "Apr" },
   { name: "The Open Championship", sport: "Golf", date: "16–19 Jul 2026", location: "Royal Birkdale", country: "UK", region: "Europe", tier: "Ultra-Premium", fromPrice: "$3,000", image: "https://golf.com/wp-content/uploads/2022/07/GettyImages-1241904014.jpg", month: "Jul" },
-  { name: "Ryder Cup", sport: "Golf", date: "Sep 2026", location: "Bethpage", country: "USA", region: "North America", tier: "Ultra-Premium", fromPrice: "$4,000", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbzfyXaADoP8bCkamAz4N2Wz1b1RcnEY-4Gw&s", month: "Sep" },
-  { name: "US Open", sport: "Golf", date: "18–21 Jun 2026", location: "Shinnecock Hills", country: "USA", region: "North America", tier: "Ultra-Premium", fromPrice: "$3,500", image: "https://www.nbc.com/sites/nbcblog/files/2024/05/us-open-golf-tournament4.jpg", month: "Jun" },
-  { name: "LIV Golf", sport: "Golf", date: "Various 2026", location: "Various", country: "Various", region: "North America", tier: "Ultra-Premium", fromPrice: "$2,000", image: "https://frontofficesports.com/wp-content/uploads/2023/10/USATSI_21497746-1-scaled.jpg?quality=100", month: "Mar", imgPos: "center 20%" },
+  { name: "Ryder Cup", sport: "Golf", date: "Sep 2026", location: "Bethpage", country: "USA", region: "North America", tier: "Ultra-Premium", fromPrice: "$4,000", image: "https://res.cloudinary.com/rydercup-prod/w_1153,h_648,c_fit,q_auto,g_center,dpr_2.0,f_auto/rydercup/news/mh-images/GettyImages-2237944030.jpg", month: "Sep", imgPos: "65% 96%" },
+  { name: "US Open", sport: "Golf", date: "18–21 Jun 2026", location: "Shinnecock Hills", country: "USA", region: "North America", tier: "Ultra-Premium", fromPrice: "$3,500", image: "https://www.nbc.com/sites/nbcblog/files/2024/05/us-open-golf-tournament4.jpg", month: "Jun", imgPos: "85% 17%" },
+  { name: "LIV Golf", sport: "Golf", date: "Various 2026", location: "Various", country: "Various", region: "North America", tier: "Ultra-Premium", fromPrice: "$2,000", image: "https://frontofficesports.com/wp-content/uploads/2023/10/USATSI_21497746-1-scaled.jpg?quality=100", month: "Mar", imgPos: "72% 76%", imgScale: 1.45 },
 
   /* ── Basketball ── */
-  { name: "NBA Matches", sport: "Basketball", date: "Oct 2026 – Jun 2027", location: "Various", country: "USA", region: "North America", tier: "Ultra-Premium", fromPrice: "$2,000", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQuwbdxdfC5U8msVKiMNbmuw-zruvmuvjOWqg&s", month: "Oct" },
-  { name: "WNBA Matches", sport: "Basketball", date: "May–Sep 2026", location: "Various", country: "USA", region: "North America", tier: "Premium", fromPrice: "$1,200", image: "https://assets.goal.com/images/v3/blt7bc80efcdab90f9b/Indiana_Fever_v_Dallas_Wings_Caitlin_Clark_WNBA.png?auto=webp&format=pjpg&width=3840&quality=60", month: "May" },
-  { name: "NCAA Matches", sport: "Basketball", date: "Nov 2026 – Apr 2027", location: "Various", country: "USA", region: "North America", tier: "Premium", fromPrice: "$1,000", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ21BEWoOuaacF5qvlnFz-7_H-HuhfsM_P-1A&s", month: "Mar" },
+  { name: "NBA Matches", sport: "Basketball", date: "Oct 2026 – Jun 2027", location: "Various", country: "USA", region: "North America", tier: "Ultra-Premium", fromPrice: "$2,000", image: "https://cdn.nba.com/manage/2023/08/curry-davis.jpg", month: "Oct", imgPos: "52% 17%" },
+  { name: "WNBA Matches", sport: "Basketball", date: "May–Sep 2026", location: "Various", country: "USA", region: "North America", tier: "Premium", fromPrice: "$1,200", image: "https://assets.goal.com/images/v3/blt7bc80efcdab90f9b/Indiana_Fever_v_Dallas_Wings_Caitlin_Clark_WNBA.png?auto=webp&format=pjpg&width=3840&quality=60", month: "May", imgPos: "57% 4%" },
+  { name: "NCAA Matches", sport: "Basketball", date: "Nov 2026 – Apr 2027", location: "Various", country: "USA", region: "North America", tier: "Premium", fromPrice: "$1,000", image: "https://www.sportsmediawatch.com/wp-content/uploads/2025/04/USATSI_25808738-scaled-e1743521965791.jpg", month: "Mar" },
   { name: "EuroLeague Matches", sport: "Basketball", date: "Oct 2026 – May 2027", location: "Various", country: "Europe", region: "Europe", tier: "Premium", fromPrice: "$1,500", image: "https://static-cdn.toi-media.com/www/uploads/2025/10/AP24333702009735.jpg", month: "Oct" },
 
   /* ── NFL ── */
   { name: "Super Bowl", sport: "NFL", date: "Feb 2027", location: "TBC", country: "USA", region: "North America", tier: "Ultra-Premium", fromPrice: "$8,000", image: "https://ichef.bbci.co.uk/ace/standard/2560/cpsprodpb/56a6/live/d5811750-056c-11f1-9c47-91e6146aabf2.jpg", month: "Feb", imgPos: "center 35%" },
-  { name: "NFL Season Matches", sport: "NFL", date: "Sep 2026 – Jan 2027", location: "Various", country: "USA", region: "North America", tier: "Ultra-Premium", fromPrice: "$2,500", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNesrQwm1nnm27x5_NgyfsqLVaQoa_zQcvbg&s", month: "Sep" },
-  { name: "NFL Draft", sport: "NFL", date: "Apr 2026", location: "TBC", country: "USA", region: "North America", tier: "Ultra-Premium", fromPrice: "$1,500", image: "https://ichef.bbci.co.uk/ace/standard/2560/cpsprodpb/56a6/live/d5811750-056c-11f1-9c47-91e6146aabf2.jpg", month: "Apr" },
-  { name: "NCAA Football", sport: "NFL", date: "Sep–Dec 2026", location: "Various", country: "USA", region: "North America", tier: "Premium", fromPrice: "$1,500", image: "https://sportshub.cbsistatic.com/i/2025/10/17/91b2743c-dd34-4239-b984-e79b1ba79e74/demon-june-north-carolina-tar-heels.jpg", month: "Sep" },
-  { name: "Thanksgiving Games", sport: "NFL", date: "26 Nov 2026", location: "Various", country: "USA", region: "North America", tier: "Ultra-Premium", fromPrice: "$3,000", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNesrQwm1nnm27x5_NgyfsqLVaQoa_zQcvbg&s", month: "Nov" },
+  { name: "NFL Season Matches", sport: "NFL", date: "Sep 2026 – Jan 2027", location: "Various", country: "USA", region: "North America", tier: "Ultra-Premium", fromPrice: "$2,500", image: "https://image.cnbcfm.com/api/v1/image/106701442-1600094421673-gettyimages-1272311926-d02i9531_2020091351912924.jpeg?v=1665572401", month: "Sep", imgPos: "59% 12%" },
+
+  { name: "NCAA Football", sport: "NFL", date: "Sep–Dec 2026", location: "Various", country: "USA", region: "North America", tier: "Premium", fromPrice: "$1,500", image: "https://sportshub.cbsistatic.com/i/2025/10/17/91b2743c-dd34-4239-b984-e79b1ba79e74/demon-june-north-carolina-tar-heels.jpg", month: "Sep", imgPos: "75% 15%" },
+  { name: "Thanksgiving Games", sport: "NFL", date: "26 Nov 2026", location: "Various", country: "USA", region: "North America", tier: "Ultra-Premium", fromPrice: "$3,000", image: "https://e0.365dm.com/23/11/2048x1152/skysports-dallas-cowboys-daron-bland_6370138.jpg?20231124010411", month: "Nov" },
 
   /* ── Cricket ── */
-  { name: "ICC T20 World Cup", sport: "Cricket", date: "Feb–Mar 2026", location: "India & Sri Lanka", country: "India", region: "Asia Pacific", tier: "Ultra-Premium", fromPrice: "$1,500", image: "https://icecric.news/wp-content/uploads/2025/11/dl.beatsnoop.com-3000-35NH1RU8i4.webp", month: "Feb" },
-  { name: "The Ashes", sport: "Cricket", date: "Various 2026", location: "England", country: "UK", region: "Europe", tier: "Ultra-Premium", fromPrice: "$2,000", image: "https://c.files.bbci.co.uk/936b/live/18a350a0-c668-11f0-b27e-ffa53df97408.jpg", month: "Jul", imgPos: "center 35%" },
+  { name: "ICC T20 World Cup", sport: "Cricket", date: "Feb–Mar 2026", location: "India & Sri Lanka", country: "India", region: "Asia Pacific", tier: "Ultra-Premium", fromPrice: "$1,500", image: "https://icecric.news/wp-content/uploads/2025/11/dl.beatsnoop.com-3000-35NH1RU8i4.webp", month: "Feb", imgPos: "69% 11%" },
+  { name: "The Ashes", sport: "Cricket", date: "Various 2026", location: "England", country: "UK", region: "Europe", tier: "Ultra-Premium", fromPrice: "$2,000", image: "https://cdn.mos.cms.futurecdn.net/5pHJZPCneVms8CreW9dWpW.jpg", month: "Jul" },
   { name: "ICC Cricket World Cup", sport: "Cricket", date: "Oct–Nov 2026", location: "TBC", country: "TBC", region: "Asia Pacific", tier: "Ultra-Premium", fromPrice: "$2,500", image: "https://www.aljazeera.com/wp-content/uploads/2023/11/AP23323600739758-1700417528.jpg", month: "Oct" },
-  { name: "IPL Final", sport: "Cricket", date: "May 2026", location: "Chennai", country: "India", region: "Asia Pacific", tier: "Premium", fromPrice: "$1,800", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRm1e4z-yY7rgVhS3KVaGnDQLEAjdnDWMpTcQ&s", month: "May" },
+  { name: "IPL Final", sport: "Cricket", date: "May 2026", location: "Chennai", country: "India", region: "Asia Pacific", tier: "Premium", fromPrice: "$1,800", image: "https://ichef.bbci.co.uk/ace/standard/3840/cpsprodpb/5158/live/99bbad40-1b97-11ef-b706-d39cbba8e95c.jpg", month: "May" },
 
   /* ── Expanded sports (hidden by default) ── */
 
   /* ── Rugby ── */
   { name: "Six Nations Matches", sport: "Rugby", date: "7 Feb – 21 Mar 2026", location: "Various", country: "UK", region: "Europe", tier: "Ultra-Premium", fromPrice: "$1,500", image: "https://ichef.bbci.co.uk/ace/standard/1800/cpsprodpb/758c/live/b2c6de60-349e-11f0-8947-7d6241f9fce9.jpg", month: "Feb", expanded: true },
   { name: "Rugby World Cup Matches", sport: "Rugby", date: "Sep–Nov 2027", location: "TBC", country: "Australia", region: "Asia Pacific", tier: "Ultra-Premium", fromPrice: "$3,000", image: "https://contentfulproxy.stadion.io/uiu4umqyl5b5/askj55pww8kr3QzfBbDZ9/a0760754959fa589f98fb2d4ae78e139/f646b1b81c232c714f0c03544829471c-snrbqO1VwEAV__1_.jpg?fm=webp&fit=fill&f=center&w=3495&h=1966", month: "Sep", expanded: true, imgPos: "center 30%" },
-  { name: "Autumn Nations Series", sport: "Rugby", date: "Nov 2026", location: "Twickenham", country: "UK", region: "Europe", tier: "Premium", fromPrice: "$1,200", image: "https://ichef.bbci.co.uk/ace/standard/1800/cpsprodpb/758c/live/b2c6de60-349e-11f0-8947-7d6241f9fce9.jpg", month: "Nov", expanded: true },
+  { name: "Autumn Nations Series", sport: "Rugby", date: "Nov 2026", location: "Twickenham", country: "UK", region: "Europe", tier: "Premium", fromPrice: "$1,200", image: "https://thp.ie/nitropack_static/pTIDZmRXHSwnDcZgDuIzmUuKeFzOjInV/assets/images/optimized/rev-3e5bbd6/thp.ie/wp-content/uploads/2025/02/South-Africa-1-scaled-e1740480165263.jpg", month: "Nov", expanded: true, imgPos: "81% 10%" },
   { name: "Premiership Matches", sport: "Rugby", date: "Sep 2026 – Jun 2027", location: "Various", country: "UK", region: "Europe", tier: "Premium", fromPrice: "$1,000", image: "https://www.bristolbearsrugby.com/wp-content/uploads/2022/11/20220910_bristol_bears_v_bath_rt1117-scaled.jpg", month: "Sep", expanded: true },
 
   /* ── Horse Racing ── */
   { name: "Kentucky Derby", sport: "Horse Racing", date: "2 May 2026", location: "Louisville", country: "USA", region: "North America", tier: "Ultra-Premium", fromPrice: "$3,000", image: "https://media.cnn.com/api/v1/images/stellar/prod/220507220710-07-kentucky-derby-winner.jpg?c=original", month: "May", expanded: true, imgPos: "center 40%" },
-  { name: "Royal Ascot", sport: "Horse Racing", date: "16–20 Jun 2026", location: "Ascot", country: "UK", region: "Europe", tier: "Ultra-Premium", fromPrice: "$3,500", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHO9QZTp9Vz2gd1QAX-pqYOcsdqKJAQ-Qvcw&s", month: "Jun", expanded: true },
+  { name: "Royal Ascot", sport: "Horse Racing", date: "16–20 Jun 2026", location: "Ascot", country: "UK", region: "Europe", tier: "Ultra-Premium", fromPrice: "$3,500", image: "https://ichef.bbci.co.uk/ace/standard/3840/cpsprodpb/b446/live/a3213630-47b9-11f0-84b6-6bf0f66205f1.jpg", month: "Jun", expanded: true, imgPos: "51% 59%", imgScale: 1.63 },
   { name: "Melbourne Cup", sport: "Horse Racing", date: "3 Nov 2026", location: "Flemington", country: "Australia", region: "Asia Pacific", tier: "Ultra-Premium", fromPrice: "$2,500", image: "https://static.independent.co.uk/2025/11/04/9/57/SEI272976918.jpeg", month: "Nov", expanded: true },
   { name: "The Grand National", sport: "Horse Racing", date: "11 Apr 2026", location: "Aintree", country: "UK", region: "Europe", tier: "Premium", fromPrice: "$1,500", image: "https://e0.365dm.com/22/04/2048x1152/skysports-grand-national-aintree_5725798.jpg?20220401205040", month: "Apr", expanded: true, imgPos: "center 40%" },
 
   /* ── Sailing ── */
-  { name: "America's Cup", sport: "Sailing", date: "Oct 2026", location: "Barcelona", country: "Spain", region: "Europe", tier: "Ultra-Premium", fromPrice: "$4,000", image: "https://c.files.bbci.co.uk/fe7f/live/dcc24e60-6d44-11ef-b970-9f202720b57a.jpg", month: "Oct", expanded: true, imgPos: "center 40%" },
-  { name: "Rolex Sydney Hobart", sport: "Sailing", date: "26 Dec 2026", location: "Sydney", country: "Australia", region: "Asia Pacific", tier: "Premium", fromPrice: "$2,000", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSbo_9gkdTlWpHJkXKoIL63xyuyBW7WG5HRdw&s", month: "Dec", expanded: true, imgPos: "center 35%" },
+  { name: "America's Cup", sport: "Sailing", date: "Oct 2026", location: "Barcelona", country: "Spain", region: "Europe", tier: "Ultra-Premium", fromPrice: "$4,000", image: "https://c.files.bbci.co.uk/fe7f/live/dcc24e60-6d44-11ef-b970-9f202720b57a.jpg", month: "Oct", expanded: true, imgPos: "71% 91%" },
+  { name: "Rolex Sydney Hobart", sport: "Sailing", date: "26 Dec 2026", location: "Sydney", country: "Australia", region: "Asia Pacific", tier: "Premium", fromPrice: "$2,000", image: "https://res.cloudinary.com/dk-wassersport/image/upload/v1766165455/yacht/syho-2412cb-29020071_f39bc2b68a1579882758cec052db0b61.jpg", month: "Dec", expanded: true, imgPos: "58% 91%" },
   { name: "Cowes Week", sport: "Sailing", date: "Aug 2026", location: "Isle of Wight", country: "UK", region: "Europe", tier: "Premium", fromPrice: "$1,500", image: "https://images.squarespace-cdn.com/content/v1/6020465310894c54832aa43e/eed79ff1-7b26-4301-aef9-698285c4a605/Cougar+MoM.jpeg", month: "Aug", expanded: true, imgPos: "center 30%" },
-  { name: "SailGP", sport: "Sailing", date: "Various 2026", location: "Various", country: "Various", region: "Europe", tier: "Premium", fromPrice: "$1,800", image: "https://media.sportstravelmagazine.com/wp-content/uploads/2025/01/10020137/U.S.-SailGP-and-Nirvana-Media-Asset-scaled.jpg", month: "May", expanded: true, imgPos: "center 35%" },
+  { name: "SailGP", sport: "Sailing", date: "Various 2026", location: "Various", country: "Various", region: "Europe", tier: "Premium", fromPrice: "$1,800", image: "https://media.sportstravelmagazine.com/wp-content/uploads/2025/01/10020137/U.S.-SailGP-and-Nirvana-Media-Asset-scaled.jpg", month: "May", expanded: true, imgPos: "66% 75%" },
 
   /* ── Ringside (Boxing, MMA, WWE) ── */
   { name: "Boxing PPV", sport: "Ringside", date: "Various 2026", location: "Las Vegas", country: "USA", region: "North America", tier: "Ultra-Premium", fromPrice: "$5,000", image: "https://images2.minutemediacdn.com/image/upload/c_crop,w_3715,h_2089,x_1117,y_150/v1738086341/images/voltaxMediaLibrary/mmsport/boxing/01jjq09mww1tddjpxrbz.jpg", month: "Mar", expanded: true, imgPos: "center 25%" },
   { name: "UFC / MMA PPV", sport: "Ringside", date: "Various 2026", location: "Las Vegas", country: "USA", region: "North America", tier: "Ultra-Premium", fromPrice: "$4,000", image: "https://platform.mmafighting.com/wp-content/uploads/sites/109/2026/01/gettyimages-2246910181.jpg?quality=90&strip=all&crop=0.0031156530408722%2C0%2C99.993768693918%2C100&w=2400", month: "Jul", expanded: true },
-  { name: "WWE Premium Live Events", sport: "Ringside", date: "Various 2026", location: "Various", country: "USA", region: "North America", tier: "Ultra-Premium", fromPrice: "$3,000", image: "https://www.usanetwork.com/sites/usablog/files/2022/09/wwe-roman-reigns-titles.jpg", month: "Apr", expanded: true },
+  { name: "WWE Premium Live Events", sport: "Ringside", date: "Various 2026", location: "Various", country: "USA", region: "North America", tier: "Ultra-Premium", fromPrice: "$3,000", image: "https://www.usanetwork.com/sites/usablog/files/2022/09/wwe-roman-reigns-titles.jpg", month: "Apr", expanded: true, imgPos: "69% 13%" },
 ];
 
 /* Top sports shown initially */
@@ -194,11 +195,95 @@ function MoreDropdown({ moreOpen, setMoreOpen, isMoreSportActive, activeSport, s
   );
 }
 
+/* ── Dev-only image position editor ── */
+function ImagePositionEditor({ image, name, currentPos, onApply, onClose }: {
+  image: string; name: string; currentPos: string; onApply: (pos: string, scale: number) => void; onClose: () => void;
+}) {
+  const [posX, setPosX] = useState(50);
+  const [posY, setPosY] = useState(50);
+  const [zoom, setZoom] = useState(100);
+  const isDragging = useRef(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const parts = currentPos.split(/\s+/);
+    const xMap: Record<string, number> = { left: 0, center: 50, right: 100 };
+    if (parts[0]) setPosX((xMap[parts[0]] ?? parseInt(parts[0])) || 50);
+    if (parts[1]) setPosY(parseInt(parts[1]) || 50);
+  }, [currentPos]);
+
+  const handleMove = useCallback((clientX: number, clientY: number) => {
+    if (!isDragging.current || !containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    setPosX(Math.round(Math.max(0, Math.min(100, ((clientX - rect.left) / rect.width) * 100))));
+    setPosY(Math.round(Math.max(0, Math.min(100, ((clientY - rect.top) / rect.height) * 100))));
+  }, []);
+
+  const posString = `${posX === 50 ? "center" : posX + "%"} ${posY}%`;
+  const scaleVal = zoom / 100;
+
+  const applyAndClose = () => {
+    onApply(posString, scaleVal);
+    navigator.clipboard.writeText(`imgPos: "${posString}"${zoom !== 100 ? `, zoom: ${zoom}%` : ""}`);
+    console.log(`✅ Applied for "${name}": imgPos="${posString}", zoom=${zoom}%`);
+    onClose();
+  };
+
+  return createPortal(
+    <div style={{ position: "fixed", inset: 0, zIndex: 9999, background: "rgba(0,0,0,0.85)", display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", gap: "16px" }}
+      onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}>
+      <div style={{ color: "#F7BE68", fontFamily: "var(--font-cormorant), serif", fontSize: "1.3rem", marginBottom: "8px" }}>
+        Drag to reposition: <strong>{name}</strong>
+      </div>
+      <div style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.8rem", fontFamily: "monospace", marginBottom: "4px" }}>
+        imgPos: &quot;{posString}&quot; &nbsp;|&nbsp; zoom: {zoom}%
+      </div>
+      <div
+        ref={containerRef}
+        style={{ width: "700px", height: "300px", borderRadius: "16px", overflow: "hidden", cursor: "crosshair", border: "2px solid rgba(247,190,104,0.3)", position: "relative" }}
+        onMouseDown={() => { isDragging.current = true; }}
+        onMouseMove={(e) => handleMove(e.clientX, e.clientY)}
+        onMouseUp={() => { isDragging.current = false; }}
+        onMouseLeave={() => { isDragging.current = false; }}
+      >
+        <img src={image} alt="" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: posString, pointerEvents: "none", transform: `scale(${scaleVal})`, transformOrigin: posString, transition: "transform 0.15s" }} />
+        <div style={{ position: "absolute", left: `${posX}%`, top: `${posY}%`, transform: "translate(-50%,-50%)", pointerEvents: "none" }}>
+          <div style={{ width: "1px", height: "30px", background: "#F7BE68", position: "absolute", left: "50%", top: "-15px", transform: "translateX(-50%)" }} />
+          <div style={{ width: "30px", height: "1px", background: "#F7BE68", position: "absolute", top: "50%", left: "-15px", transform: "translateY(-50%)" }} />
+          <div style={{ width: "8px", height: "8px", borderRadius: "50%", border: "2px solid #F7BE68", position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)" }} />
+        </div>
+      </div>
+      {/* Zoom controls */}
+      <div style={{ display: "flex", alignItems: "center", gap: "12px", marginTop: "4px" }}>
+        <button onClick={() => setZoom((z) => Math.max(80, z - 5))} style={{ width: "32px", height: "32px", borderRadius: "50%", border: "1px solid rgba(255,255,255,0.15)", background: "transparent", color: "#fff", cursor: "pointer", fontSize: "1.1rem", display: "flex", alignItems: "center", justifyContent: "center" }}>−</button>
+        <input type="range" min={80} max={200} value={zoom} onChange={(e) => setZoom(Number(e.target.value))}
+          style={{ width: "200px", accentColor: "#F7BE68", cursor: "pointer" }} />
+        <button onClick={() => setZoom((z) => Math.min(200, z + 5))} style={{ width: "32px", height: "32px", borderRadius: "50%", border: "1px solid rgba(255,255,255,0.15)", background: "transparent", color: "#fff", cursor: "pointer", fontSize: "1.1rem", display: "flex", alignItems: "center", justifyContent: "center" }}>+</button>
+        <button onClick={() => setZoom(100)} style={{ padding: "4px 12px", borderRadius: "999px", border: "1px solid rgba(255,255,255,0.1)", background: "transparent", color: "rgba(255,255,255,0.4)", cursor: "pointer", fontSize: "0.65rem", letterSpacing: "0.05em" }}>RESET</button>
+      </div>
+      <div style={{ display: "flex", gap: "12px", marginTop: "8px" }}>
+        <button onClick={applyAndClose} style={{ padding: "10px 28px", borderRadius: "999px", background: "#F7BE68", color: "#000", border: "none", cursor: "pointer", fontSize: "0.85rem", fontWeight: 600 }}>
+          Apply &amp; Close
+        </button>
+        <button onClick={onClose} style={{ padding: "10px 28px", borderRadius: "999px", background: "transparent", color: "rgba(255,255,255,0.5)", border: "1px solid rgba(255,255,255,0.15)", cursor: "pointer", fontSize: "0.85rem" }}>
+          Cancel
+        </button>
+      </div>
+      <div style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.7rem", marginTop: "4px" }}>
+        Alt/Option + Click any card image. Drag to reposition. Applied live on close.
+      </div>
+    </div>,
+    document.body
+  );
+}
+
 export default function EventsBrowser() {
   const [activeSport, setActiveSport] = useState("All");
   const [region, setRegion] = useState("All Regions");
   const [dateFilter, setDateFilter] = useState("Any Date");
   const [moreOpen, setMoreOpen] = useState(false);
+  const [editingEvent, setEditingEvent] = useState<{ image: string; name: string; imgPos: string } | null>(null);
+  const [posOverrides, setPosOverrides] = useState<Record<string, { pos: string; scale: number }>>({});
 
   const isMoreSportActive = moreSports.includes(activeSport);
 
@@ -350,11 +435,14 @@ export default function EventsBrowser() {
               onMouseLeave={(e) => { const el = e.currentTarget; el.style.borderColor = "rgba(255,255,255,0.05)"; el.style.transform = "none"; el.style.boxShadow = "none"; }}
             >
               {/* Image */}
-              <div style={{ height: "180px", position: "relative", overflow: "hidden" }}>
+              <div style={{ height: "180px", position: "relative", overflow: "hidden" }}
+                onClick={(e) => { if (e.altKey) { e.preventDefault(); e.stopPropagation(); setEditingEvent({ image: ev.image, name: ev.name, imgPos: ev.imgPos || "center center" }); } }}>
                 <img src={ev.image} alt="" style={{
                   width: "100%", height: "100%", objectFit: "cover", display: "block",
-                  objectPosition: ev.imgPos || "center center",
+                  objectPosition: posOverrides[ev.name]?.pos || ev.imgPos || "center center",
                   filter: ev.sport === "Sailing" ? "brightness(1.15) contrast(1.1) saturate(1.15)" : "brightness(0.95) contrast(1.05) saturate(1.1)",
+                  transform: (posOverrides[ev.name]?.scale && posOverrides[ev.name].scale !== 1) ? `scale(${posOverrides[ev.name].scale})` : ev.imgScale ? `scale(${ev.imgScale})` : undefined,
+                  transformOrigin: posOverrides[ev.name]?.pos || ev.imgPos || "center center",
                 }} />
                 <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(26,29,26,1) 0%, rgba(26,29,26,0.2) 50%, transparent 100%)" }} />
                 <div style={{ position: "absolute", top: "14px", left: "14px", right: "14px", display: "flex", justifyContent: "space-between" }}>
@@ -401,6 +489,17 @@ export default function EventsBrowser() {
         )}
 
       </div>
+
+      {/* Dev-only image position editor */}
+      {editingEvent && (
+        <ImagePositionEditor
+          image={editingEvent.image}
+          name={editingEvent.name}
+          currentPos={editingEvent.imgPos}
+          onApply={(pos, scale) => setPosOverrides((prev) => ({ ...prev, [editingEvent.name]: { pos, scale } }))}
+          onClose={() => setEditingEvent(null)}
+        />
+      )}
     </section>
   );
 }
