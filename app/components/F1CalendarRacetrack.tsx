@@ -38,75 +38,81 @@ const calendar: Race[] = [
   { round: 24, gp: "Abu Dhabi", date: "Dec 4–6", location: "Yas Marina", abbr: "ABU" },
 ];
 
-/* ──────────────────────────────────────────────────────────────
- * ORTUS PAPER BOAT LOGO — exact geometry from the logo image
- * viewBox: 0 0 1000 600
+/* ──────────────────────────────────────────────────────────
+ * ORTUS PAPER BOAT LOGO — carbon copy from the logo image
  *
- *              A (500,55)          ← sail apex
- *             / | \
- *            /  |  \
- *      ----H---+----I----         ← sail horizontal fold
- *          /    |    \
- *         /     |     \
- *        B──────+──────F          ← deck line (y≈290)
- *       / \     |     / \
- *      /   \    |    /   \
- *     C     \   |   /     E       ← hull widest (y≈400)
- *      \     \  |  /     /
- *       \     \ | /     /
- *        ──────D──────            ← hull bottom (500,510)
+ * The logo is a geometric origami paper boat made of
+ * uniform-weight lines. ALL lines are the same thickness.
  *
- * Outer contour: A → B → C → D → E → F → A
- * Internal folds: A↔D vertical, H↔I sail horizontal,
- *                 B↔D hull left fold, F↔D hull right fold, B↔F deck
- * ────────────────────────────────────────────────────────────── */
+ *                    A
+ *                   /|\
+ *                  / | \
+ *             H --/--+--\-- I     ← sail horizontal fold
+ *               /   |   \
+ *              /    |    \
+ *         B ──/─────+─────\── F   ← deck (sail base)
+ *          \ /      |      \ /
+ *       C ──x───────|───────x── E  ← hull tips (widest)
+ *            \      |      /
+ *             \     |     /
+ *          D1 ──────+────── D2    ← flat bottom
+ *
+ * Outer path: A → B → C → D1 → D2 → E → F → A
+ * Inner lines: A↕D, H↔I, B↔F (deck), B↘D, F↙D
+ * ────────────────────────────────────────────────────── */
 
 const W = 1000;
-const VH = 620;
+const VH = 580;
 
-// 6 outer vertices — exact paper boat proportions:
-// Narrow steep sail on top, wide FLAT-BOTTOMED hull
-const A  = { x: 500, y: 40 };   // sail apex
-const B  = { x: 380, y: 300 };  // sail base-left / deck-left
-const C  = { x: 60,  y: 430 };  // hull far-left
-const D1 = { x: 240, y: 560 };  // hull bottom-left (flat base)
-const D2 = { x: 760, y: 560 };  // hull bottom-right (flat base)
-const E  = { x: 940, y: 430 };  // hull far-right
-const F  = { x: 620, y: 300 };  // sail base-right / deck-right
-// Virtual center-bottom for fold lines to converge
-const DM = { x: 500, y: 560 };  // center of flat base
+// ── EXACT LOGO VERTICES ──
+// Sail: roughly equilateral triangle, centered
+const A  = { x: 500, y: 30 };    // apex
+const B  = { x: 355, y: 278 };   // deck-left
+const F  = { x: 645, y: 278 };   // deck-right
 
-// Sail horizontal fold — at mid-height of sail
-const sailMidY = (A.y + B.y) / 2;
-const tL = (sailMidY - A.y) / (B.y - A.y);
-const H_pt = { x: A.x + (B.x - A.x) * tL, y: sailMidY };
-const I_pt = { x: A.x + (F.x - A.x) * tL, y: sailMidY };
+// Hull: wide, shorter than sail, flat bottom
+const C  = { x: 90,  y: 375 };   // hull tip-left (widest)
+const E  = { x: 910, y: 375 };   // hull tip-right (widest)
+const D1 = { x: 280, y: 490 };   // bottom-left corner
+const D2 = { x: 720, y: 490 };   // bottom-right corner
 
-// Outer perimeter path (7 vertices now — flat base between D1 and D2)
-const outerPathD = `M ${A.x} ${A.y} L ${B.x} ${B.y} L ${C.x} ${C.y} L ${D1.x} ${D1.y} L ${D2.x} ${D2.y} L ${E.x} ${E.y} L ${F.x} ${F.y} Z`;
+// Virtual center points for fold convergence
+const DM = { x: 500, y: 490 };   // center of flat base
+const BF_center = { x: 500, y: 278 }; // center of deck
 
-// Compute checkpoint positions along outer perimeter
-function lerp(p1: { x: number; y: number }, p2: { x: number; y: number }, t: number) {
+// Sail horizontal fold line at mid-height
+const sailMidY = (A.y + B.y) / 2; // ≈ 154
+const t = (sailMidY - A.y) / (B.y - A.y);
+const H = { x: A.x + (B.x - A.x) * t, y: sailMidY };
+const I = { x: A.x + (F.x - A.x) * t, y: sailMidY };
+
+// ── PATHS ──
+const outerPath = `M ${A.x} ${A.y} L ${B.x} ${B.y} L ${C.x} ${C.y} L ${D1.x} ${D1.y} L ${D2.x} ${D2.y} L ${E.x} ${E.y} L ${F.x} ${F.y} Z`;
+
+// Line style — ALL lines same weight, matching the logo
+const LINE_COLOR = "#F7BE68";
+const LINE_WIDTH = 3;
+const LINE_OPACITY = 0.85;
+const lineStyle = { stroke: LINE_COLOR, strokeWidth: LINE_WIDTH, strokeOpacity: LINE_OPACITY, strokeLinejoin: "round" as const };
+
+// ── CHECKPOINT COMPUTATION ──
+function lerpPt(p1: { x: number; y: number }, p2: { x: number; y: number }, t: number) {
   return { x: p1.x + (p2.x - p1.x) * t, y: p1.y + (p2.y - p1.y) * t };
 }
-function segDist(p1: { x: number; y: number }, p2: { x: number; y: number }) {
+function dist(p1: { x: number; y: number }, p2: { x: number; y: number }) {
   return Math.sqrt((p2.x - p1.x) ** 2 + (p2.y - p1.y) ** 2);
 }
 
 const outerVerts = [A, B, C, D1, D2, E, F];
-const edges: { from: typeof A; to: typeof A; len: number }[] = [];
-let totalLen = 0;
-for (let i = 0; i < outerVerts.length; i++) {
-  const from = outerVerts[i];
-  const to = outerVerts[(i + 1) % outerVerts.length];
-  const len = segDist(from, to);
-  edges.push({ from, to, len });
-  totalLen += len;
-}
+const edges = outerVerts.map((v, i) => {
+  const next = outerVerts[(i + 1) % outerVerts.length];
+  return { from: v, to: next, len: dist(v, next) };
+});
+const totalLen = edges.reduce((s, e) => s + e.len, 0);
 
 function getCheckpoints(count: number) {
   const spacing = totalLen / count;
-  const points: { x: number; y: number; above: boolean }[] = [];
+  const pts: { x: number; y: number; above: boolean }[] = [];
   for (let i = 0; i < count; i++) {
     let target = i * spacing;
     let eIdx = 0;
@@ -114,11 +120,10 @@ function getCheckpoints(count: number) {
       target -= edges[eIdx].len;
       eIdx++;
     }
-    const t = target / edges[eIdx].len;
-    const pt = lerp(edges[eIdx].from, edges[eIdx].to, t);
-    points.push({ ...pt, above: pt.y < 320 || (pt.y < 430 && (pt.x < 200 || pt.x > 800)) });
+    const pt = lerpPt(edges[eIdx].from, edges[eIdx].to, target / edges[eIdx].len);
+    pts.push({ ...pt, above: pt.y < 300 });
   }
-  return points;
+  return pts;
 }
 
 const checkpoints = getCheckpoints(24);
@@ -134,7 +139,7 @@ export default function F1CalendarRacetrack() {
           <p style={{ fontSize: "0.65rem", letterSpacing: "0.4em", color: "#F7BE68", marginBottom: "14px", textTransform: "uppercase", fontWeight: 600 }}>
             All 24 Rounds
           </p>
-          <h2 style={{ fontFamily: "var(--font-cormorant), serif", fontSize: "3.2rem", fontWeight: 300, color: "#fff", lineHeight: 1.1 }}>
+          <h2 style={{ fontFamily: "var(--font-cormorant), serif", fontSize: "3.2rem", fontWeight: 300, color: "#fff" }}>
             The 2026 <em style={{ color: "#F7BE68" }}>Circuit</em>
           </h2>
           <div className="flex items-center justify-center gap-3" style={{ marginTop: "18px" }}>
@@ -144,112 +149,101 @@ export default function F1CalendarRacetrack() {
           </div>
         </div>
 
-        {/* SVG Track */}
+        {/* ═══ SVG — THE LOGO AS A RACETRACK ═══ */}
         <div className="relative" style={{ maxWidth: "1000px", margin: "0 auto", aspectRatio: `${W}/${VH}` }}>
           <svg viewBox={`0 0 ${W} ${VH}`} className="w-full h-full" style={{ overflow: "visible" }}>
             <defs>
-              <linearGradient id="trackGold" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#F7BE68" />
-                <stop offset="50%" stopColor="#C5A255" />
-                <stop offset="100%" stopColor="#F7BE68" />
-              </linearGradient>
               <filter id="glow">
                 <feGaussianBlur stdDeviation="6" result="blur" />
-                <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
-              </filter>
-              <filter id="carGlow">
-                <feGaussianBlur stdDeviation="10" result="blur" />
                 <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
               </filter>
               <filter id="dotGlow">
                 <feGaussianBlur stdDeviation="3" result="blur" />
                 <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
               </filter>
+              <filter id="carGlow">
+                <feGaussianBlur stdDeviation="10" result="blur" />
+                <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+              </filter>
             </defs>
 
-            {/* ── Origami facets (visible 3D shading) ── */}
-            {/* Sail top-left quadrant */}
-            <polygon points={`${A.x},${A.y} ${H_pt.x},${H_pt.y} ${500},${sailMidY}`} fill="rgba(247,190,104,0.04)" />
-            {/* Sail top-right quadrant */}
-            <polygon points={`${A.x},${A.y} ${500},${sailMidY} ${I_pt.x},${I_pt.y}`} fill="rgba(247,190,104,0.06)" />
-            {/* Sail bottom-left quadrant */}
-            <polygon points={`${H_pt.x},${H_pt.y} ${B.x},${B.y} ${500},${B.y} ${500},${sailMidY}`} fill="rgba(247,190,104,0.07)" />
-            {/* Sail bottom-right quadrant */}
-            <polygon points={`${500},${sailMidY} ${500},${B.y} ${F.x},${F.y} ${I_pt.x},${I_pt.y}`} fill="rgba(247,190,104,0.05)" />
-            {/* Hull outer-left: B → C → D1 → DM */}
-            <polygon points={`${B.x},${B.y} ${C.x},${C.y} ${D1.x},${D1.y} ${DM.x},${DM.y}`} fill="rgba(247,190,104,0.03)" />
-            {/* Hull inner-left: B → DM → deck-center */}
-            <polygon points={`${B.x},${B.y} ${DM.x},${DM.y} ${500},${B.y}`} fill="rgba(247,190,104,0.06)" />
-            {/* Hull inner-right: deck-center → DM → F */}
-            <polygon points={`${500},${B.y} ${DM.x},${DM.y} ${F.x},${F.y}`} fill="rgba(247,190,104,0.05)" />
-            {/* Hull outer-right: F → E → D2 → DM */}
-            <polygon points={`${F.x},${F.y} ${E.x},${E.y} ${D2.x},${D2.y} ${DM.x},${DM.y}`} fill="rgba(247,190,104,0.025)" />
+            {/* ── Subtle outer glow of the whole shape ── */}
+            <path d={outerPath} fill="none" stroke="rgba(247,190,104,0.08)" strokeWidth="20" filter="url(#glow)" />
 
-            {/* ── Outer contour (gold track) ── */}
-            <path d={outerPathD} fill="none" stroke="rgba(247,190,104,0.12)" strokeWidth="16" filter="url(#glow)" />
-            <path d={outerPathD} fill="none" stroke="url(#trackGold)" strokeWidth="4.5" strokeLinejoin="round" />
+            {/* ═══════════════════════════════════════════
+                 THE LOGO — all lines same weight/color
+                 ═══════════════════════════════════════════ */}
 
-            {/* ── Internal fold lines (clearly visible, part of the logo) ── */}
-            {/* Vertical: A → DM (full center line through sail and hull) */}
-            <line x1={A.x} y1={A.y} x2={DM.x} y2={DM.y} stroke="rgba(247,190,104,0.45)" strokeWidth="2.5" />
-            {/* Sail horizontal fold: H → I */}
-            <line x1={H_pt.x} y1={H_pt.y} x2={I_pt.x} y2={I_pt.y} stroke="rgba(247,190,104,0.45)" strokeWidth="2.5" />
-            {/* Deck line: B → F */}
-            <line x1={B.x} y1={B.y} x2={F.x} y2={F.y} stroke="rgba(247,190,104,0.45)" strokeWidth="2.5" />
-            {/* Hull left fold: B → DM */}
-            <line x1={B.x} y1={B.y} x2={DM.x} y2={DM.y} stroke="rgba(247,190,104,0.45)" strokeWidth="2.5" />
-            {/* Hull right fold: F → DM */}
-            <line x1={F.x} y1={F.y} x2={DM.x} y2={DM.y} stroke="rgba(247,190,104,0.45)" strokeWidth="2.5" />
+            {/* OUTER CONTOUR: A → B → C → D1 → D2 → E → F → A */}
+            <path d={outerPath} fill="none" {...lineStyle} />
 
-            {/* ── Watermark ── */}
-            <text x={500} y={375} textAnchor="middle" style={{ fontFamily: "var(--font-cormorant), serif", fontSize: "72px", fontWeight: 300, fill: "rgba(247,190,104,0.05)", letterSpacing: "0.2em" }}>
+            {/* SAIL VERTICAL: apex A → deck center */}
+            <line x1={A.x} y1={A.y} x2={BF_center.x} y2={BF_center.y} {...lineStyle} />
+
+            {/* SAIL HORIZONTAL FOLD: H → I */}
+            <line x1={H.x} y1={H.y} x2={I.x} y2={I.y} {...lineStyle} />
+
+            {/* DECK LINE: B → F (shared edge of sail and hull) */}
+            <line x1={B.x} y1={B.y} x2={F.x} y2={F.y} {...lineStyle} />
+
+            {/* HULL VERTICAL: deck center → base center DM */}
+            <line x1={BF_center.x} y1={BF_center.y} x2={DM.x} y2={DM.y} {...lineStyle} />
+
+            {/* HULL LEFT FOLD: B → DM */}
+            <line x1={B.x} y1={B.y} x2={DM.x} y2={DM.y} {...lineStyle} />
+
+            {/* HULL RIGHT FOLD: F → DM */}
+            <line x1={F.x} y1={F.y} x2={DM.x} y2={DM.y} {...lineStyle} />
+
+            {/* ── Watermark (very faint, inside hull) ── */}
+            <text x={500} y={420} textAnchor="middle" style={{ fontFamily: "var(--font-cormorant), serif", fontSize: "52px", fontWeight: 300, fill: "rgba(247,190,104,0.04)", letterSpacing: "0.25em" }}>
               ORTUS
             </text>
-            <text x={500} y={405} textAnchor="middle" style={{ fontFamily: "monospace", fontSize: "9px", fill: "rgba(255,255,255,0.05)", letterSpacing: "0.4em" }}>
+            <text x={500} y={448} textAnchor="middle" style={{ fontFamily: "monospace", fontSize: "8px", fill: "rgba(255,255,255,0.04)", letterSpacing: "0.35em" }}>
               FORMULA 1 — 2026 SEASON
             </text>
 
-            {/* ── Checkpoints ── */}
+            {/* ── Race checkpoints along outer perimeter ── */}
             {checkpoints.map((pt, i) => {
               const race = calendar[i];
               const isActive = activeRace?.round === race.round;
               return (
                 <g key={race.round} onMouseEnter={() => setActiveRace(race)} onMouseLeave={() => setActiveRace(null)} style={{ cursor: "pointer" }}>
-                  <circle cx={pt.x} cy={pt.y} r="18" fill="none" stroke="rgba(247,190,104,0.1)" strokeWidth="1" />
+                  <circle cx={pt.x} cy={pt.y} r="17" fill="none" stroke="rgba(247,190,104,0.08)" strokeWidth="1" />
                   <motion.circle
-                    cx={pt.x} cy={pt.y} r={12} fill="#F7BE68" stroke="rgba(247,190,104,0.5)" strokeWidth="2"
+                    cx={pt.x} cy={pt.y} r={11} fill="#F7BE68" stroke="rgba(247,190,104,0.5)" strokeWidth="2"
                     filter="url(#dotGlow)"
-                    animate={{ r: isActive ? 16 : 12 }}
+                    animate={{ r: isActive ? 15 : 11 }}
                     transition={{ type: "spring", stiffness: 400, damping: 20 }}
                   />
                   <text x={pt.x} y={pt.y + 1} textAnchor="middle" dominantBaseline="central"
                     style={{ fontSize: "7px", fontFamily: "monospace", fill: "#080a08", fontWeight: 700, pointerEvents: "none" }}>
                     {race.round}
                   </text>
-                  <text x={pt.x} y={pt.above ? pt.y - 26 : pt.y + 28} textAnchor="middle"
-                    style={{ fontSize: "9px", fontFamily: "monospace", fill: "rgba(247,190,104,0.7)", fontWeight: 600, letterSpacing: "0.05em", pointerEvents: "none" }}>
+                  <text x={pt.x} y={pt.above ? pt.y - 24 : pt.y + 26} textAnchor="middle"
+                    style={{ fontSize: "9px", fontFamily: "monospace", fill: "rgba(247,190,104,0.65)", fontWeight: 600, letterSpacing: "0.05em", pointerEvents: "none" }}>
                     {race.abbr}
                   </text>
                 </g>
               );
             })}
 
-            {/* ── Animated car tracing the outer perimeter ── */}
-            <circle r="22" fill="rgba(247,190,104,0.1)" filter="url(#carGlow)">
-              <animateMotion dur="18s" repeatCount="indefinite" path={outerPathD} rotate="auto" />
+            {/* ── Animated car tracing outer perimeter ── */}
+            <circle r="20" fill="rgba(247,190,104,0.1)" filter="url(#carGlow)">
+              <animateMotion dur="20s" repeatCount="indefinite" path={outerPath} rotate="auto" />
             </circle>
-            <circle r="10" fill="none" stroke="rgba(247,190,104,0.25)" strokeWidth="1.5">
-              <animateMotion dur="18s" repeatCount="indefinite" path={outerPathD} rotate="auto" />
+            <circle r="9" fill="none" stroke="rgba(247,190,104,0.25)" strokeWidth="1.5">
+              <animateMotion dur="20s" repeatCount="indefinite" path={outerPath} rotate="auto" />
             </circle>
-            <circle r="5" fill="#F7BE68">
-              <animateMotion dur="18s" repeatCount="indefinite" path={outerPathD} rotate="auto" />
+            <circle r="4.5" fill="#F7BE68">
+              <animateMotion dur="20s" repeatCount="indefinite" path={outerPath} rotate="auto" />
             </circle>
             <circle r="2" fill="#fff">
-              <animateMotion dur="18s" repeatCount="indefinite" path={outerPathD} rotate="auto" />
+              <animateMotion dur="20s" repeatCount="indefinite" path={outerPath} rotate="auto" />
             </circle>
           </svg>
 
-          {/* Floating tooltip */}
+          {/* ── Tooltip ── */}
           <AnimatePresence>
             {activeRace && (() => {
               const pt = checkpoints[activeRace.round - 1];
@@ -264,7 +258,7 @@ export default function F1CalendarRacetrack() {
                   style={{
                     left: `${(pt.x / W) * 100}%`,
                     top: `${(pt.y / VH) * 100}%`,
-                    transform: `translate(-50%, ${pt.above ? "calc(-100% - 40px)" : "40px"})`,
+                    transform: `translate(-50%, ${pt.above ? "calc(-100% - 36px)" : "36px"})`,
                     background: "rgba(20,22,20,0.95)",
                     border: "1px solid rgba(247,190,104,0.25)",
                     borderRadius: "14px",
@@ -297,12 +291,8 @@ export default function F1CalendarRacetrack() {
         {/* Legend */}
         <div className="flex items-center justify-center gap-8 flex-wrap" style={{ marginTop: "36px", paddingTop: "20px", borderTop: "1px solid rgba(255,255,255,0.04)" }}>
           <div className="flex items-center gap-2.5">
-            <div style={{ width: "24px", height: "3px", background: "linear-gradient(90deg, #F7BE68, #C5A255)", borderRadius: "2px" }} />
-            <span style={{ fontSize: "0.65rem", color: "rgba(255,255,255,0.3)", letterSpacing: "0.06em" }}>Track Outline</span>
-          </div>
-          <div className="flex items-center gap-2.5">
-            <div style={{ width: "24px", height: "0", borderTop: "1.5px dashed rgba(247,190,104,0.3)" }} />
-            <span style={{ fontSize: "0.65rem", color: "rgba(255,255,255,0.3)", letterSpacing: "0.06em" }}>Origami Fold</span>
+            <div style={{ width: "24px", height: "3px", background: "#F7BE68", borderRadius: "2px", opacity: 0.85 }} />
+            <span style={{ fontSize: "0.65rem", color: "rgba(255,255,255,0.3)", letterSpacing: "0.06em" }}>Ortus Logo Track</span>
           </div>
           <div className="flex items-center gap-2.5">
             <div style={{ width: "12px", height: "12px", borderRadius: "50%", background: "#F7BE68", boxShadow: "0 0 6px rgba(247,190,104,0.4)" }} />
