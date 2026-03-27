@@ -54,10 +54,12 @@ const curatedEvents: CuratedEvent[] = [
   { name: "NCAA Matches", sport: "Basketball", date: "Nov 2026 – Apr 2027", location: "Various", country: "USA", region: "North America", tier: "Premium", fromPrice: "$1,000", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ21BEWoOuaacF5qvlnFz-7_H-HuhfsM_P-1A&s", month: "Mar" },
   { name: "EuroLeague Matches", sport: "Basketball", date: "Oct 2026 – May 2027", location: "Various", country: "Europe", region: "Europe", tier: "Premium", fromPrice: "$1,500", image: "https://static-cdn.toi-media.com/www/uploads/2025/10/AP24333702009735.jpg", month: "Oct" },
 
-  /* ── American Football ── */
-  { name: "Super Bowl", sport: "Football", date: "Feb 2027", location: "TBC", country: "USA", region: "North America", tier: "Ultra-Premium", fromPrice: "$8,000", image: "https://ichef.bbci.co.uk/ace/standard/2560/cpsprodpb/56a6/live/d5811750-056c-11f1-9c47-91e6146aabf2.jpg", month: "Feb" },
-  { name: "NFL Matches", sport: "Football", date: "Sep 2026 – Jan 2027", location: "Various", country: "USA", region: "North America", tier: "Ultra-Premium", fromPrice: "$2,500", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNesrQwm1nnm27x5_NgyfsqLVaQoa_zQcvbg&s", month: "Sep" },
-  { name: "NCAA Football", sport: "Football", date: "Sep–Dec 2026", location: "Various", country: "USA", region: "North America", tier: "Premium", fromPrice: "$1,500", image: "https://sportshub.cbsistatic.com/i/2025/10/17/91b2743c-dd34-4239-b984-e79b1ba79e74/demon-june-north-carolina-tar-heels.jpg", month: "Sep" },
+  /* ── NFL ── */
+  { name: "Super Bowl", sport: "NFL", date: "Feb 2027", location: "TBC", country: "USA", region: "North America", tier: "Ultra-Premium", fromPrice: "$8,000", image: "https://ichef.bbci.co.uk/ace/standard/2560/cpsprodpb/56a6/live/d5811750-056c-11f1-9c47-91e6146aabf2.jpg", month: "Feb" },
+  { name: "NFL Season Matches", sport: "NFL", date: "Sep 2026 – Jan 2027", location: "Various", country: "USA", region: "North America", tier: "Ultra-Premium", fromPrice: "$2,500", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNesrQwm1nnm27x5_NgyfsqLVaQoa_zQcvbg&s", month: "Sep" },
+  { name: "NFL Draft", sport: "NFL", date: "Apr 2026", location: "TBC", country: "USA", region: "North America", tier: "Ultra-Premium", fromPrice: "$1,500", image: "https://ichef.bbci.co.uk/ace/standard/2560/cpsprodpb/56a6/live/d5811750-056c-11f1-9c47-91e6146aabf2.jpg", month: "Apr" },
+  { name: "NCAA Football", sport: "NFL", date: "Sep–Dec 2026", location: "Various", country: "USA", region: "North America", tier: "Premium", fromPrice: "$1,500", image: "https://sportshub.cbsistatic.com/i/2025/10/17/91b2743c-dd34-4239-b984-e79b1ba79e74/demon-june-north-carolina-tar-heels.jpg", month: "Sep" },
+  { name: "Thanksgiving Games", sport: "NFL", date: "26 Nov 2026", location: "Various", country: "USA", region: "North America", tier: "Ultra-Premium", fromPrice: "$3,000", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNesrQwm1nnm27x5_NgyfsqLVaQoa_zQcvbg&s", month: "Nov" },
 
   /* ── Cricket ── */
   { name: "ICC T20 World Cup", sport: "Cricket", date: "Feb–Mar 2026", location: "India & Sri Lanka", country: "India", region: "Asia Pacific", tier: "Ultra-Premium", fromPrice: "$1,500", image: "https://icecric.news/wp-content/uploads/2025/11/dl.beatsnoop.com-3000-35NH1RU8i4.webp", month: "Feb" },
@@ -80,10 +82,10 @@ const curatedEvents: CuratedEvent[] = [
   { name: "Paris-Roubaix", sport: "Cycling", date: "Apr 2026", location: "Roubaix", country: "France", region: "Europe", tier: "Premium", fromPrice: "$1,200", image: "https://cdn-jupiter.metropolis.co.uk/wp-content/uploads/sites/9/2023/04/PLP_Roubaix_0198-scaled-e1734018684421.webp", month: "Apr", expanded: true },
 
   /* ── Horse Racing ── */
-  { name: "Kentucky Derby", sport: "Horse Racing", date: "2 May 2026", location: "Louisville", country: "USA", region: "North America", tier: "Ultra-Premium", fromPrice: "$3,000", image: "https://media.cnn.com/api/v1/images/stellar/prod/220507220710-07-kentucky-derby-winner.jpg?c=original", month: "May", expanded: true },
+  { name: "Kentucky Derby", sport: "Horse Racing", date: "2 May 2026", location: "Louisville", country: "USA", region: "North America", tier: "Ultra-Premium", fromPrice: "$3,000", image: "https://media.cnn.com/api/v1/images/stellar/prod/220507220710-07-kentucky-derby-winner.jpg?c=original", month: "May", expanded: true, imgPos: "center 40%" },
   { name: "Royal Ascot", sport: "Horse Racing", date: "16–20 Jun 2026", location: "Ascot", country: "UK", region: "Europe", tier: "Ultra-Premium", fromPrice: "$3,500", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHO9QZTp9Vz2gd1QAX-pqYOcsdqKJAQ-Qvcw&s", month: "Jun", expanded: true },
   { name: "Melbourne Cup", sport: "Horse Racing", date: "3 Nov 2026", location: "Flemington", country: "Australia", region: "Asia Pacific", tier: "Ultra-Premium", fromPrice: "$2,500", image: "https://static.independent.co.uk/2025/11/04/9/57/SEI272976918.jpeg", month: "Nov", expanded: true },
-  { name: "The Grand National", sport: "Horse Racing", date: "11 Apr 2026", location: "Aintree", country: "UK", region: "Europe", tier: "Premium", fromPrice: "$1,500", image: "https://e0.365dm.com/22/04/2048x1152/skysports-grand-national-aintree_5725798.jpg?20220401205040", month: "Apr", expanded: true },
+  { name: "The Grand National", sport: "Horse Racing", date: "11 Apr 2026", location: "Aintree", country: "UK", region: "Europe", tier: "Premium", fromPrice: "$1,500", image: "https://e0.365dm.com/22/04/2048x1152/skysports-grand-national-aintree_5725798.jpg?20220401205040", month: "Apr", expanded: true, imgPos: "center 30%" },
 
   /* ── Sailing ── */
   { name: "America's Cup", sport: "Sailing", date: "Oct 2026", location: "Barcelona", country: "Spain", region: "Europe", tier: "Ultra-Premium", fromPrice: "$4,000", image: "https://c.files.bbci.co.uk/fe7f/live/dcc24e60-6d44-11ef-b970-9f202720b57a.jpg", month: "Oct", expanded: true },
@@ -91,19 +93,15 @@ const curatedEvents: CuratedEvent[] = [
   { name: "Cowes Week", sport: "Sailing", date: "Aug 2026", location: "Isle of Wight", country: "UK", region: "Europe", tier: "Premium", fromPrice: "$1,500", image: "https://images.squarespace-cdn.com/content/v1/6020465310894c54832aa43e/eed79ff1-7b26-4301-aef9-698285c4a605/Cougar+MoM.jpeg", month: "Aug", expanded: true },
   { name: "SailGP", sport: "Sailing", date: "Various 2026", location: "Various", country: "Various", region: "Europe", tier: "Premium", fromPrice: "$1,800", image: "https://media.sportstravelmagazine.com/wp-content/uploads/2025/01/10020137/U.S.-SailGP-and-Nirvana-Media-Asset-scaled.jpg", month: "May", expanded: true },
 
-  /* ── Boxing ── */
-  { name: "Boxing PPV", sport: "Boxing", date: "Various 2026", location: "Las Vegas", country: "USA", region: "North America", tier: "Ultra-Premium", fromPrice: "$5,000", image: "https://images2.minutemediacdn.com/image/upload/c_crop,w_3715,h_2089,x_1117,y_150/v1738086341/images/voltaxMediaLibrary/mmsport/boxing/01jjq09mww1tddjpxrbz.jpg", month: "Mar", expanded: true },
-
-  /* ── MMA ── */
-  { name: "MMA PPV", sport: "MMA", date: "Various 2026", location: "Las Vegas", country: "USA", region: "North America", tier: "Ultra-Premium", fromPrice: "$4,000", image: "https://platform.mmafighting.com/wp-content/uploads/sites/109/2026/01/gettyimages-2246910181.jpg?quality=90&strip=all&crop=0.0031156530408722%2C0%2C99.993768693918%2C100&w=2400", month: "Jul", expanded: true },
-
-  /* ── WWE ── */
-  { name: "WWE PPV", sport: "MMA", date: "Various 2026", location: "Various", country: "USA", region: "North America", tier: "Ultra-Premium", fromPrice: "$3,000", image: "https://www.usanetwork.com/sites/usablog/files/2022/09/wwe-roman-reigns-titles.jpg", month: "Apr", expanded: true },
+  /* ── Ringside (Boxing, MMA, WWE) ── */
+  { name: "Boxing PPV", sport: "Ringside", date: "Various 2026", location: "Las Vegas", country: "USA", region: "North America", tier: "Ultra-Premium", fromPrice: "$5,000", image: "https://images2.minutemediacdn.com/image/upload/c_crop,w_3715,h_2089,x_1117,y_150/v1738086341/images/voltaxMediaLibrary/mmsport/boxing/01jjq09mww1tddjpxrbz.jpg", month: "Mar", expanded: true },
+  { name: "UFC / MMA PPV", sport: "Ringside", date: "Various 2026", location: "Las Vegas", country: "USA", region: "North America", tier: "Ultra-Premium", fromPrice: "$4,000", image: "https://platform.mmafighting.com/wp-content/uploads/sites/109/2026/01/gettyimages-2246910181.jpg?quality=90&strip=all&crop=0.0031156530408722%2C0%2C99.993768693918%2C100&w=2400", month: "Jul", expanded: true },
+  { name: "WWE Premium Live Events", sport: "Ringside", date: "Various 2026", location: "Various", country: "USA", region: "North America", tier: "Ultra-Premium", fromPrice: "$3,000", image: "https://www.usanetwork.com/sites/usablog/files/2022/09/wwe-roman-reigns-titles.jpg", month: "Apr", expanded: true },
 ];
 
-/* Top 6 sports shown initially */
-const topSports = ["Formula 1", "Tennis", "Football", "Golf", "Basketball", "Cricket"];
-const moreSports = ["Rugby", "Cycling", "Horse Racing", "Sailing", "Boxing", "MMA", "WWE"];
+/* Top sports shown initially */
+const topSports = ["Formula 1", "Tennis", "Football", "Golf", "Basketball", "Cricket", "NFL"];
+const moreSports = ["Rugby", "Cycling", "Horse Racing", "Sailing", "Ringside"];
 
 const regions = ["All Regions", "Europe", "North America", "Asia Pacific"];
 const months = ["Any Date", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -359,7 +357,7 @@ export default function EventsBrowser() {
             >
               {/* Image */}
               <div style={{ height: "180px", position: "relative", overflow: "hidden" }}>
-                <img src={ev.image} alt="" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", objectPosition: ev.imgPos || "center center" }} />
+                <img src={ev.image} alt="" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", objectPosition: ev.imgPos || "center center", filter: "brightness(0.95) contrast(1.05) saturate(1.1)" }} />
                 <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(26,29,26,1) 0%, rgba(26,29,26,0.2) 50%, transparent 100%)" }} />
                 <div style={{ position: "absolute", top: "14px", left: "14px", right: "14px", display: "flex", justifyContent: "space-between" }}>
                   <span style={{

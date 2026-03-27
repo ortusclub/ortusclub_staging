@@ -10,7 +10,7 @@ const slides = [
   "https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?w=1920&q=80&auto=format&fit=crop",   // Cricket — packed stadium at dusk with floodlights
   "https://images.unsplash.com/photo-1631746556116-7559088141d6?w=1920&q=80&auto=format&fit=crop",   // Horse Racing — Flemington racecourse crowd
   "https://cdn.boatinternational.com/convert/bi_prd/bi/library_images/royvXCOoR6DTLUvAAK2Q_Emirates-Team-New-Zealand-racing-in-the-35th-Americas-cup-credit-acea-sander-van-der-borch.jpg/r[width]=1920/royvXCOoR6DTLUvAAK2Q_Emirates-Team-New-Zealand-racing-in-the-35th-Americas-cup-credit-acea-sander-van-der-borch.jpg",   // Sailing — America's Cup, Team NZ foiling
-  "https://images.unsplash.com/photo-1742498626135-67a7d3501eff?w=1920&q=80&auto=format&fit=crop",   // Golf — aerial prestigious course
+  "https://res.cloudinary.com/rydercup-prod/w_1153,h_648,c_fit,q_auto,g_center,dpr_2.0,f_auto/rydercup/images/teams/united-states/First-Tee-Fans-Web-Hero.jpg",   // Golf — Ryder Cup first tee, fans
 ];
 
 export default function SportHero() {
@@ -40,6 +40,7 @@ export default function SportHero() {
               backgroundSize: "cover",
               backgroundPosition: bgPos,
               opacity: index === current ? 1 : 0,
+              filter: "brightness(0.92) contrast(1.08) saturate(1.1)",
             }}
           />
         );
