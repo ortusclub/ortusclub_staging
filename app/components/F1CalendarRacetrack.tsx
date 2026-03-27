@@ -41,27 +41,27 @@ const calendar: Race[] = [
 const ortusRounds = new Set([6, 8, 11, 22]);
 
 /* ──────────────────────────────────────────────────────
- * Crown / Ortus logo track shape
+ * Origami paper boat logo — outer crown + inner folds
  * viewBox: 0 0 1000 500
  * ────────────────────────────────────────────────────── */
 
 const W = 1000;
 const H = 500;
 
-// The 9 crown vertices (clockwise from bottom-left)
+// The 9 outer crown vertices (clockwise from bottom-left)
 const crownVertices: { x: number; y: number }[] = [
-  { x: 60, y: 400 },   // bottom-left start
-  { x: 200, y: 140 },  // left peak top
-  { x: 320, y: 280 },  // left valley
-  { x: 430, y: 180 },  // center-left shoulder
-  { x: 500, y: 60 },   // center peak (tallest)
-  { x: 570, y: 180 },  // center-right shoulder
-  { x: 680, y: 280 },  // right valley
-  { x: 800, y: 140 },  // right peak top
-  { x: 940, y: 400 },  // bottom-right
+  { x: 60, y: 400 },
+  { x: 200, y: 140 },
+  { x: 320, y: 280 },
+  { x: 430, y: 180 },
+  { x: 500, y: 60 },
+  { x: 570, y: 180 },
+  { x: 680, y: 280 },
+  { x: 800, y: 140 },
+  { x: 940, y: 400 },
 ];
 
-// Bezier control points for the base return curve
+// Base curve control points
 const baseBezier = {
   p0: { x: 940, y: 400 },
   p1: { x: 860, y: 430 },
@@ -69,8 +69,8 @@ const baseBezier = {
   p3: { x: 60, y: 400 },
 };
 
-// Build the SVG path string
-function buildTrackPath(): string {
+// Build the outer perimeter SVG path (crown outline + base curve, closed)
+function buildOuterPath(): string {
   let d = `M ${crownVertices[0].x} ${crownVertices[0].y}`;
   for (let i = 1; i < crownVertices.length; i++) {
     d += ` L ${crownVertices[i].x} ${crownVertices[i].y}`;
@@ -80,37 +80,29 @@ function buildTrackPath(): string {
   return d;
 }
 
-// Build inner offset dashed path
-function buildInnerPath(): string {
-  const offset = 10;
-  const cx = crownVertices.reduce((s, p) => s + p.x, 0) / crownVertices.length;
-  const cy = crownVertices.reduce((s, p) => s + p.y, 0) / crownVertices.length;
+// Inner fold lines (origami 3D look)
+const innerFoldLines = [
+  // Left fold: left valley (320,280) to center-bottom (500,400)
+  { x1: 320, y1: 280, x2: 500, y2: 400 },
+  // Right fold: right valley (680,280) to center-bottom (500,400)
+  { x1: 680, y1: 280, x2: 500, y2: 400 },
+  // Center fold: center peak (500,60) straight down to center-bottom (500,400)
+  { x1: 500, y1: 60, x2: 500, y2: 400 },
+];
 
-  const inner = crownVertices.map((p) => {
-    const dx = cx - p.x;
-    const dy = cy - p.y;
-    const len = Math.sqrt(dx * dx + dy * dy);
-    return { x: p.x + (dx / len) * offset, y: p.y + (dy / len) * offset };
-  });
+// Inner triangular facets for subtle 3D fill
+const facets = [
+  { points: "60,400 320,280 500,400", fill: "rgba(247,190,104,0.03)" },
+  { points: "320,280 500,60 500,400", fill: "rgba(247,190,104,0.05)" },
+  { points: "500,60 680,280 500,400", fill: "rgba(247,190,104,0.04)" },
+  { points: "680,280 940,400 500,400", fill: "rgba(247,190,104,0.02)" },
+];
 
-  let d = `M ${inner[0].x} ${inner[0].y}`;
-  for (let i = 1; i < inner.length; i++) {
-    d += ` L ${inner[i].x} ${inner[i].y}`;
-  }
-  // Offset the base curve control points inward slightly
-  const bcp1 = { x: baseBezier.p1.x - 5, y: baseBezier.p1.y - 8 };
-  const bcp2 = { x: baseBezier.p2.x + 5, y: baseBezier.p2.y - 8 };
-  d += ` C ${bcp1.x} ${bcp1.y}, ${bcp2.x} ${bcp2.y}, ${inner[0].x} ${inner[0].y}`;
-  d += " Z";
-  return d;
-}
-
-const trackPathD = buildTrackPath();
-const innerPathD = buildInnerPath();
+const outerPathD = buildOuterPath();
 
 /* ──────────────────────────────────────────────────────
- * Linearize the path into segments and compute 24
- * evenly-spaced checkpoint positions
+ * Linearize the outer perimeter path into segments and
+ * compute 24 evenly-spaced checkpoint positions
  * ────────────────────────────────────────────────────── */
 
 function cubicBezierPoint(
@@ -127,28 +119,22 @@ function cubicBezierPoint(
   };
 }
 
-function linearizePath(): { x: number; y: number }[] {
-  // Crown vertices as-is (9 points)
+function linearizeOuterPerimeter(): { x: number; y: number }[] {
   const pts: { x: number; y: number }[] = [...crownVertices];
-
-  // Sample the base bezier curve into ~12 segments
-  const baseSteps = 12;
+  // Sample the base bezier curve
+  const baseSteps = 16;
   for (let i = 1; i <= baseSteps; i++) {
     const t = i / baseSteps;
-    const pt = cubicBezierPoint(t, baseBezier.p0, baseBezier.p1, baseBezier.p2, baseBezier.p3);
-    pts.push(pt);
+    pts.push(cubicBezierPoint(t, baseBezier.p0, baseBezier.p1, baseBezier.p2, baseBezier.p3));
   }
-
   return pts;
 }
 
 function computeCheckpoints(count: number): { x: number; y: number; labelAbove: boolean }[] {
-  const pts = linearizePath();
+  const pts = linearizeOuterPerimeter();
 
-  // Compute segment lengths
   const segments: { x1: number; y1: number; x2: number; y2: number; len: number }[] = [];
   let totalLength = 0;
-
   for (let i = 0; i < pts.length - 1; i++) {
     const dx = pts[i + 1].x - pts[i].x;
     const dy = pts[i + 1].y - pts[i].y;
@@ -164,27 +150,22 @@ function computeCheckpoints(count: number): { x: number; y: number; labelAbove: 
     const targetDist = i * spacing;
     let accumulated = 0;
     let placed = false;
-
     for (let s = 0; s < segments.length; s++) {
       if (accumulated + segments[s].len >= targetDist) {
         const rem = targetDist - accumulated;
         const t = segments[s].len > 0 ? rem / segments[s].len : 0;
         const x = segments[s].x1 + t * (segments[s].x2 - segments[s].x1);
         const y = segments[s].y1 + t * (segments[s].y2 - segments[s].y1);
-        // Label above if point is in the lower half (y > 250)
-        const labelAbove = y > 250;
-        result.push({ x, y, labelAbove });
+        result.push({ x, y, labelAbove: y > 280 });
         placed = true;
         break;
       }
       accumulated += segments[s].len;
     }
-
     if (!placed) {
       result.push({ x: pts[0].x, y: pts[0].y, labelAbove: false });
     }
   }
-
   return result;
 }
 
@@ -207,7 +188,6 @@ export default function F1CalendarRacetrack() {
         overflow: "hidden",
       }}
     >
-      {/* Keyframe animations */}
       <style>{`
         @keyframes pulseGlow {
           0%, 100% { opacity: 0.4; }
@@ -318,19 +298,25 @@ export default function F1CalendarRacetrack() {
                 </feMerge>
               </filter>
 
-              {/* Subtle radial fill */}
-              <radialGradient id="trackSurface" cx="50%" cy="50%" r="50%">
-                <stop offset="0%" stopColor="rgba(247,190,104,0.04)" />
-                <stop offset="100%" stopColor="rgba(247,190,104,0)" />
-              </radialGradient>
+              {/* Gold trail glow for the car */}
+              <filter id="trailGlow" x="-400%" y="-400%" width="900%" height="900%">
+                <feGaussianBlur in="SourceGraphic" stdDeviation="8" result="blur" />
+                <feColorMatrix
+                  in="blur"
+                  type="matrix"
+                  values="0 0 0 0 0.97  0 0 0 0 0.75  0 0 0 0 0.41  0 0 0 0.5 0"
+                />
+              </filter>
             </defs>
 
-            {/* Subtle interior fill */}
-            <path d={trackPathD} fill="url(#trackSurface)" />
+            {/* ── Inner triangular facets (subtle 3D origami fill) ── */}
+            {facets.map((f, i) => (
+              <polygon key={`facet-${i}`} points={f.points} fill={f.fill} />
+            ))}
 
-            {/* Track outer glow layer */}
+            {/* ── Outer crown glow layer ── */}
             <path
-              d={trackPathD}
+              d={outerPathD}
               fill="none"
               stroke="rgba(247,190,104,0.12)"
               strokeWidth={16}
@@ -338,9 +324,9 @@ export default function F1CalendarRacetrack() {
               filter="url(#trackOuterGlow)"
             />
 
-            {/* Main track stroke — 5px gold gradient */}
+            {/* ── Main outer path stroke — 5px gold gradient with glow ── */}
             <path
-              d={trackPathD}
+              d={outerPathD}
               fill="none"
               stroke="url(#crownTrackGrad)"
               strokeWidth={5}
@@ -348,24 +334,29 @@ export default function F1CalendarRacetrack() {
               strokeLinecap="round"
             />
 
-            {/* Inner dashed offset path */}
-            <path
-              d={innerPathD}
-              fill="none"
-              stroke="rgba(247,190,104,0.12)"
-              strokeWidth={1}
-              strokeDasharray="8 6"
-              strokeLinejoin="round"
-            />
+            {/* ── Inner fold lines (origami 3D look) — 2px dashed at 30% opacity ── */}
+            {innerFoldLines.map((line, i) => (
+              <line
+                key={`fold-${i}`}
+                x1={line.x1}
+                y1={line.y1}
+                x2={line.x2}
+                y2={line.y2}
+                stroke="rgba(247,190,104,0.3)"
+                strokeWidth={2}
+                strokeDasharray="10 8"
+                strokeLinecap="round"
+              />
+            ))}
 
-            {/* ORTUS watermark text centered inside the crown */}
+            {/* ── ORTUS watermark centered inside the crown ── */}
             <text
               x={W / 2}
-              y={320}
+              y={310}
               textAnchor="middle"
               style={{
                 fontFamily: "var(--font-cormorant), serif",
-                fontSize: "90px",
+                fontSize: "100px",
                 fontWeight: 300,
                 fill: "rgba(247,190,104,0.05)",
                 letterSpacing: "0.25em",
@@ -375,29 +366,29 @@ export default function F1CalendarRacetrack() {
               ORTUS
             </text>
 
-            {/* FORMULA 1 subtitle */}
+            {/* ── FORMULA 1 — 2026 subtitle ── */}
             <text
               x={W / 2}
-              y={355}
+              y={350}
               textAnchor="middle"
               style={{
-                fontFamily: "monospace",
-                fontSize: "11px",
+                fontFamily: "var(--font-cormorant), serif",
+                fontSize: "14px",
+                fontWeight: 400,
                 fill: "rgba(255,255,255,0.06)",
                 letterSpacing: "0.35em",
                 userSelect: "none",
               }}
             >
-              FORMULA 1 — 2026 SEASON
+              FORMULA 1 — 2026
             </text>
 
-            {/* Race checkpoints */}
+            {/* ── Race checkpoints ── */}
             {checkpoints.map((pt, i) => {
               const race = calendar[i];
               const isOrtus = ortusRounds.has(race.round);
               const isActive = activeRace?.round === race.round;
               const r = 12;
-
               const labelY = pt.labelAbove ? pt.y - 22 : pt.y + 28;
               const abbrY = pt.labelAbove ? pt.y - 36 : pt.y + 42;
 
@@ -409,7 +400,7 @@ export default function F1CalendarRacetrack() {
                   onClick={() => setActiveRace(activeRace?.round === race.round ? null : race)}
                   style={{ cursor: "pointer" }}
                 >
-                  {/* Gold glow halo for all checkpoints */}
+                  {/* Subtle halo ring */}
                   <circle
                     cx={pt.x}
                     cy={pt.y}
@@ -444,7 +435,7 @@ export default function F1CalendarRacetrack() {
                     </>
                   )}
 
-                  {/* Checkpoint marker — 12px radius */}
+                  {/* Checkpoint marker — large 12px gold dot */}
                   <motion.circle
                     cx={pt.x}
                     cy={pt.y}
@@ -453,9 +444,7 @@ export default function F1CalendarRacetrack() {
                     stroke={isOrtus ? "rgba(247,190,104,0.7)" : "rgba(247,190,104,0.2)"}
                     strokeWidth={isOrtus ? 2.5 : 1.5}
                     whileHover={{ scale: 1.4 }}
-                    animate={{
-                      r: isActive ? r + 4 : r,
-                    }}
+                    animate={{ r: isActive ? r + 4 : r }}
                     transition={{ type: "spring", stiffness: 400, damping: 20 }}
                     filter={isOrtus ? "url(#checkpointGlow)" : undefined}
                   />
@@ -494,35 +483,37 @@ export default function F1CalendarRacetrack() {
               );
             })}
 
-            {/* Animated car dot — SVG animateMotion, ~20s loop */}
+            {/* ── Animated car dot with gold glow trail ── */}
+            {/* Trail glow (large, soft) */}
+            <circle r="22" fill="rgba(247,190,104,0.08)" filter="url(#trailGlow)">
+              <animateMotion
+                dur="20s"
+                repeatCount="indefinite"
+                path={outerPathD}
+                rotate="auto"
+              />
+            </circle>
+            {/* Outer glow ring */}
+            <circle r="14" fill="none" stroke="rgba(247,190,104,0.2)" strokeWidth={2}>
+              <animateMotion
+                dur="20s"
+                repeatCount="indefinite"
+                path={outerPathD}
+                rotate="auto"
+              />
+            </circle>
+            {/* Car dot core */}
             <circle r="6" fill="#F7BE68" opacity={0.95} filter="url(#carGlow)">
               <animateMotion
                 dur="20s"
                 repeatCount="indefinite"
-                path={trackPathD}
-                rotate="auto"
-              />
-            </circle>
-            {/* Car outer glow ring */}
-            <circle r="14" fill="none" stroke="rgba(247,190,104,0.25)" strokeWidth={2}>
-              <animateMotion
-                dur="20s"
-                repeatCount="indefinite"
-                path={trackPathD}
-                rotate="auto"
-              />
-            </circle>
-            <circle r="24" fill="none" stroke="rgba(247,190,104,0.06)" strokeWidth={1}>
-              <animateMotion
-                dur="20s"
-                repeatCount="indefinite"
-                path={trackPathD}
+                path={outerPathD}
                 rotate="auto"
               />
             </circle>
           </svg>
 
-          {/* Floating premium hover card */}
+          {/* ── Floating premium tooltip card ── */}
           <AnimatePresence>
             {activeRace &&
               (() => {
@@ -620,7 +611,7 @@ export default function F1CalendarRacetrack() {
           </AnimatePresence>
         </div>
 
-        {/* Legend */}
+        {/* ── Legend ── */}
         <div
           style={{
             display: "flex",
@@ -681,7 +672,7 @@ export default function F1CalendarRacetrack() {
               style={{
                 width: "20px",
                 height: "0",
-                borderTop: "2px dashed rgba(247,190,104,0.25)",
+                borderTop: "2px dashed rgba(247,190,104,0.3)",
               }}
             />
             <span
@@ -692,7 +683,26 @@ export default function F1CalendarRacetrack() {
                 fontFamily: "monospace",
               }}
             >
-              Track Edge
+              Origami Fold
+            </span>
+          </div>
+          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            <div
+              style={{
+                width: "20px",
+                height: "0",
+                borderTop: "3px solid #F7BE68",
+              }}
+            />
+            <span
+              style={{
+                fontSize: "0.65rem",
+                color: "rgba(255,255,255,0.25)",
+                letterSpacing: "0.08em",
+                fontFamily: "monospace",
+              }}
+            >
+              Track Outline
             </span>
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
