@@ -3,14 +3,14 @@
 import { useEffect, useState } from "react";
 
 const slides = [
-  "/f1.png",   // F1
-  "https://images.unsplash.com/photo-1489944440615-453fc2b6a9a9?w=1920&q=80",   // Football stadium
-  "/golf.jpg",   // Golf
-  "https://images.unsplash.com/photo-1546519638-68e109498ffc?w=1920&q=80",      // Basketball
-  "https://images.unsplash.com/photo-1554068865-24cecd4e34b8?w=1920&q=80",      // Tennis
-  "https://images.unsplash.com/photo-1534854638093-bada1813ca19?w=1920&q=80",   // Sailing
-  "https://images.unsplash.com/photo-1529753253655-470be9a42781?w=1920&q=80",   // Horse racing
-  "https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?w=1920&q=80",   // Stadium wide
+  "/f1.png",   // F1 — Paddock Club view
+  "https://images.unsplash.com/photo-1762013315117-1c8005ad2b41?w=1920&q=80&auto=format&fit=crop",   // Football — Allianz Arena packed, floodlit
+  "https://images.unsplash.com/photo-1504450758481-7338eba7524a?w=1920&q=80&auto=format&fit=crop",   // Basketball — NBA arena packed
+  "https://media.cnn.com/api/v1/images/stellar/prod/220420110759-01-wimbledon-center-court-2021.jpg?c=16x9&q=h_1080,w_1920,c_fill",   // Tennis — Wimbledon Centre Court, grass visible, packed stands
+  "https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?w=1920&q=80&auto=format&fit=crop",   // Cricket — packed stadium at dusk with floodlights
+  "https://images.unsplash.com/photo-1631746556116-7559088141d6?w=1920&q=80&auto=format&fit=crop",   // Horse Racing — Flemington racecourse crowd
+  "https://cdn.boatinternational.com/convert/bi_prd/bi/library_images/royvXCOoR6DTLUvAAK2Q_Emirates-Team-New-Zealand-racing-in-the-35th-Americas-cup-credit-acea-sander-van-der-borch.jpg/r[width]=1920/royvXCOoR6DTLUvAAK2Q_Emirates-Team-New-Zealand-racing-in-the-35th-Americas-cup-credit-acea-sander-van-der-borch.jpg",   // Sailing — America's Cup, Team NZ foiling
+  "https://images.unsplash.com/photo-1742498626135-67a7d3501eff?w=1920&q=80&auto=format&fit=crop",   // Golf — aerial prestigious course
 ];
 
 export default function SportHero() {
@@ -26,18 +26,24 @@ export default function SportHero() {
   return (
     <section className="relative h-[88vh] flex items-end overflow-hidden">
       {/* Slideshow images */}
-      {slides.map((src, index) => (
-        <div
-          key={src}
-          className="absolute inset-0 transition-opacity duration-1000 ease-in-out"
-          style={{
-            backgroundImage: `url(${src})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            opacity: index === current ? 1 : 0,
-          }}
-        />
-      ))}
+      {slides.map((src, index) => {
+        // Custom positioning per slide
+        let bgPos = "center";
+        if (index === 7) bgPos = "center 40%";   // Golf aerial — show the fairway
+
+        return (
+          <div
+            key={src}
+            className="absolute inset-0 transition-opacity duration-1000 ease-in-out"
+            style={{
+              backgroundImage: `url(${src})`,
+              backgroundSize: "cover",
+              backgroundPosition: bgPos,
+              opacity: index === current ? 1 : 0,
+            }}
+          />
+        );
+      })}
 
       {/* Dark overlay — lighter for the sailing/water slide */}
       <div
@@ -51,7 +57,7 @@ export default function SportHero() {
           className="text-white text-7xl leading-tight mb-6"
           style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 400 }}
         >
-          <em>Ortus Sport</em>
+          <em>The Ortus Club Sports</em>
         </h1>
         <p
           className="text-white/80 text-lg mb-8 max-w-2xl"
