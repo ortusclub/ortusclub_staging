@@ -38,693 +38,275 @@ const calendar: Race[] = [
   { round: 24, gp: "Abu Dhabi", date: "Dec 4–6", location: "Yas Marina", abbr: "ABU" },
 ];
 
-const ortusRounds = new Set([6, 8, 11, 22]);
-
-/* ──────────────────────────────────────────────────────
- * Origami paper boat logo — outer crown + inner folds
- * viewBox: 0 0 1000 500
- * ────────────────────────────────────────────────────── */
+/* ──────────────────────────────────────────────────────────────
+ * ORTUS PAPER BOAT LOGO — exact geometry from the logo image
+ * viewBox: 0 0 1000 600
+ *
+ *              A (500,55)          ← sail apex
+ *             / | \
+ *            /  |  \
+ *      ----H---+----I----         ← sail horizontal fold
+ *          /    |    \
+ *         /     |     \
+ *        B──────+──────F          ← deck line (y≈290)
+ *       / \     |     / \
+ *      /   \    |    /   \
+ *     C     \   |   /     E       ← hull widest (y≈400)
+ *      \     \  |  /     /
+ *       \     \ | /     /
+ *        ──────D──────            ← hull bottom (500,510)
+ *
+ * Outer contour: A → B → C → D → E → F → A
+ * Internal folds: A↔D vertical, H↔I sail horizontal,
+ *                 B↔D hull left fold, F↔D hull right fold, B↔F deck
+ * ────────────────────────────────────────────────────────────── */
 
 const W = 1000;
-const H = 500;
+const VH = 600;
 
-// The 9 outer crown vertices (clockwise from bottom-left)
-const crownVertices: { x: number; y: number }[] = [
-  { x: 60, y: 400 },
-  { x: 200, y: 140 },
-  { x: 320, y: 280 },
-  { x: 430, y: 180 },
-  { x: 500, y: 60 },
-  { x: 570, y: 180 },
-  { x: 680, y: 280 },
-  { x: 800, y: 140 },
-  { x: 940, y: 400 },
-];
+// 6 outer vertices
+const A = { x: 500, y: 55 };
+const B = { x: 345, y: 290 };
+const C = { x: 120, y: 400 };
+const D = { x: 500, y: 510 };
+const E = { x: 880, y: 400 };
+const F = { x: 655, y: 290 };
 
-// Base curve control points
-const baseBezier = {
-  p0: { x: 940, y: 400 },
-  p1: { x: 860, y: 430 },
-  p2: { x: 140, y: 430 },
-  p3: { x: 60, y: 400 },
-};
+// Sail horizontal fold — at mid-height of sail
+const sailMidY = (A.y + B.y) / 2;
+const tL = (sailMidY - A.y) / (B.y - A.y);
+const H_pt = { x: A.x + (B.x - A.x) * tL, y: sailMidY };
+const I_pt = { x: A.x + (F.x - A.x) * tL, y: sailMidY };
 
-// Build the outer perimeter SVG path (crown outline + base curve, closed)
-function buildOuterPath(): string {
-  let d = `M ${crownVertices[0].x} ${crownVertices[0].y}`;
-  for (let i = 1; i < crownVertices.length; i++) {
-    d += ` L ${crownVertices[i].x} ${crownVertices[i].y}`;
-  }
-  d += ` C ${baseBezier.p1.x} ${baseBezier.p1.y}, ${baseBezier.p2.x} ${baseBezier.p2.y}, ${baseBezier.p3.x} ${baseBezier.p3.y}`;
-  d += " Z";
-  return d;
+// Outer perimeter path
+const outerPathD = `M ${A.x} ${A.y} L ${B.x} ${B.y} L ${C.x} ${C.y} L ${D.x} ${D.y} L ${E.x} ${E.y} L ${F.x} ${F.y} Z`;
+
+// Compute checkpoint positions along outer perimeter
+function lerp(p1: { x: number; y: number }, p2: { x: number; y: number }, t: number) {
+  return { x: p1.x + (p2.x - p1.x) * t, y: p1.y + (p2.y - p1.y) * t };
+}
+function segDist(p1: { x: number; y: number }, p2: { x: number; y: number }) {
+  return Math.sqrt((p2.x - p1.x) ** 2 + (p2.y - p1.y) ** 2);
 }
 
-// Inner fold lines (origami 3D look)
-const innerFoldLines = [
-  // Left fold: left valley (320,280) to center-bottom (500,400)
-  { x1: 320, y1: 280, x2: 500, y2: 400 },
-  // Right fold: right valley (680,280) to center-bottom (500,400)
-  { x1: 680, y1: 280, x2: 500, y2: 400 },
-  // Center fold: center peak (500,60) straight down to center-bottom (500,400)
-  { x1: 500, y1: 60, x2: 500, y2: 400 },
-];
-
-// Inner triangular facets for subtle 3D fill
-const facets = [
-  { points: "60,400 320,280 500,400", fill: "rgba(247,190,104,0.03)" },
-  { points: "320,280 500,60 500,400", fill: "rgba(247,190,104,0.05)" },
-  { points: "500,60 680,280 500,400", fill: "rgba(247,190,104,0.04)" },
-  { points: "680,280 940,400 500,400", fill: "rgba(247,190,104,0.02)" },
-];
-
-const outerPathD = buildOuterPath();
-
-/* ──────────────────────────────────────────────────────
- * Linearize the outer perimeter path into segments and
- * compute 24 evenly-spaced checkpoint positions
- * ────────────────────────────────────────────────────── */
-
-function cubicBezierPoint(
-  t: number,
-  p0: { x: number; y: number },
-  p1: { x: number; y: number },
-  p2: { x: number; y: number },
-  p3: { x: number; y: number },
-): { x: number; y: number } {
-  const mt = 1 - t;
-  return {
-    x: mt * mt * mt * p0.x + 3 * mt * mt * t * p1.x + 3 * mt * t * t * p2.x + t * t * t * p3.x,
-    y: mt * mt * mt * p0.y + 3 * mt * mt * t * p1.y + 3 * mt * t * t * p2.y + t * t * t * p3.y,
-  };
+const outerVerts = [A, B, C, D, E, F];
+const edges: { from: typeof A; to: typeof A; len: number }[] = [];
+let totalLen = 0;
+for (let i = 0; i < outerVerts.length; i++) {
+  const from = outerVerts[i];
+  const to = outerVerts[(i + 1) % outerVerts.length];
+  const len = segDist(from, to);
+  edges.push({ from, to, len });
+  totalLen += len;
 }
 
-function linearizeOuterPerimeter(): { x: number; y: number }[] {
-  const pts: { x: number; y: number }[] = [...crownVertices];
-  // Sample the base bezier curve
-  const baseSteps = 16;
-  for (let i = 1; i <= baseSteps; i++) {
-    const t = i / baseSteps;
-    pts.push(cubicBezierPoint(t, baseBezier.p0, baseBezier.p1, baseBezier.p2, baseBezier.p3));
-  }
-  return pts;
-}
-
-function computeCheckpoints(count: number): { x: number; y: number; labelAbove: boolean }[] {
-  const pts = linearizeOuterPerimeter();
-
-  const segments: { x1: number; y1: number; x2: number; y2: number; len: number }[] = [];
-  let totalLength = 0;
-  for (let i = 0; i < pts.length - 1; i++) {
-    const dx = pts[i + 1].x - pts[i].x;
-    const dy = pts[i + 1].y - pts[i].y;
-    const len = Math.sqrt(dx * dx + dy * dy);
-    segments.push({ x1: pts[i].x, y1: pts[i].y, x2: pts[i + 1].x, y2: pts[i + 1].y, len });
-    totalLength += len;
-  }
-
-  const spacing = totalLength / count;
-  const result: { x: number; y: number; labelAbove: boolean }[] = [];
-
+function getCheckpoints(count: number) {
+  const spacing = totalLen / count;
+  const points: { x: number; y: number; above: boolean }[] = [];
   for (let i = 0; i < count; i++) {
-    const targetDist = i * spacing;
-    let accumulated = 0;
-    let placed = false;
-    for (let s = 0; s < segments.length; s++) {
-      if (accumulated + segments[s].len >= targetDist) {
-        const rem = targetDist - accumulated;
-        const t = segments[s].len > 0 ? rem / segments[s].len : 0;
-        const x = segments[s].x1 + t * (segments[s].x2 - segments[s].x1);
-        const y = segments[s].y1 + t * (segments[s].y2 - segments[s].y1);
-        result.push({ x, y, labelAbove: y > 280 });
-        placed = true;
-        break;
-      }
-      accumulated += segments[s].len;
+    let target = i * spacing;
+    let eIdx = 0;
+    while (target > edges[eIdx].len && eIdx < edges.length - 1) {
+      target -= edges[eIdx].len;
+      eIdx++;
     }
-    if (!placed) {
-      result.push({ x: pts[0].x, y: pts[0].y, labelAbove: false });
-    }
+    const t = target / edges[eIdx].len;
+    const pt = lerp(edges[eIdx].from, edges[eIdx].to, t);
+    points.push({ ...pt, above: pt.y < 320 || (pt.y < 430 && (pt.x < 200 || pt.x > 800)) });
   }
-  return result;
+  return points;
 }
 
-const checkpoints = computeCheckpoints(24);
-
-/* ──────────────────────────────────────────────────────
- * Component
- * ────────────────────────────────────────────────────── */
+const checkpoints = getCheckpoints(24);
 
 export default function F1CalendarRacetrack() {
   const [activeRace, setActiveRace] = useState<Race | null>(null);
 
   return (
-    <section
-      id="calendar"
-      style={{
-        background: "#080a08",
-        padding: "80px 24px",
-        position: "relative",
-        overflow: "hidden",
-      }}
-    >
-      <style>{`
-        @keyframes pulseGlow {
-          0%, 100% { opacity: 0.4; }
-          50% { opacity: 1; }
-        }
-      `}</style>
-
-      <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
+    <section id="calendar" style={{ background: "#080a08", padding: "80px 24px 60px" }}>
+      <div className="max-w-[1200px] mx-auto">
         {/* Header */}
-        <div style={{ textAlign: "center", marginBottom: "48px" }}>
-          <p
-            style={{
-              fontSize: "0.6rem",
-              letterSpacing: "0.35em",
-              color: "#F7BE68",
-              marginBottom: "12px",
-              textTransform: "uppercase",
-            }}
-          >
+        <div className="text-center" style={{ marginBottom: "40px" }}>
+          <p style={{ fontSize: "0.65rem", letterSpacing: "0.4em", color: "#F7BE68", marginBottom: "14px", textTransform: "uppercase", fontWeight: 600 }}>
             All 24 Rounds
           </p>
-          <h2
-            style={{
-              fontFamily: "var(--font-cormorant), serif",
-              fontSize: "3rem",
-              fontWeight: 400,
-              color: "#fff",
-              margin: 0,
-            }}
-          >
-            The 2026 <em>Circuit</em>
+          <h2 style={{ fontFamily: "var(--font-cormorant), serif", fontSize: "3.2rem", fontWeight: 300, color: "#fff", lineHeight: 1.1 }}>
+            The 2026 <em style={{ color: "#F7BE68" }}>Circuit</em>
           </h2>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: "12px",
-              marginTop: "16px",
-            }}
-          >
-            <span style={{ display: "block", height: "1px", width: "48px", background: "rgba(247,190,104,0.3)" }} />
-            <span style={{ display: "block", width: "6px", height: "6px", borderRadius: "50%", background: "#F7BE68" }} />
-            <span style={{ display: "block", height: "1px", width: "48px", background: "rgba(247,190,104,0.3)" }} />
+          <div className="flex items-center justify-center gap-3" style={{ marginTop: "18px" }}>
+            <span className="block" style={{ height: "1px", width: "50px", background: "linear-gradient(to right, transparent, #F7BE68)" }} />
+            <span className="block" style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#F7BE68", boxShadow: "0 0 8px rgba(247,190,104,0.5)" }} />
+            <span className="block" style={{ height: "1px", width: "50px", background: "linear-gradient(to left, transparent, #F7BE68)" }} />
           </div>
         </div>
 
-        {/* Track SVG */}
-        <div
-          style={{
-            position: "relative",
-            aspectRatio: `${W} / ${H}`,
-            maxWidth: "1200px",
-            margin: "0 auto",
-          }}
-        >
-          <svg
-            viewBox={`0 0 ${W} ${H}`}
-            style={{ width: "100%", height: "100%", overflow: "visible", display: "block" }}
-          >
+        {/* SVG Track */}
+        <div className="relative" style={{ maxWidth: "1000px", margin: "0 auto", aspectRatio: `${W}/${VH}` }}>
+          <svg viewBox={`0 0 ${W} ${VH}`} className="w-full h-full" style={{ overflow: "visible" }}>
             <defs>
-              {/* Gold gradient for main track stroke */}
-              <linearGradient id="crownTrackGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor="#F7BE68" stopOpacity={0.9} />
-                <stop offset="30%" stopColor="#e8a84a" stopOpacity={1} />
-                <stop offset="50%" stopColor="#F7BE68" stopOpacity={0.7} />
-                <stop offset="70%" stopColor="#e8a84a" stopOpacity={1} />
-                <stop offset="100%" stopColor="#F7BE68" stopOpacity={0.9} />
+              <linearGradient id="trackGold" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#F7BE68" />
+                <stop offset="50%" stopColor="#C5A255" />
+                <stop offset="100%" stopColor="#F7BE68" />
               </linearGradient>
-
-              {/* Outer glow filter */}
-              <filter id="trackOuterGlow" x="-20%" y="-20%" width="140%" height="140%">
-                <feGaussianBlur in="SourceGraphic" stdDeviation="7" result="blur" />
-                <feColorMatrix
-                  in="blur"
-                  type="matrix"
-                  values="0 0 0 0 0.97  0 0 0 0 0.75  0 0 0 0 0.41  0 0 0 0.4 0"
-                  result="colorBlur"
-                />
-                <feMerge>
-                  <feMergeNode in="colorBlur" />
-                  <feMergeNode in="SourceGraphic" />
-                </feMerge>
+              <filter id="glow">
+                <feGaussianBlur stdDeviation="6" result="blur" />
+                <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
               </filter>
-
-              {/* Checkpoint glow filter */}
-              <filter id="checkpointGlow" x="-200%" y="-200%" width="500%" height="500%">
-                <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blur" />
-                <feColorMatrix
-                  in="blur"
-                  type="matrix"
-                  values="0 0 0 0 0.97  0 0 0 0 0.75  0 0 0 0 0.41  0 0 0 0.7 0"
-                />
+              <filter id="carGlow">
+                <feGaussianBlur stdDeviation="10" result="blur" />
+                <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
               </filter>
-
-              {/* Car glow filter */}
-              <filter id="carGlow" x="-300%" y="-300%" width="700%" height="700%">
-                <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur" />
-                <feColorMatrix
-                  in="blur"
-                  type="matrix"
-                  values="0 0 0 0 0.97  0 0 0 0 0.75  0 0 0 0 0.41  0 0 0 0.8 0"
-                  result="colorBlur"
-                />
-                <feMerge>
-                  <feMergeNode in="colorBlur" />
-                  <feMergeNode in="SourceGraphic" />
-                </feMerge>
-              </filter>
-
-              {/* Gold trail glow for the car */}
-              <filter id="trailGlow" x="-400%" y="-400%" width="900%" height="900%">
-                <feGaussianBlur in="SourceGraphic" stdDeviation="8" result="blur" />
-                <feColorMatrix
-                  in="blur"
-                  type="matrix"
-                  values="0 0 0 0 0.97  0 0 0 0 0.75  0 0 0 0 0.41  0 0 0 0.5 0"
-                />
+              <filter id="dotGlow">
+                <feGaussianBlur stdDeviation="3" result="blur" />
+                <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
               </filter>
             </defs>
 
-            {/* ── Inner triangular facets (subtle 3D origami fill) ── */}
-            {facets.map((f, i) => (
-              <polygon key={`facet-${i}`} points={f.points} fill={f.fill} />
-            ))}
+            {/* ── Origami facets (subtle 3D shading) ── */}
+            {/* Sail top-left quadrant */}
+            <polygon points={`${A.x},${A.y} ${H_pt.x},${H_pt.y} ${500},${sailMidY}`} fill="rgba(247,190,104,0.025)" />
+            {/* Sail top-right quadrant */}
+            <polygon points={`${A.x},${A.y} ${500},${sailMidY} ${I_pt.x},${I_pt.y}`} fill="rgba(247,190,104,0.035)" />
+            {/* Sail bottom-left quadrant */}
+            <polygon points={`${H_pt.x},${H_pt.y} ${B.x},${B.y} ${500},${B.y} ${500},${sailMidY}`} fill="rgba(247,190,104,0.045)" />
+            {/* Sail bottom-right quadrant */}
+            <polygon points={`${500},${sailMidY} ${500},${B.y} ${F.x},${F.y} ${I_pt.x},${I_pt.y}`} fill="rgba(247,190,104,0.035)" />
+            {/* Hull outer-left: B → C → D */}
+            <polygon points={`${B.x},${B.y} ${C.x},${C.y} ${D.x},${D.y}`} fill="rgba(247,190,104,0.02)" />
+            {/* Hull inner-left: B → D → center */}
+            <polygon points={`${B.x},${B.y} ${D.x},${D.y} ${500},${B.y}`} fill="rgba(247,190,104,0.04)" />
+            {/* Hull inner-right: center → D → F */}
+            <polygon points={`${500},${B.y} ${D.x},${D.y} ${F.x},${F.y}`} fill="rgba(247,190,104,0.03)" />
+            {/* Hull outer-right: F → E → D */}
+            <polygon points={`${F.x},${F.y} ${E.x},${E.y} ${D.x},${D.y}`} fill="rgba(247,190,104,0.015)" />
 
-            {/* ── Outer crown glow layer ── */}
-            <path
-              d={outerPathD}
-              fill="none"
-              stroke="rgba(247,190,104,0.12)"
-              strokeWidth={16}
-              strokeLinejoin="round"
-              filter="url(#trackOuterGlow)"
-            />
+            {/* ── Outer contour (gold track) ── */}
+            <path d={outerPathD} fill="none" stroke="rgba(247,190,104,0.12)" strokeWidth="16" filter="url(#glow)" />
+            <path d={outerPathD} fill="none" stroke="url(#trackGold)" strokeWidth="4.5" strokeLinejoin="round" />
 
-            {/* ── Main outer path stroke — 5px gold gradient with glow ── */}
-            <path
-              d={outerPathD}
-              fill="none"
-              stroke="url(#crownTrackGrad)"
-              strokeWidth={5}
-              strokeLinejoin="round"
-              strokeLinecap="round"
-            />
+            {/* ── Internal fold lines ── */}
+            {/* Vertical: A → D (full center line) */}
+            <line x1={A.x} y1={A.y} x2={D.x} y2={D.y} stroke="rgba(247,190,104,0.2)" strokeWidth="1.5" strokeDasharray="8 6" />
+            {/* Sail horizontal fold: H → I */}
+            <line x1={H_pt.x} y1={H_pt.y} x2={I_pt.x} y2={I_pt.y} stroke="rgba(247,190,104,0.2)" strokeWidth="1.5" strokeDasharray="8 6" />
+            {/* Deck line: B → F */}
+            <line x1={B.x} y1={B.y} x2={F.x} y2={F.y} stroke="rgba(247,190,104,0.15)" strokeWidth="1.5" strokeDasharray="6 5" />
+            {/* Hull left fold: B → D */}
+            <line x1={B.x} y1={B.y} x2={D.x} y2={D.y} stroke="rgba(247,190,104,0.2)" strokeWidth="1.5" strokeDasharray="8 6" />
+            {/* Hull right fold: F → D */}
+            <line x1={F.x} y1={F.y} x2={D.x} y2={D.y} stroke="rgba(247,190,104,0.2)" strokeWidth="1.5" strokeDasharray="8 6" />
 
-            {/* ── Inner fold lines (origami 3D look) — 2px dashed at 30% opacity ── */}
-            {innerFoldLines.map((line, i) => (
-              <line
-                key={`fold-${i}`}
-                x1={line.x1}
-                y1={line.y1}
-                x2={line.x2}
-                y2={line.y2}
-                stroke="rgba(247,190,104,0.3)"
-                strokeWidth={2}
-                strokeDasharray="10 8"
-                strokeLinecap="round"
-              />
-            ))}
-
-            {/* ── ORTUS watermark centered inside the crown ── */}
-            <text
-              x={W / 2}
-              y={310}
-              textAnchor="middle"
-              style={{
-                fontFamily: "var(--font-cormorant), serif",
-                fontSize: "100px",
-                fontWeight: 300,
-                fill: "rgba(247,190,104,0.05)",
-                letterSpacing: "0.25em",
-                userSelect: "none",
-              }}
-            >
+            {/* ── Watermark ── */}
+            <text x={500} y={375} textAnchor="middle" style={{ fontFamily: "var(--font-cormorant), serif", fontSize: "72px", fontWeight: 300, fill: "rgba(247,190,104,0.05)", letterSpacing: "0.2em" }}>
               ORTUS
             </text>
-
-            {/* ── FORMULA 1 — 2026 subtitle ── */}
-            <text
-              x={W / 2}
-              y={350}
-              textAnchor="middle"
-              style={{
-                fontFamily: "var(--font-cormorant), serif",
-                fontSize: "14px",
-                fontWeight: 400,
-                fill: "rgba(255,255,255,0.06)",
-                letterSpacing: "0.35em",
-                userSelect: "none",
-              }}
-            >
-              FORMULA 1 — 2026
+            <text x={500} y={405} textAnchor="middle" style={{ fontFamily: "monospace", fontSize: "9px", fill: "rgba(255,255,255,0.05)", letterSpacing: "0.4em" }}>
+              FORMULA 1 — 2026 SEASON
             </text>
 
-            {/* ── Race checkpoints ── */}
+            {/* ── Checkpoints ── */}
             {checkpoints.map((pt, i) => {
               const race = calendar[i];
-              const isOrtus = ortusRounds.has(race.round);
               const isActive = activeRace?.round === race.round;
-              const r = 12;
-              const labelY = pt.labelAbove ? pt.y - 22 : pt.y + 28;
-              const abbrY = pt.labelAbove ? pt.y - 36 : pt.y + 42;
-
               return (
-                <g
-                  key={race.round}
-                  onMouseEnter={() => setActiveRace(race)}
-                  onMouseLeave={() => setActiveRace(null)}
-                  onClick={() => setActiveRace(activeRace?.round === race.round ? null : race)}
-                  style={{ cursor: "pointer" }}
-                >
-                  {/* Subtle halo ring */}
-                  <circle
-                    cx={pt.x}
-                    cy={pt.y}
-                    r={20}
-                    fill="none"
-                    stroke="rgba(247,190,104,0.08)"
-                    strokeWidth={1}
-                    filter="url(#checkpointGlow)"
-                  />
-
-                  {/* Ortus-specific pulsing ring */}
-                  {isOrtus && (
-                    <>
-                      <circle
-                        cx={pt.x}
-                        cy={pt.y}
-                        r={22}
-                        fill="none"
-                        stroke="rgba(247,190,104,0.2)"
-                        strokeWidth={1.5}
-                        filter="url(#checkpointGlow)"
-                      />
-                      <circle
-                        cx={pt.x}
-                        cy={pt.y}
-                        r={17}
-                        fill="none"
-                        stroke="rgba(247,190,104,0.3)"
-                        strokeWidth={1}
-                        style={{ animation: "pulseGlow 2s ease-in-out infinite" }}
-                      />
-                    </>
-                  )}
-
-                  {/* Checkpoint marker — large 12px gold dot */}
+                <g key={race.round} onMouseEnter={() => setActiveRace(race)} onMouseLeave={() => setActiveRace(null)} style={{ cursor: "pointer" }}>
+                  <circle cx={pt.x} cy={pt.y} r="18" fill="none" stroke="rgba(247,190,104,0.1)" strokeWidth="1" />
                   <motion.circle
-                    cx={pt.x}
-                    cy={pt.y}
-                    r={r}
-                    fill={isOrtus ? "#F7BE68" : "rgba(247,190,104,0.5)"}
-                    stroke={isOrtus ? "rgba(247,190,104,0.7)" : "rgba(247,190,104,0.2)"}
-                    strokeWidth={isOrtus ? 2.5 : 1.5}
-                    whileHover={{ scale: 1.4 }}
-                    animate={{ r: isActive ? r + 4 : r }}
+                    cx={pt.x} cy={pt.y} r={12} fill="#F7BE68" stroke="rgba(247,190,104,0.5)" strokeWidth="2"
+                    filter="url(#dotGlow)"
+                    animate={{ r: isActive ? 16 : 12 }}
                     transition={{ type: "spring", stiffness: 400, damping: 20 }}
-                    filter={isOrtus ? "url(#checkpointGlow)" : undefined}
                   />
-
-                  {/* Round number label — always visible */}
-                  <text
-                    x={pt.x}
-                    y={labelY}
-                    textAnchor="middle"
-                    style={{
-                      fontSize: "9.5px",
-                      fontWeight: 700,
-                      fontFamily: "monospace",
-                      fill: isOrtus ? "#F7BE68" : "rgba(255,255,255,0.6)",
-                    }}
-                  >
-                    R{race.round.toString().padStart(2, "0")}
+                  <text x={pt.x} y={pt.y + 1} textAnchor="middle" dominantBaseline="central"
+                    style={{ fontSize: "7px", fontFamily: "monospace", fill: "#080a08", fontWeight: 700, pointerEvents: "none" }}>
+                    {race.round}
                   </text>
-
-                  {/* GP abbreviation — always visible */}
-                  <text
-                    x={pt.x}
-                    y={abbrY}
-                    textAnchor="middle"
-                    style={{
-                      fontSize: "8px",
-                      fontWeight: 600,
-                      fontFamily: "monospace",
-                      letterSpacing: "0.06em",
-                      fill: isOrtus ? "rgba(247,190,104,0.8)" : "rgba(255,255,255,0.35)",
-                    }}
-                  >
+                  <text x={pt.x} y={pt.above ? pt.y - 26 : pt.y + 28} textAnchor="middle"
+                    style={{ fontSize: "9px", fontFamily: "monospace", fill: "rgba(247,190,104,0.7)", fontWeight: 600, letterSpacing: "0.05em", pointerEvents: "none" }}>
                     {race.abbr}
                   </text>
                 </g>
               );
             })}
 
-            {/* ── Animated car dot with gold glow trail ── */}
-            {/* Trail glow (large, soft) */}
-            <circle r="22" fill="rgba(247,190,104,0.08)" filter="url(#trailGlow)">
-              <animateMotion
-                dur="20s"
-                repeatCount="indefinite"
-                path={outerPathD}
-                rotate="auto"
-              />
+            {/* ── Animated car tracing the outer perimeter ── */}
+            <circle r="22" fill="rgba(247,190,104,0.1)" filter="url(#carGlow)">
+              <animateMotion dur="18s" repeatCount="indefinite" path={outerPathD} rotate="auto" />
             </circle>
-            {/* Outer glow ring */}
-            <circle r="14" fill="none" stroke="rgba(247,190,104,0.2)" strokeWidth={2}>
-              <animateMotion
-                dur="20s"
-                repeatCount="indefinite"
-                path={outerPathD}
-                rotate="auto"
-              />
+            <circle r="10" fill="none" stroke="rgba(247,190,104,0.25)" strokeWidth="1.5">
+              <animateMotion dur="18s" repeatCount="indefinite" path={outerPathD} rotate="auto" />
             </circle>
-            {/* Car dot core */}
-            <circle r="6" fill="#F7BE68" opacity={0.95} filter="url(#carGlow)">
-              <animateMotion
-                dur="20s"
-                repeatCount="indefinite"
-                path={outerPathD}
-                rotate="auto"
-              />
+            <circle r="5" fill="#F7BE68">
+              <animateMotion dur="18s" repeatCount="indefinite" path={outerPathD} rotate="auto" />
+            </circle>
+            <circle r="2" fill="#fff">
+              <animateMotion dur="18s" repeatCount="indefinite" path={outerPathD} rotate="auto" />
             </circle>
           </svg>
 
-          {/* ── Floating premium tooltip card ── */}
+          {/* Floating tooltip */}
           <AnimatePresence>
-            {activeRace &&
-              (() => {
-                const pt = checkpoints[activeRace.round - 1];
-                const isOrtus = ortusRounds.has(activeRace.round);
-                const tooltipAbove = !pt.labelAbove;
-                return (
-                  <motion.div
-                    key={activeRace.round}
-                    initial={{ opacity: 0, y: tooltipAbove ? 8 : -8, scale: 0.92 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    exit={{ opacity: 0, y: tooltipAbove ? 8 : -8, scale: 0.92 }}
-                    transition={{ duration: 0.2, ease: "easeOut" }}
-                    style={{
-                      position: "absolute",
-                      left: `${(pt.x / W) * 100}%`,
-                      top: `${(pt.y / H) * 100}%`,
-                      transform: `translate(-50%, ${tooltipAbove ? "calc(-100% - 32px)" : "32px"})`,
-                      background: "linear-gradient(135deg, #141714 0%, #1a1d1a 100%)",
-                      border: `1px solid ${isOrtus ? "rgba(247,190,104,0.35)" : "rgba(255,255,255,0.1)"}`,
-                      borderRadius: "14px",
-                      padding: "18px 24px",
-                      boxShadow: isOrtus
-                        ? "0 20px 60px rgba(0,0,0,0.7), 0 0 30px rgba(247,190,104,0.12)"
-                        : "0 20px 60px rgba(0,0,0,0.7)",
-                      zIndex: 30,
-                      whiteSpace: "nowrap" as const,
-                      backdropFilter: "blur(16px)",
-                      pointerEvents: "none" as const,
-                    }}
-                  >
-                    <div
-                      style={{
-                        fontSize: "0.55rem",
-                        fontFamily: "monospace",
-                        color: isOrtus ? "#F7BE68" : "rgba(255,255,255,0.3)",
-                        letterSpacing: "0.14em",
-                        marginBottom: "6px",
-                      }}
-                    >
-                      ROUND {activeRace.round.toString().padStart(2, "0")}
-                    </div>
-                    <div
-                      style={{
-                        fontFamily: "var(--font-cormorant), serif",
-                        fontSize: "1.3rem",
-                        fontWeight: 500,
-                        color: "#fff",
-                        marginBottom: "8px",
-                      }}
-                    >
-                      {activeRace.gp} Grand Prix
-                    </div>
-                    <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
-                      <span
-                        style={{
-                          fontSize: "0.65rem",
-                          color: "rgba(255,255,255,0.45)",
-                          fontFamily: "monospace",
-                        }}
-                      >
-                        {activeRace.date}
-                      </span>
-                      <span
-                        style={{
-                          fontSize: "0.65rem",
-                          color: "rgba(255,255,255,0.25)",
-                          fontFamily: "monospace",
-                        }}
-                      >
-                        {activeRace.location}
-                      </span>
-                    </div>
-                    {isOrtus && (
-                      <div style={{ marginTop: "12px" }}>
-                        <span
-                          style={{
-                            fontSize: "0.45rem",
-                            letterSpacing: "0.14em",
-                            padding: "4px 14px",
-                            borderRadius: "999px",
-                            background: "rgba(247,190,104,0.12)",
-                            color: "#F7BE68",
-                            border: "1px solid rgba(247,190,104,0.2)",
-                            fontWeight: 600,
-                          }}
-                        >
-                          ORTUS EXPERIENCE
-                        </span>
-                      </div>
-                    )}
-                  </motion.div>
-                );
-              })()}
+            {activeRace && (() => {
+              const pt = checkpoints[activeRace.round - 1];
+              return (
+                <motion.div
+                  key={activeRace.round}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  transition={{ duration: 0.15 }}
+                  className="absolute pointer-events-none"
+                  style={{
+                    left: `${(pt.x / W) * 100}%`,
+                    top: `${(pt.y / VH) * 100}%`,
+                    transform: `translate(-50%, ${pt.above ? "calc(-100% - 40px)" : "40px"})`,
+                    background: "rgba(20,22,20,0.95)",
+                    border: "1px solid rgba(247,190,104,0.25)",
+                    borderRadius: "14px",
+                    padding: "16px 22px",
+                    boxShadow: "0 16px 48px rgba(0,0,0,0.6)",
+                    zIndex: 30,
+                    whiteSpace: "nowrap",
+                    backdropFilter: "blur(12px)",
+                  }}
+                >
+                  <div style={{ fontSize: "0.5rem", color: "rgba(247,190,104,0.5)", fontFamily: "monospace", letterSpacing: "0.15em", marginBottom: "6px" }}>
+                    ROUND {activeRace.round.toString().padStart(2, "0")}
+                  </div>
+                  <div style={{ fontFamily: "var(--font-cormorant), serif", fontSize: "1.3rem", color: "#fff", marginBottom: "8px", fontWeight: 500 }}>
+                    {activeRace.gp} Grand Prix
+                  </div>
+                  <div className="flex items-center gap-4" style={{ marginBottom: "8px" }}>
+                    <span style={{ fontSize: "0.7rem", color: "rgba(255,255,255,0.4)", fontFamily: "monospace" }}>{activeRace.date}</span>
+                    <span style={{ fontSize: "0.7rem", color: "rgba(255,255,255,0.25)", fontFamily: "monospace" }}>{activeRace.location}</span>
+                  </div>
+                  <span style={{ fontSize: "0.5rem", letterSpacing: "0.12em", padding: "4px 12px", borderRadius: "999px", background: "rgba(247,190,104,0.12)", color: "#F7BE68", border: "1px solid rgba(247,190,104,0.2)" }}>
+                    ORTUS HOSPITALITY
+                  </span>
+                </motion.div>
+              );
+            })()}
           </AnimatePresence>
         </div>
 
-        {/* ── Legend ── */}
-        <div
-          style={{
-            display: "flex",
-            flexWrap: "wrap",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: "32px",
-            marginTop: "40px",
-            paddingTop: "24px",
-            borderTop: "1px solid rgba(255,255,255,0.04)",
-          }}
-        >
-          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-            <div
-              style={{
-                width: "12px",
-                height: "12px",
-                borderRadius: "50%",
-                background: "rgba(247,190,104,0.5)",
-                border: "1.5px solid rgba(247,190,104,0.2)",
-              }}
-            />
-            <span
-              style={{
-                fontSize: "0.65rem",
-                color: "rgba(255,255,255,0.3)",
-                letterSpacing: "0.08em",
-                fontFamily: "monospace",
-              }}
-            >
-              Grand Prix
-            </span>
+        {/* Legend */}
+        <div className="flex items-center justify-center gap-8 flex-wrap" style={{ marginTop: "36px", paddingTop: "20px", borderTop: "1px solid rgba(255,255,255,0.04)" }}>
+          <div className="flex items-center gap-2.5">
+            <div style={{ width: "24px", height: "3px", background: "linear-gradient(90deg, #F7BE68, #C5A255)", borderRadius: "2px" }} />
+            <span style={{ fontSize: "0.65rem", color: "rgba(255,255,255,0.3)", letterSpacing: "0.06em" }}>Track Outline</span>
           </div>
-          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-            <div
-              style={{
-                width: "14px",
-                height: "14px",
-                borderRadius: "50%",
-                background: "#F7BE68",
-                border: "2.5px solid rgba(247,190,104,0.5)",
-                boxShadow: "0 0 12px rgba(247,190,104,0.4), 0 0 24px rgba(247,190,104,0.15)",
-              }}
-            />
-            <span
-              style={{
-                fontSize: "0.65rem",
-                color: "#F7BE68",
-                letterSpacing: "0.08em",
-                fontFamily: "monospace",
-              }}
-            >
-              Ortus Hospitality
-            </span>
+          <div className="flex items-center gap-2.5">
+            <div style={{ width: "24px", height: "0", borderTop: "1.5px dashed rgba(247,190,104,0.3)" }} />
+            <span style={{ fontSize: "0.65rem", color: "rgba(255,255,255,0.3)", letterSpacing: "0.06em" }}>Origami Fold</span>
           </div>
-          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-            <div
-              style={{
-                width: "20px",
-                height: "0",
-                borderTop: "2px dashed rgba(247,190,104,0.3)",
-              }}
-            />
-            <span
-              style={{
-                fontSize: "0.65rem",
-                color: "rgba(255,255,255,0.25)",
-                letterSpacing: "0.08em",
-                fontFamily: "monospace",
-              }}
-            >
-              Origami Fold
-            </span>
+          <div className="flex items-center gap-2.5">
+            <div style={{ width: "12px", height: "12px", borderRadius: "50%", background: "#F7BE68", boxShadow: "0 0 6px rgba(247,190,104,0.4)" }} />
+            <span style={{ fontSize: "0.65rem", color: "#F7BE68", letterSpacing: "0.06em" }}>Grand Prix</span>
           </div>
-          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-            <div
-              style={{
-                width: "20px",
-                height: "0",
-                borderTop: "3px solid #F7BE68",
-              }}
-            />
-            <span
-              style={{
-                fontSize: "0.65rem",
-                color: "rgba(255,255,255,0.25)",
-                letterSpacing: "0.08em",
-                fontFamily: "monospace",
-              }}
-            >
-              Track Outline
-            </span>
-          </div>
-          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-            <div
-              style={{
-                width: "10px",
-                height: "10px",
-                borderRadius: "50%",
-                background: "#F7BE68",
-                boxShadow: "0 0 10px rgba(247,190,104,0.6)",
-              }}
-            />
-            <span
-              style={{
-                fontSize: "0.65rem",
-                color: "rgba(255,255,255,0.25)",
-                letterSpacing: "0.08em",
-                fontFamily: "monospace",
-              }}
-            >
-              Racing Car
-            </span>
+          <div className="flex items-center gap-2.5">
+            <div style={{ width: "10px", height: "10px", borderRadius: "50%", background: "#fff", boxShadow: "0 0 8px rgba(247,190,104,0.5)" }} />
+            <span style={{ fontSize: "0.65rem", color: "rgba(255,255,255,0.3)", letterSpacing: "0.06em" }}>Racing Car</span>
           </div>
         </div>
       </div>
